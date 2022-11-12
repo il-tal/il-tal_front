@@ -1,52 +1,55 @@
+import { useState } from "react";
 import styled from "styled-components";
+import Category from "./Category";
+import CategoryBtn from "./CategoryBtn";
 
 const ThemeFilter = () => {
+  const [genre, setGenre] = useState(["전체"]);
+  const [location, setLocation] = useState(["전체"]);
+  const [score, setScore] = useState(["전체"]);
+  const [difficulty, setDifficuldy] = useState(["전체"]);
+  const [people, setPeople] = useState(["전체"]);
+
+  console.log("장르:", genre);
+  console.log("지역", location);
   return (
     <Container>
       <FilterWrap>
         <p>지역별</p>
-        <Location>
-          <span>전체지역</span>
-          <span>강남</span>
-          <span>홍대</span>
-          <span>신촌</span>
-          <span>건대</span>
-          <span>대학로</span>
-        </Location>
+
+        <CategoryBtn
+          categoryIndex={Category.LocationCategory}
+          state={location}
+          setState={setLocation}
+        />
+
         <p>장르</p>
-        <Genre>
-          <span>전체</span>
-          <span>추리</span>
-          <span>공포</span>
-          <span>액션</span>
-          <span>감성</span>
-          <span>19금</span>
-        </Genre>
+        <CategoryBtn
+          categoryIndex={Category.GenreCategory}
+          state={genre}
+          setState={setGenre}
+        />
         <p>평점</p>
-        <Grade>
-          <span>⭐️</span>
-          <span>⭐️⭐️</span>
-          <span>⭐️⭐️⭐️</span>
-          <span>⭐️⭐️⭐️⭐️</span>
-          <span>⭐️⭐️⭐️⭐️⭐️</span>
-        </Grade>
+
+        <CategoryBtn
+          categoryIndex={Category.ScoreCategory}
+          state={score}
+          setState={setScore}
+        />
+
         <p>난이도</p>
-        <Difficulty>
-          <span>🔒</span>
-          <span>🔒🔒</span>
-          <span>🔒🔒🔒</span>
-          <span>🔒🔒🔒🔒</span>
-          <span>🔒🔒🔒🔒🔒</span>
-        </Difficulty>
+        <CategoryBtn
+          categoryIndex={Category.DifficultyCategory}
+          state={difficulty}
+          setState={setDifficuldy}
+        />
+
         <p>예약 가능 인원</p>
-        <RecommendPeoPle>
-          <span>전체</span>
-          <span>혼방</span>
-          <span>2인</span>
-          <span>3인</span>
-          <span>4인</span>
-          <span>5인이상</span>
-        </RecommendPeoPle>
+        <CategoryBtn
+          categoryIndex={Category.PeopleCategory}
+          state={people}
+          setState={setPeople}
+        />
       </FilterWrap>
     </Container>
   );
