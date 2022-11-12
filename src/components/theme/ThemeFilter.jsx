@@ -10,6 +10,18 @@ const ThemeFilter = () => {
   const [difficulty, setDifficuldy] = useState(["전체"]);
   const [people, setPeople] = useState(["전체"]);
 
+  console.log(
+    "장르:",
+    genre,
+    "장소:",
+    location,
+    "별점:",
+    score,
+    "난이도:",
+    difficulty,
+    "인원:",
+    people
+  );
   return (
     <Container>
       <FilterWrap>

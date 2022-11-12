@@ -9,17 +9,26 @@ const CategoryBtn = ({ categoryIndex, state, setState }) => {
   }, [state]);
 
   const categoryHandler = (e) => {
+    console.log(isNaN(e.target.value));
+    //해당 State에 클릭한 카테고리가 있는지 확인한다. (있다면 클릭한 카테고리를 반환하고, 없다면 undefinded가 됨)
     const isInclude = state.find((element) => element === e.target.value);
+    console.log("isInclude", isInclude);
 
+    //만약 클릭한 카테고리가 "전체" 인 경우 state는 "전체" 로 바꾼다.
     if (e.target.value === "전체") {
       setState(["전체"]);
+
+      //만약 isInclude가 값이 있다면 (클릭해제를 하려는것과 같은 의미), state에서 클릭한 카테고리만 제외시킴
     } else if (isInclude) {
       setState(state.filter((element) => element !== e.target.value));
-    } else if (state.length > 0) {
+
+      // state에 "전체"가 있다면 "전체"를 state에서 빼내고 나머지 클릭한 값들을 넣어줌
+    } else {
       setState([
         ...state.filter((element) => element !== "전체"),
         e.target.value,
       ]);
+      console.log("여기확인", state);
     }
   };
 
@@ -27,13 +36,13 @@ const CategoryBtn = ({ categoryIndex, state, setState }) => {
     <>
       {categoryIndex.map((element) => (
         <Btn
-          key={element.value}
+          key={element.name}
           type="button"
           onClick={categoryHandler}
           value={element.value}
-          backgroundColor={state.find((el) => el === element.value)}
+          backgroundColor={state.find((el) => el === `${element.value}`)}
         >
-          {element.value}
+          {element.name}
         </Btn>
       ))}
     </>
