@@ -28,7 +28,6 @@ const CategoryBtn = ({ categoryIndex, state, setState }) => {
         ...state.filter((element) => element !== "전체"),
         e.target.value,
       ]);
-      console.log("여기확인", state);
     }
   };
 
