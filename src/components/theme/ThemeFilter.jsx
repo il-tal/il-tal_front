@@ -3,13 +3,18 @@ import styled from "styled-components";
 import Category from "./Category";
 import CategoryBtn from "./CategoryBtn";
 
-const ThemeFilter = () => {
-  const [genre, setGenre] = useState(["전체"]);
-  const [location, setLocation] = useState(["전체"]);
-  const [score, setScore] = useState(["전체"]);
-  const [difficulty, setDifficuldy] = useState(["전체"]);
-  const [people, setPeople] = useState(["전체"]);
-
+const ThemeFilter = ({
+  genre,
+  setGenre,
+  location,
+  setLocation,
+  score,
+  setScore,
+  difficulty,
+  setDifficuldy,
+  people,
+  setPeople,
+}) => {
   return (
     <Container>
       <FilterWrap>
@@ -56,8 +61,8 @@ const ThemeFilter = () => {
 export default ThemeFilter;
 
 const Container = styled.div`
-  height: 100%;
-  width: 100%;
+  height: 400px;
+  width: 300px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -73,12 +78,11 @@ const FilterWrap = styled.div`
 `;
 
 const SearchBtn = styled.button`
-  height: 40px;
-  width: 100px;
-  background-color: white;
+  height: 20px;
+  width: 80px;
+  background-color: grey;
   color: black;
-  border: none;
-  border-radius: 5px;
+  border: 1px solid;
   cursor: pointer;
 
   &:hover {

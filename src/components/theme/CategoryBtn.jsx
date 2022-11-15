@@ -4,12 +4,11 @@ import styled from "styled-components";
 const CategoryBtn = ({ categoryIndex, state, setState }) => {
   useEffect(() => {
     if (state.length === 0) {
-      setState(["전체"]);
+      setState([]);
     }
   }, [state]);
 
   const categoryHandler = (e) => {
-    console.log(isNaN(e.target.value));
     //해당 State에 클릭한 카테고리가 있는지 확인한다. (있다면 클릭한 카테고리를 반환하고, 없다면 undefinded가 됨)
     const isInclude = state.find((element) => element === e.target.value);
     console.log("isInclude", isInclude);
