@@ -10,6 +10,7 @@ import CompanyPage from "../page/CompanyPage";
 
 
 import Test from "../page/Test";
+import Footer from "../components/shared/Footer";
 
 const Router = () => {
   return (
@@ -25,7 +26,7 @@ const Router = () => {
         <Route path="*" element={<ErrorPage />}/>
         <Route path="/test" element={<Test />}/>
       </Routes>
-
+      <Footer />
     </BrowserRouter>
   )
 };
