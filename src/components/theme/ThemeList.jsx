@@ -13,9 +13,9 @@ const ThemeList = () => {
   //카테고리 필터 스테이트
   const [genre, setGenre] = useState(["전체"]);
   const [location, setLocation] = useState(["전체"]);
-  const [score, setScore] = useState(["전체"]);
-  const [difficulty, setDifficuldy] = useState(["전체"]);
-  const [people, setPeople] = useState(["전체"]);
+  const [score, setScore] = useState([1, 5]);
+  const [difficulty, setDifficulty] = useState([1, 5]);
+  const [people, setPeople] = useState([1, 5]);
 
   const {
     data,
@@ -50,7 +50,7 @@ const ThemeList = () => {
           score={score}
           setScore={setScore}
           difficulty={difficulty}
-          setDifficuldy={setDifficuldy}
+          setDifficulty={setDifficulty}
           people={people}
           setPeople={setPeople}
         />
@@ -103,7 +103,7 @@ const Filter = styled.div`
 
 const PosterWrap = styled.div`
   height: 100%;
-  width: 800px;
+  width: 1100px;
   display: flex;
   margin: 0 auto;
   /* justify-content: center; */
