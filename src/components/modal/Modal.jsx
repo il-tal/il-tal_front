@@ -22,14 +22,14 @@ const StModal = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   justify-content: center;
   align-items: center;
   .modalBody {
-    position: absolute;
+    /* position: absolute; */
 
-    background-color: white;
+    background-color: transparent;
 
     box-shadow: 0 10px 3px 0 rgba(34, 36, 38, 0.15);
   }

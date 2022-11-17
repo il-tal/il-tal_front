@@ -16,5 +16,10 @@ export default SelectBox;
 
 const Select = styled.select`
   height: 30px;
-  width: 150px;
+  width: 100px;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 15px;
 `;
