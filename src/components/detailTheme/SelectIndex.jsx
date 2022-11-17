@@ -2,7 +2,7 @@
 
 const SelectIndex = {
   optionStar: [
-    { value: null, name: "별점을 선택하세요" },
+    { value: "", name: "별점" },
     { value: 1, name: "⭐" },
     { value: 2, name: "⭐⭐" },
     { value: 3, name: "⭐⭐⭐" },
@@ -11,20 +11,25 @@ const SelectIndex = {
   ],
 
   optionLevel: [
-    { value: null, name: "난이도를 선택하세요" },
+    { value: "", name: "난이도" },
     { value: 3, name: "상" },
     { value: 2, name: "중" },
     { value: 1, name: "하" },
   ],
 
   optionHint: [
-    { value: null, name: "힌트 사용횟수" },
+    { value: "", name: "힌트" },
+    { value: 0, name: "0회" },
     { value: 1, name: "1회" },
     { value: 2, name: "2회" },
     { value: 3, name: "3회" },
     { value: 4, name: "4회" },
-    { value: 5, name: "5회" },
-    { value: 99, name: "6회 이상" },
+    { value: 5, name: "5회이상" },
+  ],
+  success: [
+    { value: "", name: "성공여부" },
+    { value: true, name: "성공" },
+    { value: false, name: "실패" },
   ],
 };
 
