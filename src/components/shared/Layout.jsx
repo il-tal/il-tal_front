@@ -7,8 +7,11 @@ export default Layout;
 
 const STLayout = styled.div`
   width: 1000px;
-  height: 100vh;
+  height: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
+  margin: 0 auto;
 `;

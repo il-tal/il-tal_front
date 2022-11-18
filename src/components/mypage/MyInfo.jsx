@@ -12,7 +12,7 @@ const MyInfo = () => {
         <UserCharactor>
           <MainTitles>대표 칭호</MainTitles>
           <TitleBadge>전설</TitleBadge>
-          <div>포챠꼬</div>
+          <div>정영훈</div>
           <div>진행도</div>
         </UserCharactor>
         <UserCharactor>
@@ -26,21 +26,9 @@ const MyInfo = () => {
         칭호
         <TitleDisplay>
           <MyTitles />
-          <MyTitles />
-          <MyTitles />
-          <MyTitles />
-          <MyTitles />
-          <MyTitles />
-          <MyTitles />
-          <MyTitles />
-          <MyTitles />
-          <MyTitles />
-          <MyTitles />
         </TitleDisplay>
         내 리뷰
         <ReviewDisplay>
-          <MyReviews />
-          <MyReviews />
           <MyReviews />
         </ReviewDisplay>
         내 테마
