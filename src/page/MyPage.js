@@ -1,6 +1,11 @@
 import MyInfo from "../components/mypage/MyInfo";
+import Layout from "../components/shared/Layout";
 
 const MyPage = () => {
-    return <MyInfo />;
-}
-  export default MyPage;
+  return (
+    <Layout>
+      <MyInfo />
+    </Layout>
+  );
+};
+export default MyPage;

@@ -1,4 +1,4 @@
-import Layout from "../layout/Layout";
+import Layout from "../components/shared/Layout";
 import DetailTheme from "../components/detailTheme/DetailTheme";
 const DetailThemePage = () => {
   return (
