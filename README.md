@@ -13,7 +13,7 @@
 7. [📝-라이센스](#📝-라이센스)
 8. [🙏-도움을 준 사이트](#🙏-도움주신분들)
 
-### 🚪 프로젝트 소개
+## 🚪 프로젝트 소개
 
 [:globe_with_meridians:]()
 
@@ -26,7 +26,7 @@
 
 <p align="right">(<a href="#Top">맨 위로</a>)</p>
 
-### ✨ 주요 기능
+## ✨ 주요 기능
 
 -
 -
@@ -34,7 +34,7 @@
 
 <p align="right">(<a href="#Top">맨 위로</a>)</p>
 
-### 📁 디렉토리
+## 📁 디렉토리
 
 <details>
   <summary>자세히</summary>
@@ -47,7 +47,7 @@
 
 <p align="right">(<a href="#Top">맨 위로</a>)</p>
 
-### 💻 라이브러리
+## 💻 라이브러리
 
 <img src="https://img.shields.io/badge/React-18.2.0-61DAFB?style=for-the-badge&logo=React&logoColor=white">
 <img src="https://img.shields.io/badge/styled_components-4.4.2-DB7093?style=for-the-badge&logo=styled-components&logoColor=white"> 
@@ -66,13 +66,13 @@
 
 <p align="right">(<a href="#Top">맨 위로</a>)</p>
 
-### 🔫 트러블 슈팅
+## 🔫 트러블 슈팅
 
 트러블을 쏴서 없애
 
 <p align="right">(<a href="#Top">맨 위로</a>)</p>
 
-### 🧑‍🤝‍🧑 팀원 소개 (프론트엔드)
+## 🧑‍🤝‍🧑 팀원 소개 (프론트엔드)
 
 | 이름         | 깃주소                                  | 담당  |
 | ------------ | --------------------------------------- | ----- |
@@ -83,13 +83,13 @@
 
 <p align="right">(<a href="#Top">맨 위로</a>)</p>
 
-### 📝 라이센스
+## 📝 라이센스
 
 우리 라이센스 있음
 
 <p align="right">(<a href="#Top">맨 위로</a>)</p>
 
-### 🙏 도움주신분들
+## 🙏 도움주신분들
 
 구글 선생님에게 도움을 받았겠지만 특별히 이분에겐 감사합니다 하는 사이트.
 
