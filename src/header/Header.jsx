@@ -14,6 +14,7 @@ const Header = () => {
   }
   return (
     <Container>
+
       <LoginBtn onClick={() => setIsLogin(false)}>로그인</LoginBtn>
       <LogoutBtn
         onClick={() => {
@@ -30,15 +31,29 @@ const Header = () => {
           <LoginRegisterForm setIsLogin={setIsLogin}/>
         </Modal>
       )}
+
     </Container>
   );
 };
 export default Header;
 
 const Container = styled.div`
-  height: 100%;
-  width: 100%;
+  height: 50px;
+  width: 100vw;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid gray;
+  position: sticky;
+  top: 0;
+  background-color: white;
+`;
+const HeaderWrap = styled.div`
+  height: 100%;
+  width: 1000px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const LoginBtn = styled.button`

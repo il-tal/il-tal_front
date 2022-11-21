@@ -1,7 +1,11 @@
-import ThemeList from "../components/theme/ThemeList"
+import ThemeList from "../components/theme/ThemeList";
+import Layout from "../layout/Layout";
 
 const ThemePage = () => {
-    return <ThemeList />;
-    
-  }
-  export default ThemePage ;
+  return (
+    <Layout>
+      <ThemeList />
+    </Layout>
+  );
+};
+export default ThemePage;
