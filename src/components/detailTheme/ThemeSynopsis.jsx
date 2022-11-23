@@ -7,7 +7,6 @@ const ThemeSynopsis = ({ synopsis }) => {
 
   return (
     <Container>
-      {/* <DivisionLine /> */}
       <SynopText>
         <div className={ellipsis ? "small" : "big"}>
           {synopsis.split("\n").map((data) => {

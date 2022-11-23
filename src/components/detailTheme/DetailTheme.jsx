@@ -11,7 +11,7 @@ const DetailTheme = () => {
   //상세페이지 조회용 id
   const param = useParams();
 
-  //
+  //카카오맵 모달창
   const [isMap, setIsMap] = useState(true);
 
   //테마 상세정보 조회 GET 요청 useQuery

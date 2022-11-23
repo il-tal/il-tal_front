@@ -4,20 +4,22 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Category from "./Category";
 import CategoryBtn from "./CategoryBtn";
+import { useRecoilState } from "recoil";
+import {
+  difficultyState,
+  genreState,
+  locationState,
+  peopleState,
+  scoreState,
+} from "../../api/store";
+const ThemeFilter = ({ refetch }) => {
+  //전역변수로 선언된 각 필터별 스테이트 (Recoil)
+  const [genre, setGenre] = useRecoilState(genreState);
+  const [location, setLocation] = useRecoilState(locationState);
+  const [people, setPeople] = useRecoilState(peopleState);
+  const [score, setScore] = useRecoilState(scoreState);
+  const [difficulty, setDifficulty] = useRecoilState(difficultyState);
 
-const ThemeFilter = ({
-  genre,
-  setGenre,
-  location,
-  setLocation,
-  score,
-  setScore,
-  difficulty,
-  setDifficulty,
-  people,
-  setPeople,
-  refetch,
-}) => {
   //난이도 선택 슬라이더바 목록
   const levelFilter = {
     1: "매우쉬움",
@@ -117,11 +119,6 @@ const ThemeFilter = ({
         />
         <p>평점</p>
 
-        {/* <CategoryBtn
-          categoryIndex={Category.ScoreCategory}
-          state={score}
-          setState={setScore}
-        /> */}
         <SliderWrap>
           <Slider
             range
@@ -133,16 +130,13 @@ const ThemeFilter = ({
             allowCross={false}
             pushable
             draggableTrack
+            value={score}
             onChange={(e) => setScore(e)}
           />
         </SliderWrap>
 
         <p>난이도</p>
-        {/* <CategoryBtn
-          categoryIndex={Category.DifficultyCategory}
-          state={difficulty}
-          setState={setDifficuldy}
-        /> */}
+
         <SliderWrap>
           <Slider
             range
@@ -151,6 +145,7 @@ const ThemeFilter = ({
             marks={levelFilter}
             step={null}
             defaultValue={[1, 5]}
+            value={difficulty}
             allowCross={false}
             pushable
             draggableTrack

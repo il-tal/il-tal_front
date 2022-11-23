@@ -1,10 +1,9 @@
-import { useState } from "react";
 import styled from "styled-components";
 
 //SelectBox 컴포넌트
 const SelectBox = ({ props, onChangeHandler, name, value }) => {
   //defaultValue에 들어있는 value는 댓글 수정시 원래 쓰여있던 정보가 들어감
-  console.log("셀렉박스", value);
+
   return (
     <Select name={name} onChange={onChangeHandler} value={value}>
       {props.map((option) => (

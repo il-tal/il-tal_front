@@ -13,9 +13,7 @@ const ThemeReview = () => {
   const [isEdit, setIsEdit] = useState(true);
 
   //코멘트 조회 useQuery
-  const { data, isLoading, isError, error } = useQuery(["getComments"], () =>
-    getComment(id)
-  );
+  const { data, isLoading } = useQuery(["getComments"], () => getComment(id));
 
   //코멘트 로딩 처리
   if (isLoading) {
@@ -33,8 +31,6 @@ const ThemeReview = () => {
         <CommentForm isEdit={isEdit} setIsEdit={setIsEdit} />
       </div>
 
-      {/* {isEdit ? null : <CommentForm isEdit={isEdit} setIsEdit={setIsEdit} />} */}
-
       <ReviewWrap>
         {data.data.map((comment) => {
           return (
@@ -51,10 +47,6 @@ const ThemeReview = () => {
             />
           );
         })}
-        {/* <Comment />
-        <Comment />
-        <Comment /> */}
-        {/* 여기에 comment맵 돌리기 */}
       </ReviewWrap>
     </Container>
   );

@@ -15,12 +15,12 @@ const GlobalStyle = createGlobalStyle`
 
 root.render(
   <React.StrictMode>
-    <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
+    <QueryClientProvider client={queryClient}>
+      <RecoilRoot>
         <GlobalStyle />
         <App />
         <ReactQueryDevtools />
-      </QueryClientProvider>
-    </RecoilRoot>
+      </RecoilRoot>
+    </QueryClientProvider>
   </React.StrictMode>
 );

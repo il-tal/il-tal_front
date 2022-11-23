@@ -2,29 +2,28 @@ import styled from "styled-components";
 import ThemePoster from "./ThemePoster";
 import ThemeFilter from "./ThemeFilter";
 import { useState } from "react";
-import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
-import { getFilterTheme, getThemes } from "../../api/ThemeApi";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { getFilterTheme } from "../../api/ThemeApi";
 import InfiniteScroll from "react-infinite-scroller";
-import { useNavigate } from "react-router-dom";
-import { atom, useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
+import {
+  difficultyState,
+  genreState,
+  locationState,
+  peopleState,
+  scoreState,
+} from "../../api/store";
 
 const ThemeList = () => {
-  const navigate = useNavigate();
   //필터 토글
   const [isFilter, setIsFilter] = useState(false);
 
-  // const genreState = atom({
-  //   key: "genreState1",
-  //   default: [],
-  // });
-  // const [genreInput, setGenreInput] = useRecoilState(genreState);
-
-  //카테고리 필터 스테이트들
-  const [genre, setGenre] = useState([]);
-  const [location, setLocation] = useState([]);
-  const [score, setScore] = useState([0, 5]);
-  const [difficulty, setDifficulty] = useState([1, 5]);
-  const [people, setPeople] = useState([]);
+  //전역변수로 선언된 각 필터 스테이트를 값만 불러서 사용 (useRecoilValue사용)
+  const genre = useRecoilValue(genreState);
+  const location = useRecoilValue(locationState);
+  const people = useRecoilValue(peopleState);
+  const score = useRecoilValue(scoreState);
+  const difficulty = useRecoilValue(difficultyState);
 
   //필터링 된 장르들 무한쿼리
   const {
@@ -70,21 +69,7 @@ const ThemeList = () => {
       <Filter onClick={() => setIsFilter(!isFilter)}>
         {isFilter ? "필터 닫기" : "필터 열기"}
       </Filter>
-      {isFilter ? (
-        <ThemeFilter
-          genre={genre}
-          setGenre={setGenre}
-          location={location}
-          setLocation={setLocation}
-          score={score}
-          setScore={setScore}
-          difficulty={difficulty}
-          setDifficulty={setDifficulty}
-          people={people}
-          setPeople={setPeople}
-          refetch={refetch}
-        />
-      ) : null}
+      {isFilter ? <ThemeFilter refetch={refetch} /> : null}
 
       <PosterWrap>
         {isFetching && <div>Loading...</div>}
@@ -103,15 +88,6 @@ const ThemeList = () => {
             });
           })}
         </InfiniteScroll>
-
-        {/* <ThemePoster />
-        <ThemePoster />
-        <ThemePoster />
-        <ThemePoster />
-        <ThemePoster />
-        <ThemePoster />
-        <ThemePoster />
-        <ThemePoster /> */}
       </PosterWrap>
     </Container>
   );
