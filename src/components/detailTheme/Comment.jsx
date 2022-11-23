@@ -1,21 +1,180 @@
 import styled from "styled-components";
+import {
+  AiOutlineEdit,
+  AiOutlineSave,
+  AiOutlineDelete,
+  AiOutlineClose,
+} from "react-icons/ai";
+import { useState } from "react";
+import SelectBox from "./SelectBox";
+import SelectIndex from "./SelectIndex";
+import { useMutation } from "@tanstack/react-query";
+import { delComment, putComment } from "../../api/ThemeApi";
+import { useQueryClient } from "@tanstack/react-query";
 
-const Comment = () => {
+const Comment = ({
+  id,
+  nickname,
+  playDate,
+  score,
+  success,
+  difficulty,
+  hint,
+  comment,
+}) => {
+  //수정시 초기값을 원래 댓글에 입력했던 값으로 설정
+  const editInitial = {
+    comment: comment,
+    difficulty: difficulty,
+    hint: hint,
+    success: success,
+    playDate: playDate,
+    score: score,
+  };
+
+  //유즈쿼리의 키값을 확인해서 refetch해주는 함수
+  const queryClient = useQueryClient();
+
+  //수정모드 토글 스테이트
+  const [isEdit, setIsEdit] = useState(false);
+
+  //본인 글 인지 판별하기 위한 유저정보
+  const userinfo = JSON.parse(sessionStorage.getItem("userinfo"));
+
+  //수정시 사용할 데이터 스테이트
+  const [editValue, setEditValue] = useState(editInitial);
+
+  //글 수정 이벤트 값 스테이트에 저장
+  const onChangeEdit = (e) => {
+    const { name, value } = e.target;
+    setEditValue({ ...editValue, [name]: value });
+    console.log("수정글", editValue);
+  };
+
+  //댓글 수정 mutation
+  const editComment = useMutation(
+    ({ id: id, data: editValue }) => putComment({ id: id, data: editValue }),
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(["getComments"]);
+        setIsEdit(false);
+      },
+    }
+  );
+
+  //댓글 삭제 mutation
+  const deleteComment = useMutation((id) => delComment(id), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["getComments"]);
+    },
+  });
+
+  //save버튼 누를 시 서버에 PUT 요청 보내기 및 데이터 유무 확인처리
+  const onSubmitHandler = () => {
+    if (editValue.score === "") {
+      alert("별점을 입력해주세요!");
+    } else if (editValue.success === "") {
+      alert("성공/실패 여부를 체크해주세요!");
+    } else if (editValue.difficulty === "") {
+      alert("난이도는 어떠셨나요?");
+    } else if (editValue.hint === "") {
+      alert("힌트는 몇개 사용하셨나요?");
+    } else if (editValue.playDate === "") {
+      alert("언제 탈출에 도전했는지 알려주실래요?");
+    } else if (editValue.comment === "") {
+      alert("해당 테마가 어땠는지 후기로 공유해볼까요?");
+    } else {
+      editComment.mutate({ id: id, data: editValue });
+    }
+  };
   return (
     <Container>
+      {userinfo.nickname === nickname ? (
+        <>
+          <div className="del" onClick={() => deleteComment.mutate(id)}>
+            <AiOutlineDelete />
+          </div>
+          <div className="edit" onClick={() => setIsEdit(!isEdit)}>
+            {isEdit ? <AiOutlineClose /> : <AiOutlineEdit />}
+          </div>
+          {isEdit ? (
+            <div className="save" onClick={onSubmitHandler}>
+              <AiOutlineSave />
+            </div>
+          ) : null}
+        </>
+      ) : null}
       <Header>
-        <div className="nick">닉네임</div>
-        <div className="date">플레이날짜 2022-12-23</div>
+        <div className="nick">{nickname}</div>
+        <div className="date">
+          플레이날짜
+          {isEdit ? (
+            <input
+              type="date"
+              name="playDate"
+              onChange={onChangeEdit}
+              defaultValue={playDate}
+            />
+          ) : (
+            playDate
+          )}
+        </div>
       </Header>
-      <Middle>
-        <div className="clear">성공/실패</div>
-        <div className="difficulty">난이도</div>
-        <div className="hint">힌트사용횟수</div>
-        <div className="score">⭐⭐⭐⭐</div>
-      </Middle>
-      <Body>
-        <span>직원이 너무 불친절해요.. 여기 다신 안갈래요.. 진짜에요..</span>
-      </Body>
+      {isEdit ? (
+        <div className="edit-select">
+          <SelectBox
+            name="success"
+            props={SelectIndex.success}
+            value={editValue.success}
+            onChangeHandler={onChangeEdit}
+          />
+          <SelectBox
+            name="difficulty"
+            props={SelectIndex.optionLevel}
+            value={editValue.difficulty}
+            onChangeHandler={onChangeEdit}
+          />
+          <SelectBox
+            name="hint"
+            props={SelectIndex.optionHint}
+            value={editValue.hint}
+            onChangeHandler={onChangeEdit}
+          />
+          <SelectBox
+            name="score"
+            props={SelectIndex.optionStar}
+            value={editValue.score}
+            onChangeHandler={onChangeEdit}
+          />
+        </div>
+      ) : (
+        <Middle>
+          <div className="clear">{success ? "성공" : "실패"}</div>
+          <div className="difficulty">
+            {difficulty === 3
+              ? "어려웠어요"
+              : difficulty === 2
+              ? "보통이에요"
+              : "쉬웠어요"}
+          </div>
+          <div className="hint">{`힌트 ${hint}회`}</div>
+          <div className="score">{"⭐".repeat(score)}</div>
+        </Middle>
+      )}
+      {isEdit ? (
+        <div className="edit-text-wrap">
+          <textarea
+            className="edit-text"
+            name="comment"
+            defaultValue={comment}
+            onChange={onChangeEdit}
+          />
+        </div>
+      ) : (
+        <Body>
+          <span>{comment}</span>
+        </Body>
+      )}
     </Container>
   );
 };
@@ -31,6 +190,70 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
+  .del {
+    position: absolute;
+
+    width: 30px;
+    height: 30px;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3px;
+    font-size: 25px;
+  }
+  .edit {
+    position: absolute;
+
+    width: 30px;
+    height: 30px;
+    right: 40px;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3px;
+    font-size: 25px;
+  }
+  .save {
+    position: absolute;
+
+    width: 30px;
+    height: 30px;
+    right: 80px;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3px;
+    font-size: 25px;
+  }
+  .edit-text-wrap {
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    .edit-text {
+      display: flex;
+      width: 850px;
+      height: 65px;
+      margin: 10px;
+      padding: 10px;
+      box-sizing: border-box;
+      resize: none;
+
+      :focus {
+        outline: 1px solid grey;
+      }
+    }
+  }
+
+  .edit-select {
+    position: absolute;
+    top: 8px;
+    display: flex;
+  }
 `;
 
 const Header = styled.div`

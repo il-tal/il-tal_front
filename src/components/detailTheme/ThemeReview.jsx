@@ -2,8 +2,25 @@ import styled from "styled-components";
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
 import { useState } from "react";
+import { getComment } from "../../api/ThemeApi";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
 const ThemeReview = () => {
+  //코멘트 조회용 테마 id
+  const { id } = useParams();
+
+  //리뷰 작성하기 토글
   const [isEdit, setIsEdit] = useState(true);
+
+  //코멘트 조회 useQuery
+  const { data, isLoading, isError, error } = useQuery(["getComments"], () =>
+    getComment(id)
+  );
+
+  //코멘트 로딩 처리
+  if (isLoading) {
+    return <div>댓글을 불러오는 중입니다...!</div>;
+  }
   return (
     <Container>
       <ReviewHeader>
@@ -19,9 +36,24 @@ const ThemeReview = () => {
       {/* {isEdit ? null : <CommentForm isEdit={isEdit} setIsEdit={setIsEdit} />} */}
 
       <ReviewWrap>
+        {data.data.map((comment) => {
+          return (
+            <Comment
+              key={comment.id}
+              id={comment.id}
+              nickname={comment.nickname}
+              playDate={comment.playDate}
+              score={comment.score}
+              success={comment.success}
+              difficulty={comment.difficulty}
+              hint={comment.hint}
+              comment={comment.comment}
+            />
+          );
+        })}
+        {/* <Comment />
         <Comment />
-        <Comment />
-        <Comment />
+        <Comment /> */}
         {/* 여기에 comment맵 돌리기 */}
       </ReviewWrap>
     </Container>

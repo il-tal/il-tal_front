@@ -11,17 +11,16 @@ const Header = () => {
 
   return (
     <Container>
-
       <LoginBtn onClick={() => setIsLogin(false)}>로그인</LoginBtn>
       <div onClick={() => navigater("/")}>집으로</div>
       <div> / </div>
       <div onClick={() => navigater("/test")}>실험실로</div>
+      <div onClick={() => navigater(-1)}>뒤로가기</div>
       {isLogin ? null : (
         <Modal closeModal={() => setIsLogin(true)}>
           <RegisterForm />
         </Modal>
       )}
-
     </Container>
   );
 };

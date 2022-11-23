@@ -1,18 +1,23 @@
 import { useState } from "react";
 import styled from "styled-components";
 
-const ThemeSynopsys = () => {
+const ThemeSynopsis = ({ synopsis }) => {
+  //더보기 토글
   const [ellipsis, setEllipsis] = useState(true);
+
   return (
     <Container>
       {/* <DivisionLine /> */}
       <SynopText>
         <div className={ellipsis ? "small" : "big"}>
-          어? 또 피터 대리님이네... <br />
-          집가고 싶은 표정이네요? <br />
-          그나저나 그 팀 부장님은 왜 자꾸 대리님만 외근 보내는 거래요? <br />
-          서러워서 살겠나... 그래도 대리님 지난번에 승진 시험 잘 쳤다면서요?
-          <br /> 곧 볕들날이 있겠죠~
+          {synopsis.split("\n").map((data) => {
+            return (
+              <span>
+                {data}
+                <br />
+              </span>
+            );
+          })}
         </div>
         <span onClick={() => setEllipsis(!ellipsis)}>
           {ellipsis ? ">더보기" : "접기"}
@@ -22,7 +27,7 @@ const ThemeSynopsys = () => {
   );
 };
 
-export default ThemeSynopsys;
+export default ThemeSynopsis;
 
 const Container = styled.div`
   width: 100%;
@@ -51,6 +56,7 @@ const SynopText = styled.div`
     -webkit-line-clamp: 2; */
     overflow: hidden;
     transition: max-height 500ms ease-in-out;
+    flex-direction: column;
   }
   .big {
     display: flex;
@@ -62,6 +68,7 @@ const SynopText = styled.div`
     line-height: 19px;
     overflow: hidden;
     transition: max-height 500ms ease-in-out;
+    flex-direction: column;
   }
   span {
     font-size: 14px;

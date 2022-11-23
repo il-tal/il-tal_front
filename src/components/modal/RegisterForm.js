@@ -30,7 +30,9 @@ const RegisterForm = () => {
     onSuccess: (res) => {
       sessionStorage.setItem("access_token", res.headers.access_token);
       sessionStorage.setItem("refresh_token", res.headers.access_token);
-      navigate("/main");
+      sessionStorage.setItem("userinfo", JSON.stringify(res.data.data));
+      console.log(res);
+      // navigate("/main");
     },
     onError: (err) => {
       alert("로그인에 실패했습니다.");
@@ -127,9 +129,7 @@ const RegisterForm = () => {
                   })}
                   placeholder="비밀번호"
                 />
-                {errors.password1 && (
-                  <p>{errors.password1.message}</p>
-                )}
+                {errors.password1 && <p>{errors.password1.message}</p>}
                 <InputPW
                   type="password"
                   {...register("password2", {
