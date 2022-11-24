@@ -81,6 +81,7 @@ const Container = styled.div`
     cursor: pointer;
   }
 `;
+
 const HeaderWrap = styled.div`
   height: 100%;
   width: 1000px;

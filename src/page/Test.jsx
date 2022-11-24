@@ -38,14 +38,3 @@ const FlightDeck = styled.button`
   padding: 50px;
   outline: 3px solid;
 `;
-
-/**
-<Route path="/" element={<MainPage />}/>
-<Route path="/theme" element={<ThemePage />}/>
-<Route path="/theme/:id" element={<DetailTheme />}/>
-<Route path="/company" element={<CompanyPage />}/>
-<Route path="/company/:id" element={<DetailCompanyPage />}/>
-<Route path="/myaccount" element={<MyPage />} />
-<Route path="*" element={<ErrorPage />}/>
- * 
- */
