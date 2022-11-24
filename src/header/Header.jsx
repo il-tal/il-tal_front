@@ -11,23 +11,32 @@ const Header = () => {
 
   return (
     <Container>
-      <LoginBtn onClick={() => setIsLogin(false)}>로그인</LoginBtn>
-      <div onClick={() => navigater("/")}>집으로</div>
-      <div> / </div>
-      <div onClick={() => navigater("/test")}>실험실로</div>
-      <div onClick={() => navigater(-1)}>뒤로가기</div>
-      {isLogin ? null : (
-        <Modal closeModal={() => setIsLogin(true)}>
-          <RegisterForm />
-        </Modal>
-      )}
+      <div className="layout">
+        <div className="left-wrap">
+          <div className="logo" onClick={() => navigater("/")}>
+            일탈
+          </div>
+          <div className="noneline" onClick={() => navigater("/company")}>
+            업체별
+          </div>
+          <div className="noneline" onClick={() => navigater("/theme")}>
+            테마별
+          </div>
+        </div>
+        <LoginBtn onClick={() => setIsLogin(false)}>로그인</LoginBtn>
+        {isLogin ? null : (
+          <Modal closeModal={() => setIsLogin(true)}>
+            <RegisterForm />
+          </Modal>
+        )}
+      </div>
     </Container>
   );
 };
 export default Header;
 
 const Container = styled.div`
-  height: 50px;
+  height: 97px;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -37,6 +46,40 @@ const Container = styled.div`
   top: 0;
   background-color: white;
   z-index: 10;
+  .layout {
+    width: 1440px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .left-wrap {
+    display: flex;
+  }
+  .logo {
+    width: 220px;
+    font-size: 36px;
+    color: rgba(255, 183, 67, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .isline {
+    width: 98px;
+    font-size: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  .noneline {
+    width: 98px;
+    font-size: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
 `;
 const HeaderWrap = styled.div`
   height: 100%;
@@ -47,7 +90,9 @@ const HeaderWrap = styled.div`
 `;
 
 const LoginBtn = styled.button`
-  height: 30px;
-  width: 70px;
-  border: 1px solid black;
+  width: 99px;
+  border: none;
+  font-size: 21px;
+  background-color: transparent;
+  cursor: pointer;
 `;

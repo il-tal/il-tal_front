@@ -136,7 +136,7 @@ const DateInput = styled.input`
 `;
 const TextInput = styled.textarea`
   height: 150px;
-  width: 1058px;
+  width: 1370px;
   margin: 10px 0;
   border: 1px solid grey;
   resize: none;

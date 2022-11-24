@@ -6,7 +6,7 @@ function Layout({ children }) {
 export default Layout;
 
 const STLayout = styled.div`
-  width: 1116px;
+  width: 1440px;
   height: 100%;
   min-height: 100vh;
   display: flex;
