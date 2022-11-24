@@ -30,7 +30,7 @@ const Header = () => {
         <LoginBtn onClick={() => setIsLogin(false)}>로그인</LoginBtn>
         {isLogin ? null : (
           <Modal closeModal={() => setIsLogin(true)}>
-            <RegisterForm />
+            <LoginRegisterForm setIsLogin={setIsLogin} />
           </Modal>
         )}
       </div>
