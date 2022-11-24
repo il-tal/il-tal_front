@@ -11,7 +11,6 @@ const Header = () => {
 
   return (
     <Container>
-
       <LoginBtn onClick={() => setIsLogin(false)}>로그인</LoginBtn>
       <div onClick={() => navigater("/")}>집으로</div>
       <div> / </div>
@@ -21,13 +20,13 @@ const Header = () => {
           <RegisterForm />
         </Modal>
       )}
-
     </Container>
   );
 };
 export default Header;
 
 const Container = styled.div`
+  z-index: 10;
   height: 50px;
   width: 100vw;
   display: flex;
@@ -38,6 +37,7 @@ const Container = styled.div`
   top: 0;
   background-color: white;
 `;
+
 const HeaderWrap = styled.div`
   height: 100%;
   width: 1000px;

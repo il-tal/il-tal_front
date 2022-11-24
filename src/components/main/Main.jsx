@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { SwiperSlide } from "swiper/react";
 import { getAchieve, getBest, getRandom } from "../../api/mainApi";
 import { Carousel } from "../../utils/carousel";
+import { Button } from "../shared/Button";
 import BestUser from "./BestUser";
 import PopSkel from "./PopSkel";
 import PopularTheme from "./PopularTheme";
@@ -15,35 +16,64 @@ const Main = () => {
   const random = useQuery(["getRandom"], getRandom, {
     staleTime: Infinity,
   });
-  console.log(achieve);
   const totalAchievement = 20;
   const completed = [20, 18, 16, 12, 10];
   return (
     <Container>
-      {achieve.isLoading ? (
-        <UserBox>
-          <UserIntro bold={"bold"}>Guest님</UserIntro>
-          <br /> <div>탈출할준비되셨나요</div>
-          <UserInfo>
-            <UserSummary
-              mainBadgeImg=""
-              bgcolor={"#123123"}
-              completed={0}
-              goal={totalAchievement}
-            />
-          </UserInfo>
-        </UserBox>
+      {sessionStorage.access_token ? (
+        achieve.isLoading ? (
+          <UserBox>
+            <UserIntro bold={"bold"}>Guest님</UserIntro>
+            <br /> <div>탈출할준비되셨나요</div>
+            <UserInfo>
+              <UserSummary
+                mainBadgeImg=""
+                bgcolor={"#123123"}
+                completed={0}
+                goal={totalAchievement}
+              />
+            </UserInfo>
+          </UserBox>
+        ) : (
+          <UserBox>
+            <UserIntro bold={"bold"}>{achieve.data.nickname}님</UserIntro>
+            <br /> <div>탈출할준비되셨나요</div>
+            <UserInfo>
+              <UserSummary
+                mainBadgeName={achieve.data.mainBadgeName}
+                RecentTitle={achieve.data.badgeImgUrl[1]}
+                RecentTitle_2={achieve.data.badgeImgUrl[2]}
+                RecentTitle_3={achieve.data.badgeImgUrl[3]}
+                mainBadgeImg={achieve.data.mainBadgeImg}
+                bgcolor={"#123123"}
+                completed={12}
+                goal={totalAchievement}
+              />
+            </UserInfo>
+          </UserBox>
+        )
       ) : (
         <UserBox>
-          <UserIntro bold={"bold"}>{achieve.data.nickname}님</UserIntro>
-          <br /> <div>탈출할준비되셨나요</div>
+          <UserIntro bold={"bold"}>일상의 방탈출</UserIntro>
+          <br /> <div>지금 시작해보세요</div>
           <UserInfo>
-            <UserSummary
-              mainBadgeName={achieve.data.mainBadgeName}
-              mainBadgeImg={achieve.data.mainBadgeImg}
-              bgcolor={"#123123"}
-              completed={12}
-              goal={totalAchievement}
+            <UserSummary blur={1} />
+            <Button
+              label={"로그인"}
+              position={"absolute"}
+              width={`240px`}
+              height={`50px`}
+              left={`30%`}
+            />
+            <Button
+              onClick={() => {
+                console.log("hello");
+              }}
+              label={"회원가입"}
+              position={"absolute"}
+              width={`240px`}
+              height={`50px`}
+              right={`30%`}
             />
           </UserInfo>
         </UserBox>
@@ -82,17 +112,20 @@ const Main = () => {
       <RecommandThemeWrap>
         {random.isLoading ? (
           <>
-            <PopSkel width={22.5} height={15} />
-            <PopSkel width={22.5} height={15} />
-            <PopSkel width={22.5} height={15} />
-            <PopSkel width={22.5} height={15} />
-            <PopSkel width={22.5} height={15} />
+            <SwiperSlide>
+              <RecommandTheme
+                companyName={""}
+                themeName={""}
+                themeImgUrl={""}
+              />
+            </SwiperSlide>
           </>
         ) : (
           <Carousel>
             {random.data.map((data, index) => (
               <SwiperSlide>
                 <RecommandTheme
+                  key={index}
                   companyName={data.companyName}
                   themeName={data.themeName}
                   themeImgUrl={data.themeImgUrl}
@@ -189,6 +222,8 @@ const UserInfo = styled.div`
   width: 70rem;
   margin: 5rem auto;
   display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #d5e5f4;
 `;
 

@@ -3,9 +3,9 @@ import ProgressBar from "../../utils/progressBar";
 
 const UserSummary = (props) => {
   return (
-    <UserSummaryBox>
+    <UserSummaryBox blur={props.blur}>
       <RowGrid>
-        대표 칭호
+        <p>대표 칭호</p>
         <RepTitle mainBadgeImg={props.mainBadgeImg}></RepTitle>
       </RowGrid>
       <RowGrid>
@@ -18,9 +18,9 @@ const UserSummary = (props) => {
           />
         </ProgressGrid>
       </RowGrid>
-      <RecentTitle>Hello</RecentTitle>
-      <RecentTitle>Hello</RecentTitle>
-      <RecentTitle>Hello</RecentTitle>
+      <RecentTitle recentTitle={props.RecentTitle} />
+      <RecentTitle recentTitle={props.RecentTitle_2} />
+      <RecentTitle recentTitle={props.RecentTitle_3} />
     </UserSummaryBox>
   );
 };
@@ -33,6 +33,7 @@ const UserSummaryBox = styled.div`
   grid-template-columns: 1fr 3fr 1fr 1fr 1fr;
   justify-content: center;
   align-items: center;
+  filter: blur(${(props) => props.blur}rem);
 `;
 
 const RowGrid = styled.div`
@@ -63,6 +64,10 @@ const RepTitleName = styled.div`
 `;
 
 const RecentTitle = styled.div`
+  background-image: url(${(props) => props.recentTitle});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   width: 6.25rem;
   height: 6.25rem;
   border-radius: 5rem;

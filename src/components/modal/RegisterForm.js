@@ -29,8 +29,8 @@ const RegisterForm = () => {
   const { mutate: toLogIn } = useMutation(loginForm, {
     onSuccess: (res) => {
       sessionStorage.setItem("access_token", res.headers.access_token);
-      sessionStorage.setItem("refresh_token", res.headers.access_token);
-      navigate("/main");
+      sessionStorage.setItem("refresh_token", res.headers.refresh_token);
+      navigate("/");
     },
     onError: (err) => {
       alert("로그인에 실패했습니다.");

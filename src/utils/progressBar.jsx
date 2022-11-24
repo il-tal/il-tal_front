@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 /**
  *  @param { Colors } bgcolor 색깔
- *  @param { Integer } completed 목표치
- *
+ *  @param { Integer } completed 달성치
+ *  @param { Integer } goal 목표치
  */
 const ProgressBar = (props) => {
   const { bgcolor, completed, goal } = props;
