@@ -160,13 +160,15 @@ const ThemeFilter = ({ refetch }) => {
 export default ThemeFilter;
 
 const Container = styled.div`
-  height: 100%;
+  height: 400px;
   width: 300px;
   display: flex;
   justify-content: center;
   flex-direction: column;
-  /* align-items: center; */
-  background-color: #f0dbdb;
+  align-items: flex-end;
+  position: absolute;
+
+  top: 40px;
 `;
 
 const FilterWrap = styled.div`
@@ -174,6 +176,7 @@ const FilterWrap = styled.div`
   width: 100%;
   /* cursor: pointer; */
   border: 1px solid red;
+  background-color: white;
   .not {
     border: 1px solid #e5e5e5;
     border-radius: 4px;

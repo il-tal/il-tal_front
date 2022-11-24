@@ -19,6 +19,20 @@ const DetailTheme = () => {
     getDetailTheme(param.id)
   );
 
+  const difficult = () => {
+    if (data.data.difficulty > 4) {
+      return "매우어려움";
+    } else if (data.data.difficulty > 3) {
+      return "어려움";
+    } else if (data.data.difficulty > 2) {
+      return "보통";
+    } else if (data.data.difficulty > 1) {
+      return "쉬움";
+    } else if (data.data.difficulty > 0) {
+      return "매우쉬움";
+    }
+  };
+
   //로딩처리
   if (isLoading) {
     return <div>로딩중..</div>;
@@ -45,7 +59,7 @@ const DetailTheme = () => {
             </TextGenre>
             <TextDifficulty>
               <div className="type">난이도</div>
-              <div className="content">{"⭐".repeat(data.data.difficulty)}</div>
+              <div className="content">{difficult(data.data.difficulty)}</div>
             </TextDifficulty>
             <TextPeople>
               <div className="type">인원</div>
@@ -74,7 +88,7 @@ const DetailTheme = () => {
         </ThemeTextWrap>
       </ThemeInfoWrap>
       <ThemeSynopsis synopsis={data.data.synopsis} />
-      <ThemeReview />
+      <ThemeReview props={data.data} />
       {isMap ? null : (
         <Modal closeModal={() => setIsMap(true)}>
           <KakaoMap setClose={setIsMap} />
@@ -88,6 +102,7 @@ export default DetailTheme;
 const Container = styled.div`
   height: 100%;
   width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;

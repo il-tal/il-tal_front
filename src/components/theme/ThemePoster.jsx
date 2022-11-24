@@ -23,7 +23,7 @@ const ThemePoster = ({ theme }) => {
           {theme.themeName}
         </ThemeTextTitle>
         <ThemeTextScore>
-          ⭐ {theme.themeScore} ({theme.totalLikeCnt})
+          ⭐ {theme.themeScore} ({theme.reviewCnt})
         </ThemeTextScore>
         <ThemeTextLike>
           <div onClick={() => themeLike.mutate({ themeId: theme.id })}>

@@ -28,7 +28,7 @@ export default Header;
 
 const Container = styled.div`
   height: 50px;
-  width: 100vw;
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -36,6 +36,7 @@ const Container = styled.div`
   position: sticky;
   top: 0;
   background-color: white;
+  z-index: 10;
 `;
 const HeaderWrap = styled.div`
   height: 100%;

@@ -136,10 +136,13 @@ const DateInput = styled.input`
 `;
 const TextInput = styled.textarea`
   height: 150px;
-  width: 850px;
+  width: 1058px;
   margin: 10px 0;
   border: 1px solid grey;
   resize: none;
+  padding: 5px;
+  box-sizing: border-box;
+  font-size: 15px;
 `;
 const FormHeaderWrap = styled.div`
   height: 50px;
@@ -164,7 +167,9 @@ const FormWrap = styled.div`
 const Btn = styled.div`
   height: 30px;
   width: 100px;
-  background-color: teal;
+  background-color: black;
+  color: white;
+  cursor: pointer;
 
   display: flex;
   justify-content: center;

@@ -45,7 +45,7 @@ const SynopText = styled.div`
   .small {
     display: flex;
     height: 100%;
-    max-height: 35px;
+    max-height: 18px;
     width: 100%;
     font-size: 13px;
     margin: 15px 0;
@@ -60,7 +60,7 @@ const SynopText = styled.div`
   .big {
     display: flex;
     height: 100%;
-    max-height: 200px;
+    max-height: 250px;
     width: 100%;
     font-size: 13px;
     margin: 15px 0;

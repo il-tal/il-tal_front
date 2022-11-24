@@ -66,10 +66,12 @@ const ThemeList = () => {
 
   return (
     <Container>
-      <Filter onClick={() => setIsFilter(!isFilter)}>
-        {isFilter ? "필터 닫기" : "필터 열기"}
-      </Filter>
-      {isFilter ? <ThemeFilter refetch={refetch} /> : null}
+      <div className="filter">
+        <Filter onClick={() => setIsFilter(!isFilter)}>
+          {isFilter ? "필터 닫기" : "필터 열기"}
+        </Filter>
+        {isFilter ? <ThemeFilter refetch={refetch} /> : null}
+      </div>
 
       <PosterWrap>
         {isFetching && <div>Loading...</div>}
@@ -97,8 +99,15 @@ export default ThemeList;
 const Container = styled.div`
   height: 100%;
   width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  justify-content: flex-start;
+  .filter {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+  }
 `;
 
 const Filter = styled.div`
