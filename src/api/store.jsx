@@ -31,3 +31,9 @@ export const difficultyState = atom({
   key: "difficultyState",
   default: [1, 5],
 });
+
+//업체별 지역필터 전역 스테이트
+export const companyLocation = atom({
+  key: "companyLocation",
+  default: "",
+});

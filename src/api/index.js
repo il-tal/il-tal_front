@@ -20,7 +20,6 @@ api.interceptors.request.use((config) => {
 export default api;
 
 export const signUpForm = async (userData) => {
-  console.log(userData);
   const { data } = await api.post("/signup", userData);
   return data;
 };
@@ -30,10 +29,22 @@ export const loginForm = async (userData) => {
   return data;
 };
 
-// export const kakaoSignUp = async () => {
-//   const data = await api.post("/kakao/callback");
-//   return data;
-// };
+export const companyList = async (payload) => {
+  const { data } = await api.get(
+    `/companies?${payload.loc}&page=${payload.id}`
+  );
+  return data;
+};
+
+export const companyDetail = async () => {
+  const { data } = await api.get("/company");
+  return data;
+};
+
+export const companyLike = async (userData) => {
+  const { data } = await api.post("/company/wish", userData);
+  return data;
+};
 
 //업체상세페이지 GET요청
 export const getDetailCompany = async (id) => {

@@ -1,13 +1,19 @@
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
-//ThemePic에는 프롭스로 받은 테마의 사진
-//ThemeText에는 프롭스로 받은 테마의 제목과 평점 받기
-
-const ThemePoster = () => {
+const ThemePoster = ({ theme }) => {
   return (
     <Container>
-      <ThemePic />
-      <ThemeText>테마명+별점</ThemeText>
+      <ThemePic>
+        <Link to={"/theme/:id"}>
+          <img src={theme.themeImgUrl} />
+        </Link>
+      </ThemePic>
+      <ThemeTextBox>
+        <ThemeText>{theme.themeName}</ThemeText>
+        <ThemeScore>⭐️ {theme.themeScore}</ThemeScore>
+        <ThemeLike> ❤️ </ThemeLike>
+      </ThemeTextBox>
     </Container>
   );
 };
@@ -15,16 +21,40 @@ const ThemePoster = () => {
 export default ThemePoster;
 
 const Container = styled.div`
-  height: 100%;
-  width: 100%;
+  height: 294px;
+  width: 225px;
+  margin-right: 55px;
+  border: 1px solid gray;
 `;
 
 const ThemePic = styled.div`
-  height: 100px;
-  width: 100px;
-  background-color: orange;
+  img {
+    height: 190px;
+    width: 225px;
+    object-fit: cover;
+  }
 `;
-const ThemeText = styled.div`
+const ThemeTextBox = styled.div`
+  position: relative;
   height: 100px;
-  width: 200px;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+`;
+
+const ThemeText = styled.text`
+  margin: 10px;
+  font-size: 19px;
+`;
+
+const ThemeScore = styled.text`
+  margin-left: 10px;
+`;
+
+const ThemeLike = styled.div`
+  position: absolute;
+  margin: 10px;
+  right: 10px;
+  bottom: 10px;
 `;

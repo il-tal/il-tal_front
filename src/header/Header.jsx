@@ -1,14 +1,18 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import LoginForm from "../components/modal/LoginForm";
-import RegisterForm from "../components/modal/RegisterForm";
+import LoginRegisterForm from "../components/modal/LoginRegisterForm";
 import Modal from "../components/modal/Modal";
 import { useState } from "react";
 
 const Header = () => {
   const navigater = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
-
+  const onLogout = () => {
+    sessionStorage.removeItem("username");
+    sessionStorage.removeItem("nickname");
+    sessionStorage.removeItem("access_token");
+    sessionStorage.removeItem("refresh_token");
+  };
   return (
     <Container>
       <div className="layout">
@@ -95,5 +99,13 @@ const LoginBtn = styled.button`
   border: none;
   font-size: 21px;
   background-color: transparent;
+  cursor: pointer;
+  cursor: pointer;
+`;
+
+const LogoutBtn = styled.button`
+  height: 30px;
+  width: 70px;
+  border: 1px solid black;
   cursor: pointer;
 `;
