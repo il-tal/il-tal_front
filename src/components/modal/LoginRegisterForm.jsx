@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { signUpForm, loginForm } from "../../api/index";
+import { REST_API_KEY, REDIRECT_URI } from "./KakaoLoginData";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -32,6 +33,8 @@ const RegisterForm = ({ setIsLogin }) => {
     onSuccess: (res) => {
       sessionStorage.setItem("access_token", res.headers.access_token);
       sessionStorage.setItem("refresh_token", res.headers.refresh_token);
+      sessionStorage.setItem("username", JSON.stringify(logIn.username));
+      sessionStorage.setItem("nickname", JSON.stringify(logIn.nickname));
       setIsLogin(true);
       navigate("/");
     },
@@ -103,6 +106,12 @@ const RegisterForm = ({ setIsLogin }) => {
   //     .matches(/^[가-힣a-zA-Z]{2,10}$/, "한글,영문 2~10자로 작성해주세요."),
   // });
 
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+
+  const handleLogin = () => {
+    window.location.href = KAKAO_AUTH_URL;
+  };
+
   return (
     <Container>
       <LogoBox />
@@ -126,7 +135,9 @@ const RegisterForm = ({ setIsLogin }) => {
           </BottomBox>
           <Line />
           <SocialLoginBox>
-            <KaKaoLoginBtn>카카오톡으로 로그인</KaKaoLoginBtn>
+            <KakaoLoginBtn onClick={handleLogin}>
+              카카오톡으로 로그인
+            </KakaoLoginBtn>
             <GoogleLoginBtn>구글로 로그인</GoogleLoginBtn>
           </SocialLoginBox>
         </Wrap>
@@ -225,6 +236,7 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: white;
 `;
 
 const Wrap = styled.div`
@@ -298,7 +310,7 @@ const SocialLoginBox = styled.div`
   /* border: 1px solid red; */
 `;
 
-const KaKaoLoginBtn = styled.button`
+const KakaoLoginBtn = styled.button`
   box-sizing: border-box;
   height: 50px;
   width: 299px;
@@ -307,6 +319,7 @@ const KaKaoLoginBtn = styled.button`
   border-radius: 5px;
   border: none;
   color: #828282;
+  cursor: pointer;
 `;
 
 const GoogleLoginBtn = styled.button`
@@ -317,6 +330,7 @@ const GoogleLoginBtn = styled.button`
   background-color: white;
   border-radius: 5px;
   color: #828282;
+  cursor: pointer;
 `;
 
 ///////////////////////////////////////////

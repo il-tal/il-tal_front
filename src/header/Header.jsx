@@ -9,12 +9,12 @@ const Header = () => {
   const [isLogin, setIsLogin] = useState(true);
   const onLogout = () => {
     sessionStorage.removeItem("username");
+    sessionStorage.removeItem("nickname");
     sessionStorage.removeItem("access_token");
     sessionStorage.removeItem("refresh_token");
-  }
+  };
   return (
     <Container>
-
       <LoginBtn onClick={() => setIsLogin(false)}>로그인</LoginBtn>
       <LogoutBtn
         onClick={() => {
@@ -22,16 +22,14 @@ const Header = () => {
         }}>
         로그아웃
       </LogoutBtn>
-
       <div onClick={() => navigater("/")}>집으로</div>
       <div> / </div>
       <div onClick={() => navigater("/test")}>실험실로</div>
       {isLogin ? null : (
         <Modal closeModal={() => setIsLogin(!isLogin)}>
-          <LoginRegisterForm setIsLogin={setIsLogin}/>
+          <LoginRegisterForm setIsLogin={setIsLogin} />
         </Modal>
       )}
-
     </Container>
   );
 };

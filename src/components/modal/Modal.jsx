@@ -29,7 +29,7 @@ const StModal = styled.div`
   .modalBody {
     /* position: absolute; */
 
-    background-color: transparent;
+    /* background-color: transparent; */
 
     box-shadow: 0 10px 3px 0 rgba(34, 36, 38, 0.15);
   }
