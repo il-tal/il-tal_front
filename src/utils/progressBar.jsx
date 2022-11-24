@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 /**
  *  @param { Colors } bgcolor 색깔
- *  @param { Integer } completed 목표치
- *
+ *  @param { Integer } completed 달성치
+ *  @param { Integer } goal 목표치
  */
 const ProgressBar = (props) => {
   const { bgcolor, completed, goal } = props;
@@ -18,10 +18,10 @@ const ProgressBar = (props) => {
 };
 
 const Container = styled.div`
-  height: 25px;
-  width: 600px;
+  height: 1.25rem;
+  width: calc(100% - 6rem);
   background-color: #ababab;
-  border-radius: 30px;
+  border-radius: 1.25rem;
   margin-right: 10px;
   margin-left: 10px;
 `;
@@ -37,7 +37,7 @@ const FillerStyles = styled.div`
 `;
 
 const LabelStyles = styled.span`
-  padding: 25px;
+  padding: 10px;
   color: white;
   font-weight: bold;
   position: absolute;

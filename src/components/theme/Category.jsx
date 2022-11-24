@@ -1,12 +1,12 @@
 const Category = {
   GenreCategory: [
-    {
-      name: "전체",
-      value: "전체",
-    },
+    // {
+    //   name: "전체",
+    //   value: null,
+    // },
     {
       name: "SF/판타지",
-      value: "SF/판타지",
+      value: "SF,판타지",
     },
     {
       name: "코믹",
@@ -18,11 +18,11 @@ const Category = {
     },
     {
       name: "잠입/범죄",
-      value: "잠입/범죄",
+      value: "잠입,범죄",
     },
     {
       name: "어드벤처/모험",
-      value: "어드벤처/모험",
+      value: "어드벤처,모험",
     },
     {
       name: "스릴러",
@@ -50,7 +50,7 @@ const Category = {
     },
     {
       name: "드라마/감성",
-      value: "드라마/감성",
+      value: "드라마,감성",
     },
     {
       name: "동화",
@@ -59,10 +59,10 @@ const Category = {
   ],
 
   LocationCategory: [
-    {
-      name: "전체",
-      value: "전체",
-    },
+    // {
+    //   name: "전체",
+    //   value: null,
+    // },
     {
       name: "강남",
       value: "강남",
@@ -98,10 +98,10 @@ const Category = {
   ],
 
   ScoreCategory: [
-    {
-      name: "전체",
-      value: "전체",
-    },
+    // {
+    //   name: "전체",
+    //   value: "전체",
+    // },
     {
       name: "⭐️",
       value: 1,
@@ -152,10 +152,10 @@ const Category = {
   ],
 
   PeopleCategory: [
-    {
-      name: "전체",
-      value: "전체",
-    },
+    // {
+    //   name: "전체",
+    //   value: "전체",
+    // },
     {
       name: "1인",
       value: 1,
@@ -173,8 +173,8 @@ const Category = {
       value: 4,
     },
     {
-      name: "5인",
-      value: 5,
+      name: "5인이상",
+      value: [5, 6],
     },
   ],
 };

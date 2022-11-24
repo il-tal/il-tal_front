@@ -12,9 +12,9 @@ const SelectIndex = {
 
   optionLevel: [
     { value: "", name: "난이도" },
-    { value: 3, name: "상" },
-    { value: 2, name: "중" },
-    { value: 1, name: "하" },
+    { value: 3, name: "어려워요" },
+    { value: 2, name: "보통이에요" },
+    { value: 1, name: "쉬워요" },
   ],
 
   optionHint: [

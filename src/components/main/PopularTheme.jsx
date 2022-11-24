@@ -1,22 +1,17 @@
 import styled from "styled-components";
 
-//메인페이지 레이아웃에 보면 ThemePic과 ThemeText가 겹쳐있음
-//아마 z index사용해서 겹쳐 올려야 하는듯..? 잘모르겠음
-
 const PopularTheme = (props) => {
   return (
     <Container>
-      <ThemePic>
+      <ThemePic img={props.themeImgUrl}>
         <ThemeRank>{props.rank}</ThemeRank>
-        사진
+        <ThemeText fontSize={1} fontWeight={100}>
+          {props.companyName}
+        </ThemeText>
+        <ThemeText fontSize={1.5} fontWeight={700}>
+          {props.themeName}
+        </ThemeText>
       </ThemePic>
-
-      <ThemeText fontSize={16} fontWeight={100}>
-        비트포비아 미션브레이크 CGV 용산점
-      </ThemeText>
-      <ThemeText fontSize={24} fontWeight={700}>
-        도시괴담 Part.2 ‘The Abandoned Office’
-      </ThemeText>
     </Container>
   );
 };
@@ -26,32 +21,36 @@ const Container = styled.div`
   height: 100%;
   width: 100%;
   margin: 25px;
-  display: flex;
+  display: table;
   flex-direction: column;
 `;
+
 const ThemePic = styled.div`
-  height: 200px;
-  width: 280px;
-  background-color: teal;
+  background-image: url(${(props) => props.img});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  height: 15rem;
+  width: 22.5rem;
+  display: grid;
+  grid-template-rows: 1.5fr 0fr 0.5fr;
+  background-color: #e1e1e1;
 `;
 
 const ThemeRank = styled.div`
-  width: 1.25rem;
-  height: 2rem;
-  font-size: 2rem;
+  width: 2.5rem;
+  height: 2.5rem;
+  font-size: 2.5rem;
   z-index: 1;
   display: flex;
-  float: right;
-  background-color: #d9d9d9;
+  flex-direction: column;
+  background-color: #ffb743;
 `;
 
 const ThemeText = styled.div`
-  height: 50px;
-  width: 280px;
-  font-size: ${(props) => props.fontSize}px;
+  height: 30px;
+  width: 20rem;
+  font-size: ${(props) => props.fontSize}rem;
   font-weight: ${(props) => props.fontWeight};
-  display: flex;
-  align-items: center;
   text-align: left;
-  background-color: tomato;
 `;

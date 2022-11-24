@@ -1,39 +1,139 @@
+import { useQueries, useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
+import { SwiperSlide } from "swiper/react";
+import { getAchieve, getBest, getRandom } from "../../api/mainApi";
+import { Carousel } from "../../utils/carousel";
+import { Button } from "../shared/Button";
 import BestUser from "./BestUser";
+import PopSkel from "./PopSkel";
 import PopularTheme from "./PopularTheme";
 import RecommandTheme from "./RecommandTheme";
 import UserSummary from "./UserSummary";
 
 const Main = () => {
-  const user = "정영훈";
+  const achieve = useQuery(["getAchieve"], getAchieve);
+  const best = useQuery(["getBest"], getBest, { staleTime: Infinity });
+  const random = useQuery(["getRandom"], getRandom, {
+    staleTime: Infinity,
+  });
   const totalAchievement = 20;
   const completed = [20, 18, 16, 12, 10];
   return (
     <Container>
-      <UserBox>
-        {user}님<br /> 탈출할준비되셨나요
-        <UserInfo>
-          <UserSummary />
-        </UserInfo>
-      </UserBox>
-
+      {sessionStorage.access_token ? (
+        achieve.isLoading ? (
+          <UserBox>
+            <UserIntro bold={"bold"}>Guest님</UserIntro>
+            <br /> <div>탈출할준비되셨나요</div>
+            <UserInfo>
+              <UserSummary
+                mainBadgeImg=""
+                bgcolor={"#123123"}
+                completed={0}
+                goal={totalAchievement}
+              />
+            </UserInfo>
+          </UserBox>
+        ) : (
+          <UserBox>
+            <UserIntro bold={"bold"}>{achieve.data.nickname}님</UserIntro>
+            <br /> <div>탈출할준비되셨나요</div>
+            <UserInfo>
+              <UserSummary
+                mainBadgeName={achieve.data.mainBadgeName}
+                RecentTitle={achieve.data.badgeImgUrl[1]}
+                RecentTitle_2={achieve.data.badgeImgUrl[2]}
+                RecentTitle_3={achieve.data.badgeImgUrl[3]}
+                mainBadgeImg={achieve.data.mainBadgeImg}
+                bgcolor={"#123123"}
+                completed={12}
+                goal={totalAchievement}
+              />
+            </UserInfo>
+          </UserBox>
+        )
+      ) : (
+        <UserBox>
+          <UserIntro bold={"bold"}>일상의 방탈출</UserIntro>
+          <br /> <div>지금 시작해보세요</div>
+          <UserInfo>
+            <UserSummary blur={1} />
+            <Button
+              label={"로그인"}
+              position={"absolute"}
+              width={`240px`}
+              height={`50px`}
+              left={`30%`}
+            />
+            <Button
+              onClick={() => {
+                console.log("hello");
+              }}
+              label={"회원가입"}
+              position={"absolute"}
+              width={`240px`}
+              height={`50px`}
+              right={`30%`}
+            />
+          </UserInfo>
+        </UserBox>
+      )}
       <HeaderTitle>인기테마</HeaderTitle>
-      <PopularThemeWrap>
-        <PopularTheme rank={1} />
-        <PopularTheme rank={2} />
-        <PopularTheme rank={3} />
-      </PopularThemeWrap>
+      {best.isLoading ? (
+        <PopularThemeWrap>
+          <PopSkel width={22.5} height={15} />
+          <PopSkel width={22.5} height={15} />
+          <PopSkel width={22.5} height={15} />
+        </PopularThemeWrap>
+      ) : (
+        <PopularThemeWrap>
+          <PopularTheme
+            rank={1}
+            companyName={best.data[0].companyName}
+            themeName={best.data[0].themeName}
+            themeImgUrl={best.data[0].themeImgUrl}
+          />
+          <PopularTheme
+            rank={2}
+            companyName={best.data[1].companyName}
+            themeName={best.data[1].themeName}
+            themeImgUrl={best.data[1].themeImgUrl}
+          />
+          <PopularTheme
+            rank={3}
+            companyName={best.data[2].companyName}
+            themeName={best.data[2].themeName}
+            themeImgUrl={best.data[2].themeImgUrl}
+          />
+        </PopularThemeWrap>
+      )}
 
       <HeaderTitle>추천테마</HeaderTitle>
       <RecommandThemeWrap>
-        <RecommandTheme />
-        <RecommandTheme />
-        <RecommandTheme />
-        <RecommandTheme />
-        <RecommandTheme />
-        <RecommandTheme />
-        <RecommandTheme />
-        <RecommandTheme />
+        {random.isLoading ? (
+          <>
+            <SwiperSlide>
+              <RecommandTheme
+                companyName={""}
+                themeName={""}
+                themeImgUrl={""}
+              />
+            </SwiperSlide>
+          </>
+        ) : (
+          <Carousel>
+            {random.data.map((data, index) => (
+              <SwiperSlide>
+                <RecommandTheme
+                  key={index}
+                  companyName={data.companyName}
+                  themeName={data.themeName}
+                  themeImgUrl={data.themeImgUrl}
+                />
+              </SwiperSlide>
+            ))}
+          </Carousel>
+        )}
       </RecommandThemeWrap>
 
       <HeaderTitle>베스트 탈출러</HeaderTitle>
@@ -100,10 +200,17 @@ const Container = styled.div`
 `;
 
 const UserBox = styled.div`
-  width: 100vw;
-  margin-bottom: 6.25rem;
+  width: calc(100vw - 20px);
+  height: 300px;
+  margin-bottom: 8rem;
   font-size: 2rem;
-  background-color: gray;
+  text-align: center;
+  justify-content: center;
+  background-color: #ffb743;
+`;
+
+const UserIntro = styled.div`
+  font-weight: ${(props) => props.bold};
 `;
 
 const HeaderTitle = styled.div`
@@ -112,27 +219,33 @@ const HeaderTitle = styled.div`
 
 const UserInfo = styled.div`
   font-size: 1rem;
-  z-index: 10;
-  width: 50rem;
-  margin: 6.25rem auto;
+  width: 70rem;
+  margin: 5rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: #d5e5f4;
 `;
 
 const PopularThemeWrap = styled.div`
-  width: 1000px;
+  width: 70rem;
   display: flex;
   justify-content: center;
   text-align: center;
 `;
+
 const RecommandThemeWrap = styled.div`
-  width: 100vw;
+  width: 70rem;
+  margin-top: 25px;
+  margin-bottom: 50px;
   overflow: hidden;
   display: flex;
-  justify-content: center;
+  justify-content: left;
   text-align: center;
 `;
+
 const BestUserWrap = styled.div`
-  width: 1116px;
+  width: 72.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;

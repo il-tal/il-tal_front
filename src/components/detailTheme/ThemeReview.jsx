@@ -2,12 +2,32 @@ import styled from "styled-components";
 import Comment from "./Comment";
 import CommentForm from "./CommentForm";
 import { useState } from "react";
-const ThemeReview = () => {
+import { getComment } from "../../api/ThemeApi";
+import { useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router-dom";
+const ThemeReview = ({ props }) => {
+  //코멘트 조회용 테마 id
+  const { id } = useParams();
+
+  //리뷰 작성하기 토글
   const [isEdit, setIsEdit] = useState(true);
+
+  //코멘트 조회 useQuery
+  const { data, isLoading } = useQuery(["getComments"], () => getComment(id));
+
+  //코멘트 로딩 처리
+  if (isLoading) {
+    return <div>댓글을 불러오는 중입니다...!</div>;
+  }
   return (
     <Container>
       <ReviewHeader>
-        <span>리뷰</span>
+        <div className="review-score-wrap">
+          <div className="review">리뷰({props.reviewCnt})</div>
+          <div className="score">
+            총 평점 : {"⭐".repeat(props.themeScore)} ({props.themeScore})
+          </div>
+        </div>
         <span className="comment" onClick={() => setIsEdit(!isEdit)}>
           {isEdit ? "리뷰작성" : "취소"}
         </span>
@@ -16,13 +36,22 @@ const ThemeReview = () => {
         <CommentForm isEdit={isEdit} setIsEdit={setIsEdit} />
       </div>
 
-      {/* {isEdit ? null : <CommentForm isEdit={isEdit} setIsEdit={setIsEdit} />} */}
-
       <ReviewWrap>
-        <Comment />
-        <Comment />
-        <Comment />
-        {/* 여기에 comment맵 돌리기 */}
+        {data.data.map((comment) => {
+          return (
+            <Comment
+              key={comment.id}
+              id={comment.id}
+              nickname={comment.nickname}
+              playDate={comment.playDate}
+              score={comment.score}
+              success={comment.success}
+              difficulty={comment.difficulty}
+              hint={comment.hint}
+              comment={comment.comment}
+            />
+          );
+        })}
       </ReviewWrap>
     </Container>
   );
@@ -69,8 +98,31 @@ const ReviewHeader = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 20px 0 10px 0;
+  align-items: center;
+  .review-score-wrap {
+    display: flex;
+    font-size: 18px;
+    .review {
+      margin-right: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .score {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 
   .comment {
     cursor: pointer;
+    border: 1px solid;
+    height: 30px;
+    width: 100px;
+    font-size: 13px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;

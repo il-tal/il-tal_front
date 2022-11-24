@@ -1,28 +1,33 @@
 import styled from "styled-components";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { wishTheme } from "../../api/ThemeApi";
 
-const ThemePoster = () => {
+const ThemePoster = ({ theme }) => {
+  const navigate = useNavigate();
   const [isLike, setIsLike] = useState(false);
+  const themeLike = useMutation((themeId) => wishTheme(themeId));
   return (
     <Container>
-      <ThemePic>
-        <img src="http://www.murderparker.com/upload_file/room/1(13).jpg" />
+      <ThemePic onClick={() => navigate(`/theme/${theme.id}`)}>
+        <img src={theme.themeImgUrl} alt="themePoster" />
       </ThemePic>
       <ThemeTextWrap>
         <ThemeTextHeader>
-          <span>업체명</span>
-          <span>장르</span>
+          <span>{theme.companyName}</span>
+          <span>{theme.genre}</span>
         </ThemeTextHeader>
-        <ThemeTextTitle>테마명</ThemeTextTitle>
-        <ThemeTextScore>⭐ 4.0 (20) </ThemeTextScore>
+        <ThemeTextTitle onClick={() => navigate(`/theme/${theme.id}`)}>
+          {theme.themeName}
+        </ThemeTextTitle>
+        <ThemeTextScore>
+          ⭐ {theme.themeScore} ({theme.reviewCnt})
+        </ThemeTextScore>
         <ThemeTextLike>
-          <div>
-            {isLike ? (
-              <AiOutlineHeart onClick={() => setIsLike(!isLike)} />
-            ) : (
-              <AiFillHeart onClick={() => setIsLike(!isLike)} color={"red"} />
-            )}
+          <div onClick={() => themeLike.mutate({ themeId: theme.id })}>
+            {isLike ? <AiOutlineHeart /> : <AiFillHeart color={"red"} />}
           </div>
         </ThemeTextLike>
       </ThemeTextWrap>
@@ -46,15 +51,17 @@ const Container = styled.div`
 const ThemePic = styled.div`
   height: 200px;
   width: 200px;
-  background-color: yellowgreen;
+
   display: flex;
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  cursor: pointer;
   img {
     display: flex;
     object-fit: cover;
     width: 100%;
+    height: 100%;
   }
 `;
 
@@ -80,11 +87,12 @@ const ThemeTextHeader = styled.div`
 `;
 const ThemeTextTitle = styled.div`
   width: 190px;
-  height: 30px;
+  height: 60px;
   font-size: 23px;
   font-weight: bold;
   margin: 5px 0;
   display: flex;
+  cursor: pointer;
 `;
 const ThemeTextScore = styled.div`
   width: 190px;

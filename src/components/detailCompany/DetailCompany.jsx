@@ -1,18 +1,70 @@
+import { useQuery } from "@tanstack/react-query";
 import styled from "styled-components";
+import { getDetailCompany } from "../../api";
 import CompanyTheme from "./CompanyTheme";
+import KakaoMap from "../map/KakaoMap";
+import { useNavigate, useParams } from "react-router-dom";
 
 const DetailCompany = () => {
+  //업체 아이디 받기
+  const { id } = useParams();
+  const navigate = useNavigate();
+
+  //업체 상세페이지 GET요청
+  const { data, isLoading } = useQuery(["getDetailCompany"], () =>
+    getDetailCompany(id)
+  );
+
+  //로딩처리
+  if (isLoading) return <div>loading...</div>;
   return (
     <Container>
       <CompanyWrap>
-        <CompanyPic>사진</CompanyPic>
-        <CompanyText>여기에는 텍스트가 들어갑니다</CompanyText>
-        <CompanyMap>여기는 지도가 들어감</CompanyMap>
+        <div className="pic-map-wrap">
+          <CompanyPic>
+            <img src={data.data.companyImgUrl} />
+          </CompanyPic>
+          <CompanyMap>
+            <KakaoMap
+              address={data.data.address}
+              company={data.data.companyName}
+            />
+          </CompanyMap>
+        </div>
+        <div className="text-info-wrap">
+          <CompanyText>
+            <div className="company">{data.data.companyName}</div>
+            <div className="review">
+              ⭐{data.data.companyScore} 이용후기 {data.data.totalReviewCnt}건
+            </div>
+            <div className="button-wrap">
+              <button
+                className="homepage"
+                onClick={() => window.open(data.data.companyUrl, "_blank")}
+              >
+                홈페이지
+              </button>
+              <button className="like">❤좋아요{data.data.LikeCnt}</button>
+            </div>
+          </CompanyText>
+          <CompanyInfo>
+            <span>{data.data.address}</span>
+            <span>{data.data.phoneNumber}</span>
+            <span>{data.data.workHour}</span>
+          </CompanyInfo>
+        </div>
       </CompanyWrap>
       <ThemeWrap>
-        <CompanyTheme />
-
-        {/* <h3>여기에 CompanyTheme 컴포넌트 map돌리기</h3> */}
+        {data.data.themeList.map((theme) => {
+          return (
+            <div
+              className="test"
+              onClick={() => navigate(`/theme/${theme.id}`)}
+            >
+              <CompanyTheme theme={theme} key={theme.id} />
+            </div>
+          );
+        })}
       </ThemeWrap>
     </Container>
   );
@@ -22,34 +74,91 @@ export default DetailCompany;
 const Container = styled.div`
   height: 100%;
   width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: flex-start;
 `;
 const CompanyWrap = styled.div`
   height: 100%;
   width: 100%;
   display: flex;
-  background-color: grey;
+
+  flex-direction: column;
+  .pic-map-wrap {
+    display: flex;
+    justify-content: space-between;
+  }
+  .text-info-wrap {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px 0%;
+  }
 `;
 const CompanyPic = styled.div`
-  height: 200px;
-  width: 200px;
-  background-color: tomato;
+  height: 350px;
+  width: 650px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  img {
+    display: flex;
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 const CompanyText = styled.div`
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 650px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .company {
+    font-size: 25px;
+    font-weight: bold;
+  }
+  .review {
+    font-size: 18px;
+  }
+  .homepage {
+    width: 80px;
+    height: 30px;
+    margin-right: 20px;
+  }
+  .like {
+    width: 100px;
+    height: 30px;
+  }
+`;
+
+const CompanyInfo = styled.div`
+  width: 450px;
+  height: 150px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  span {
+    font-size: 18px;
+  }
 `;
 
 const CompanyMap = styled.div`
-  height: 300px;
-  width: 300px;
-  background-color: skyblue;
+  height: 350px;
+  width: 450px;
 `;
 
 const ThemeWrap = styled.div`
   height: 100%;
   width: 100%;
+  .test:hover {
+    transform: scale(1.04);
+    transition: all ease 0.5s;
+  }
 `;

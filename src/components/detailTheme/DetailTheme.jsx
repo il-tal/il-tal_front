@@ -1,59 +1,94 @@
+import { useQuery } from "@tanstack/react-query";
 import { useState } from "react";
+import { useParams } from "react-router-dom";
 import styled from "styled-components";
+import { getDetailTheme } from "../../api/ThemeApi";
 import KakaoMap from "../map/KakaoMap";
 import Modal from "../modal/Modal";
 import ThemeReview from "./ThemeReview";
-import ThemeSynopsys from "./ThemeSynopsis";
+import ThemeSynopsis from "./ThemeSynopsis";
 const DetailTheme = () => {
+  //상세페이지 조회용 id
+  const param = useParams();
+
+  //카카오맵 모달창
   const [isMap, setIsMap] = useState(true);
+
+  //테마 상세정보 조회 GET 요청 useQuery
+  const { data, isLoading } = useQuery(["getDetail"], () =>
+    getDetailTheme(param.id)
+  );
+
+  const difficult = () => {
+    if (data.data.difficulty > 4) {
+      return "매우어려움";
+    } else if (data.data.difficulty > 3) {
+      return "어려움";
+    } else if (data.data.difficulty > 2) {
+      return "보통";
+    } else if (data.data.difficulty > 1) {
+      return "쉬움";
+    } else if (data.data.difficulty > 0) {
+      return "매우쉬움";
+    }
+  };
+
+  //로딩처리
+  if (isLoading) {
+    return <div>로딩중..</div>;
+  }
   return (
     <Container>
       <ThemeInfoWrap>
         <ThemePicWrap>
           <ThemePic>
-            <img src="http://www.murderparker.com/upload_file/room/1(13).jpg" />
+            <img src={data.data.themeImgUrl} />
           </ThemePic>
         </ThemePicWrap>
 
         <ThemeTextWrap>
           <ThemeHeaderWrap>
-            <ThemeCompany>업체명</ThemeCompany>
-            <ThemeTitle>테마이름</ThemeTitle>
+            <ThemeCompany>{data.data.companyName}</ThemeCompany>
+            <ThemeTitle>{data.data.themeName}</ThemeTitle>
           </ThemeHeaderWrap>
 
           <ThemeInfo>
             <TextGenre>
               <div className="type">장르</div>
-              <div className="content">공포</div>
+              <div className="content">{data.data.genre}</div>
             </TextGenre>
             <TextDifficulty>
               <div className="type">난이도</div>
-              <div className="content">어려움</div>
+              <div className="content">{difficult(data.data.difficulty)}</div>
             </TextDifficulty>
             <TextPeople>
               <div className="type">인원</div>
-              <div className="content">2~4명</div>
+              <div className="content">
+                {data.data.minPeople}인~{data.data.maxPeople}인
+              </div>
             </TextPeople>
             <TextTime>
               <div className="type">제한시간</div>
-              <div className="content">70분</div>
+              <div className="content">{data.data.playTime}분</div>
             </TextTime>
             <TextPrice>
               <div className="type">가격</div>
-              <div className="content">
-                40,000원 (2인기준, 1인당 10,000원 추가)
-              </div>
+              <div className="content">{data.data.price}원</div>
             </TextPrice>
           </ThemeInfo>
           <ThemeBtnWrap>
             <Btn onClick={() => setIsMap(false)}>위치보기</Btn>
-            <Btn>예약하기</Btn>
+            <Btn
+              onClick={() => window.open([`${data.data.themeUrl}`, "_black"])}
+            >
+              예약하기
+            </Btn>
             <Btn>좋아요</Btn>
           </ThemeBtnWrap>
         </ThemeTextWrap>
       </ThemeInfoWrap>
-      <ThemeSynopsys />
-      <ThemeReview />
+      <ThemeSynopsis synopsis={data.data.synopsis} />
+      <ThemeReview props={data.data} />
       {isMap ? null : (
         <Modal closeModal={() => setIsMap(true)}>
           <KakaoMap setClose={setIsMap} />
@@ -67,6 +102,7 @@ export default DetailTheme;
 const Container = styled.div`
   height: 100%;
   width: 100%;
+  min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
