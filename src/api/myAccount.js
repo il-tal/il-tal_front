@@ -1,50 +1,44 @@
-import { axiosIns } from "./axios";
-
-// 
-
+import api from "./index";
+//
 
 /** 성향 최초 등록 */
-export const postTendency = async () => {
-
-}
+export const postTendency = async () => {};
 /** 성향 수정 */
-export const editTendency = async () => {
-
-}
+export const editTendency = async () => {};
 
 export const editNickName = async (userName) => {
-  const data = await axiosIns.put("/nickname",userName);
+  const data = await api.put("/nickname", userName);
   return data;
-}
+};
 
 export const reciveBadges = async (badgeId) => {
-  const data = await axiosIns.post("/badge/give", badgeId);
+  const data = await api.post("/badge/give", badgeId);
   return data;
-}
+};
 
 export const putMainBadge = async (badgeId) => {
-  const data = await axiosIns.put(`/badge/${badgeId.badgeId}`, badgeId);
+  const data = await api.put(`/badge/${badgeId.badgeId}`, badgeId);
   return data;
-}
+};
 
 export const getMyPage = async () => {
-  const data = await axiosIns.get("/mypage");
+  const data = await api.get("/mypage");
   return data.data.data;
-}
+};
 
 export const getMyTheme = async () => {
-  const data  = await axiosIns.get("/mythemes");
+  const data = await api.get("/mythemes");
   return data.data.data;
-}
+};
 export const getMyCompany = async () => {
-  const data = await axiosIns.get("/mycompanies");
+  const data = await api.get("/mycompanies");
   return data.data.data;
-}
+};
 export const getMyReview = async () => {
-  const data = await axiosIns.get("/myreviews");
+  const data = await api.get("/myreviews");
   return data.data.data;
-}
+};
 export const getAllBadges = async () => {
-  const data = await axiosIns.get("/badges");
+  const data = await api.get("/badges");
   return data.data.data;
-}
+};

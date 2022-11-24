@@ -8,7 +8,6 @@ import ErrorPage from "../page/ErrorPage";
 import CompanyPage from "../page/CompanyPage";
 import MainLayout from "../page/MainLayout";
 import Test from "../page/Test";
-import KakaoMap from "../components/map/KakaoMap";
 
 const Router = () => {
   return (

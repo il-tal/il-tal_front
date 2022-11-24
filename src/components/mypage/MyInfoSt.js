@@ -76,7 +76,7 @@ export const EditGenre = styled.div`
   top: auto;
   font-size: 1rem;
   position: absolute;
-`
+`;
 
 export const UserEdit = styled.div`
   text-align: right;
@@ -85,7 +85,7 @@ export const UserEdit = styled.div`
 export const UserTitles = styled.div`
   margin: 10px;
   font-size: 1.5rem;
-  border : 1px solid;
+  border: 1px solid;
   padding: 10px 20px;
   border-radius: 25px;
 `;
@@ -142,6 +142,6 @@ export const ComWrap = styled.div`
   min-width: 1200px;
   width: 100%;
   display: grid;
-  grid-template-columns: repeat(6,1fr);
+  grid-template-columns: repeat(6, 1fr);
   margin: 10px;
 `;

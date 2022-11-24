@@ -7,9 +7,12 @@ const api = axios.create({
 // api요청 주소가 login 또는 singup이 아닐 경우 로컬스토리지에 존재하는  access token 토큰을 가져온다.
 // 가져온 토큰을 요청 headers에 담는다.
 api.interceptors.request.use((config) => {
-  const accessToken = sessionStorage.getItem("access_token");
-  if (accessToken) {
-    config.headers["access_token"] = accessToken;
+  const access_token = sessionStorage.getItem("access_token");
+  const refresh_token = sessionStorage.getItem("refresh_token");
+
+  if (access_token) {
+    config.headers["Authorization"] = `${access_token}}`;
+    config.headers["Refresh_Token"] = `${refresh_token}`;
   }
   return config;
 });
