@@ -1,8 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import LoginRegisterForm from "../components/modal/LoginRegisterForm";
 import Modal from "../components/modal/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { set } from "date-fns";
+import { useRecoilState } from "recoil";
+import { headerClicked } from "../api/store";
 
 const Header = () => {
   const navigater = useNavigate();
@@ -13,17 +16,50 @@ const Header = () => {
     sessionStorage.removeItem("access_token");
     sessionStorage.removeItem("refresh_token");
   };
+
+  const [isClicked, setIsClicked] = useRecoilState(headerClicked);
+  const url = useLocation();
+  console.log("유알엘", url);
+  useEffect(() => {
+    if (url.pathname === "/") {
+      setIsClicked(0);
+    } else if (url.pathname === "/company") {
+      setIsClicked(1);
+    } else if (url.pathname === "/theme") {
+      setIsClicked(2);
+    }
+  }, [setIsClicked]);
+
+  const onClickLogo = () => {
+    setIsClicked(0);
+    navigater("/");
+  };
+  const onClickCompany = () => {
+    setIsClicked(1);
+    navigater("/company");
+  };
+  const onClickGenre = () => {
+    setIsClicked(2);
+    navigater("/theme");
+  };
+
   return (
     <Container>
       <div className="layout">
         <div className="left-wrap">
-          <div className="logo" onClick={() => navigater("/")}>
+          <div className="logo" onClick={onClickLogo}>
             일탈
           </div>
-          <div className="noneline" onClick={() => navigater("/company")}>
+          <div
+            className={isClicked === 1 ? "online" : "noneline"}
+            onClick={onClickCompany}
+          >
             업체별
           </div>
-          <div className="noneline" onClick={() => navigater("/theme")}>
+          <div
+            className={isClicked === 2 ? "online" : "noneline"}
+            onClick={onClickGenre}
+          >
             테마별
           </div>
         </div>
@@ -51,15 +87,18 @@ const Container = styled.div`
   background-color: white;
   z-index: 10;
   .layout {
+    height: 92%;
     width: 1440px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
   .left-wrap {
+    height: 100%;
     display: flex;
   }
   .logo {
+    height: 100%;
     width: 220px;
     font-size: 36px;
     color: rgba(255, 183, 67, 1);
@@ -68,7 +107,9 @@ const Container = styled.div`
     justify-content: center;
     cursor: pointer;
   }
+
   .isline {
+    height: 100%;
     width: 98px;
     font-size: 21px;
     display: flex;
@@ -77,12 +118,23 @@ const Container = styled.div`
     cursor: pointer;
   }
   .noneline {
+    height: 100%;
     width: 98px;
     font-size: 21px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+  }
+  .online {
+    height: 100%;
+    width: 98px;
+    font-size: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-bottom: 4px solid rgba(255, 183, 67, 1);
   }
 `;
 

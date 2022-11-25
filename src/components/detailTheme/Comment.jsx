@@ -57,6 +57,7 @@ const Comment = ({
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["getComments"]);
+        queryClient.invalidateQueries(["getDetail"]);
         setIsEdit(false);
       },
     }
@@ -66,6 +67,7 @@ const Comment = ({
   const deleteComment = useMutation((id) => delComment(id), {
     onSuccess: () => {
       queryClient.invalidateQueries(["getComments"]);
+      queryClient.invalidateQueries(["getDetail"]);
     },
   });
 
@@ -236,7 +238,7 @@ const Container = styled.div`
     width: 100%;
     .edit-text {
       display: flex;
-      width: 850px;
+      width: 1300px;
       height: 65px;
       margin: 10px;
       padding: 10px;

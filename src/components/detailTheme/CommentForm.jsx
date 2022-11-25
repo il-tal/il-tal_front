@@ -55,7 +55,8 @@ const CommentForm = ({ setIsEdit, isEdit }) => {
     ({ id: id, data: cmt }) => postComment({ id: id, data: cmt }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["getComments"]);
+        queryClient.invalidateQueries(["getComments", "getDetail"]);
+
         alert("댓글 작성 완료!");
         setIsEdit(true);
         setCmt(initial);
