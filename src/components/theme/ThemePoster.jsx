@@ -1,35 +1,52 @@
 import styled from "styled-components";
 import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { wishTheme } from "../../api/ThemeApi";
 
 const ThemePoster = ({ theme }) => {
   const navigate = useNavigate();
-  const [isLike, setIsLike] = useState(false);
-  const themeLike = useMutation((themeId) => wishTheme(themeId));
+  const queryClient = useQueryClient();
+  const themeLike = useMutation((themeId) => wishTheme(themeId), {
+    onSuccess: (res) => {
+      queryClient.invalidateQueries(["getThemeList"]);
+      setLikeState(res.data.themeLikeCheck);
+    },
+  });
+
+  //좋아요 스테이트 (theme에서 체크여부를 바로 받으면 너무 느리게 바뀌므로 wishTheme요청값을 이용하기위해 사용)
+  const [likeState, setLikeState] = useState(theme.themeLikeCheck);
+  useEffect(() => {
+    if (likeState) {
+      return setLikeState(theme.themeLikeCheck);
+    } else {
+      return setLikeState(theme.themeLikeCheck);
+    }
+  }, [theme]);
+
   return (
     <Container>
       <ThemePic onClick={() => navigate(`/theme/${theme.id}`)}>
         <img src={theme.themeImgUrl} alt="themePoster" />
       </ThemePic>
       <ThemeTextWrap>
-        <ThemeTextHeader>
-          <span>{theme.companyName}</span>
-          <span>{theme.genre}</span>
-        </ThemeTextHeader>
+        <ThemeTextHeader>{theme.companyName}</ThemeTextHeader>
         <ThemeTextTitle onClick={() => navigate(`/theme/${theme.id}`)}>
           {theme.themeName}
         </ThemeTextTitle>
-        <ThemeTextScore>
-          ⭐ {theme.themeScore} ({theme.reviewCnt})
-        </ThemeTextScore>
-        <ThemeTextLike>
-          <div onClick={() => themeLike.mutate({ themeId: theme.id })}>
-            {isLike ? <AiOutlineHeart /> : <AiFillHeart color={"red"} />}
+        <ThemeTextGenre>{theme.genre}</ThemeTextGenre>
+        <ThemeTextBottom>
+          <div>
+            ⭐ {theme.themeScore} <span>({theme.reviewCnt})</span>
           </div>
-        </ThemeTextLike>
+          <div
+            className="like"
+            onClick={() => themeLike.mutate({ themeId: theme.id })}
+          >
+            {likeState ? <AiFillHeart color={"red"} /> : <AiOutlineHeart />}
+          </div>
+        </ThemeTextBottom>
       </ThemeTextWrap>
     </Container>
   );
@@ -38,19 +55,24 @@ const ThemePoster = ({ theme }) => {
 export default ThemePoster;
 
 const Container = styled.div`
-  height: 330px;
-  width: 200px;
-  border: 1px solid;
+  height: 440px;
+  width: 340px;
+  border: 1px solid gray;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 5px 5px 5px 5px gray;
-  margin: 30px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 27px 10px;
+
+  &:hover {
+    border: 1px solid rgba(255, 183, 67, 1);
+  }
 `;
 
 const ThemePic = styled.div`
-  height: 200px;
-  width: 200px;
+  height: 216px;
+  width: 340px;
 
   display: flex;
   justify-content: center;
@@ -66,50 +88,52 @@ const ThemePic = styled.div`
 `;
 
 const ThemeTextWrap = styled.div`
-  width: 190px;
-  height: 130px;
+  width: 340px;
+  height: 224px;
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  padding: 5px;
 `;
 const ThemeTextHeader = styled.div`
-  width: 190px;
-  height: 20px;
+  width: 310px;
+  height: 35px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-top: 5px;
-
   color: grey;
-  font-size: 13px;
-  span {
-  }
+  font-size: 20px;
 `;
 const ThemeTextTitle = styled.div`
-  width: 190px;
-  height: 60px;
+  width: 310px;
+  height: 80px;
   font-size: 23px;
   font-weight: bold;
   margin: 5px 0;
   display: flex;
   cursor: pointer;
 `;
-const ThemeTextScore = styled.div`
-  width: 190px;
-  height: 25px;
-  font-size: 15px;
+const ThemeTextGenre = styled.div`
+  width: 310px;
+  height: 35px;
+  font-size: 16px;
+  color: grey;
+`;
+const ThemeTextBottom = styled.div`
+  width: 310px;
+  height: 35px;
+  font-size: 20px;
 
   display: flex;
-`;
-const ThemeTextLike = styled.div`
-  width: 190px;
-  height: 25px;
-
-  font-size: 25px;
-  div {
-    height: 25px;
-    width: 25px;
-    float: right;
+  justify-content: space-between;
+  .like {
     cursor: pointer;
+    font-size: 25px;
+  }
+  span {
+    color: gray;
   }
 `;

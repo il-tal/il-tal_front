@@ -1,8 +1,11 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import LoginRegisterForm from "../components/modal/LoginRegisterForm";
 import Modal from "../components/modal/Modal";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { set } from "date-fns";
+import { useRecoilState } from "recoil";
+import { headerClicked } from "../api/store";
 
 const Header = () => {
   const navigater = useNavigate();
@@ -20,7 +23,7 @@ const Header = () => {
     <Container>
       <div className="layout">
         <div className="left-wrap">
-          <div className="logo" onClick={() => navigater("/")}>
+          <div className="logo" onClick={onClickLogo}>
             일탈
           </div>
           <div className="noneline" onClick={() => navigater("/company")}>
@@ -59,15 +62,18 @@ const Container = styled.div`
   background-color: white;
   z-index: 10;
   .layout {
+    height: 92%;
     width: 1440px;
     display: flex;
     justify-content: space-between;
     align-items: center;
   }
   .left-wrap {
+    height: 100%;
     display: flex;
   }
   .logo {
+    height: 100%;
     width: 220px;
     font-size: 36px;
     color: rgba(255, 183, 67, 1);
@@ -76,7 +82,9 @@ const Container = styled.div`
     justify-content: center;
     cursor: pointer;
   }
+
   .isline {
+    height: 100%;
     width: 98px;
     font-size: 21px;
     display: flex;
@@ -85,12 +93,23 @@ const Container = styled.div`
     cursor: pointer;
   }
   .noneline {
+    height: 100%;
     width: 98px;
     font-size: 21px;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
+  }
+  .online {
+    height: 100%;
+    width: 98px;
+    font-size: 21px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border-bottom: 4px solid rgba(255, 183, 67, 1);
   }
 `;
 

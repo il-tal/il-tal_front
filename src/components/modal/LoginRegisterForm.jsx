@@ -33,10 +33,8 @@ const RegisterForm = ({ setIsLogin }) => {
     onSuccess: (res) => {
       sessionStorage.setItem("access_token", res.headers.access_token);
       sessionStorage.setItem("refresh_token", res.headers.refresh_token);
-      sessionStorage.setItem("username", JSON.stringify(logIn.username));
-      sessionStorage.setItem("nickname", JSON.stringify(logIn.nickname));
+      sessionStorage.setItem("userinfo", JSON.stringify(res.data.data));
       setIsLogin(true);
-      navigate("/");
     },
     onError: (err) => {
       alert("로그인에 실패했습니다.");
