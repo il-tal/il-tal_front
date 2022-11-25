@@ -52,7 +52,8 @@ const CompanyList = () => {
           <select
             className="filter"
             onChange={onChangeHandler}
-            value={comLocation}>
+            value={comLocation}
+          >
             {Locations.location.map((arg) => {
               return (
                 <option key={arg.value} value={arg.value}>
@@ -64,11 +65,12 @@ const CompanyList = () => {
         </div>
       </Category>
       <CompanyWrap>
-        {isFetching && <div>Loading</div>}
+        {/* {isFetching && <div>Loading</div>} */}
         <InfiniteScroll
           className="infinite"
           loadMore={fetchNextPage}
-          hasMore={hasNextPage}>
+          hasMore={hasNextPage}
+        >
           {data.pages.map((pagedata) => {
             return pagedata.data.map((company) => {
               return <Company company={company} />;
