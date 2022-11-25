@@ -2,9 +2,15 @@ import api from "./index";
 //
 
 /** 성향 최초 등록 */
-export const postTendency = async () => {};
+export const postTendency = async (userTend) => {
+  const data = await api.post("/tendency", userTend);
+  return data;
+};
 /** 성향 수정 */
-export const editTendency = async () => {};
+export const editTendency = async (userTend) => {
+  const data = await api.put("/tendency", userTend);
+  return data;
+};
 
 export const editNickName = async (userName) => {
   const data = await api.put("/nickname", userName);

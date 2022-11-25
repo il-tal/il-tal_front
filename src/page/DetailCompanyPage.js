@@ -1,4 +1,5 @@
 import DetailCompany from "../components/detailCompany/DetailCompany";
+
 const DetailCompanyPage = () => {
   return <DetailCompany />;
 };
