@@ -13,6 +13,9 @@ const Header = () => {
     sessionStorage.removeItem("access_token");
     sessionStorage.removeItem("refresh_token");
   };
+
+  const [showLogin, setShowLogin] = useState(true);
+
   return (
     <Container>
       <div className="layout">
@@ -27,7 +30,12 @@ const Header = () => {
             테마별
           </div>
         </div>
-        <LoginBtn onClick={() => setIsLogin(false)}>로그인</LoginBtn>
+
+        <div className="right-wrap">
+          <Btn onClick={() => navigater("/myaccount")}>마이페이지</Btn>
+          <Btn onClick={() => setIsLogin(false)}>로그인</Btn>
+          <Btn onClick={onLogout}>로그아웃</Btn>
+        </div>
         {isLogin ? null : (
           <Modal closeModal={() => setIsLogin(true)}>
             <LoginRegisterForm setIsLogin={setIsLogin} />
@@ -94,18 +102,17 @@ const HeaderWrap = styled.div`
   align-items: center;
 `;
 
-const LoginBtn = styled.button`
-  width: 99px;
+const Btn = styled.button`
+  width: 110px;
   border: none;
   font-size: 21px;
   background-color: transparent;
   cursor: pointer;
-  cursor: pointer;
 `;
 
-const LogoutBtn = styled.button`
-  height: 30px;
-  width: 70px;
-  border: 1px solid black;
-  cursor: pointer;
-`;
+// const LogoutBtn = styled.button`
+//   height: 30px;
+//   width: 70px;
+//   border: 1px solid black;
+//   cursor: pointer;
+// `;
