@@ -36,12 +36,8 @@ export const companyList = async (payload) => {
   return data;
 };
 
-export const companyDetail = async () => {
-  const { data } = await api.get("/company");
-  return data;
-};
-
-export const companyLike = async (userData) => {
+//업체&업체상세 찜하기 post 요청
+export const companyWish = async (userData) => {
   const { data } = await api.post("/company/wish", userData);
   return data;
 };
