@@ -52,8 +52,8 @@ const AllTitles = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  width: 8rem;
-  height: 8rem;
+  width: 9rem;
+  height: 9rem;
   margin: 10px;
   background-color: #ababab;
   border-radius: 5rem;

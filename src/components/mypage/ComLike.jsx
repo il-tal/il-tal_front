@@ -1,32 +1,39 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const ComLike = (props) => {
+  const navigate = useNavigate();
   return (
-    <>
-      <ComLikeBox themeImgUrl={props.themeImgUrl}>
-        <div></div>
-        <ThemeLabel>
-          <CompanyName>{props.companyName}</CompanyName>
-          <ThemeName>{props.themeName}</ThemeName>
-        </ThemeLabel>
-      </ComLikeBox>
-    </>
+    <ComLikeBox
+      onClick={() => {
+        navigate(`/company/${props.id}`);
+      }}
+    >
+      <DivImg src={props.companyImgUrl} alt={"이미지"}></DivImg>
+      <ThemeLabel>
+        <CompanyName>{props.companyName}</CompanyName>
+      </ThemeLabel>
+    </ComLikeBox>
   );
 };
 
 export default ComLike;
 
 const ComLikeBox = styled.div`
-  background-image: url(${(props) => props.themeImgUrl});
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
-  width: 11.25rem;
-  height: 11.25rem;
-  background-color: green;
+  width: 14.5rem;
+  height: 14.5rem;
+  background-color: #d2d2d2;
   display: grid;
   grid-template-rows: 5fr 1fr;
-  margin: 15px;
+  margin: 25px;
+`;
+
+const DivImg = styled.img`
+  width: 100%;
+  height: 100%;
 `;
 
 const ThemeLabel = styled.div`

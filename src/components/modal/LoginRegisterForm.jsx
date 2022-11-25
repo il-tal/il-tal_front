@@ -33,10 +33,8 @@ const RegisterForm = ({ setIsLogin }) => {
     onSuccess: (res) => {
       sessionStorage.setItem("access_token", res.headers.access_token);
       sessionStorage.setItem("refresh_token", res.headers.refresh_token);
-      sessionStorage.setItem("username", JSON.stringify(logIn.username));
-      sessionStorage.setItem("nickname", JSON.stringify(logIn.nickname));
+      sessionStorage.setItem("userinfo", JSON.stringify(res.data.data));
       setIsLogin(true);
-      navigate("/");
     },
     onError: (err) => {
       alert("로그인에 실패했습니다.");
@@ -75,36 +73,6 @@ const RegisterForm = ({ setIsLogin }) => {
       setValue("nickname", "");
     }
   };
-
-  // const formSchema = yup.object({
-  //   username: yup
-  //     .string()
-  //     .required("영문/숫자 포함 4-12자로 입력해주세요.")
-  //     .min(8, "최소 4자 이상 가능합니다.")
-  //     .max(15, "최대 12자까지만 가능합니다.")
-  //     .matches(
-  //       /^(?=.*[a-zA-Z])[-a-zA-Z0-9]{4,12}$/,
-  //       "영문/숫자 포함 4-12자로 입력해주세요"
-  //     ),
-  //   password: yup
-  //     .string()
-  //     .required("영문/숫자/특수문자포함 8-16자로 입력해주세요.")
-  //     .min(8, "최소 8자 이상 가능합니다.")
-  //     .max(15, "최대 16자까지만 가능합니다.")
-  //     .matches(
-  //       /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,16}$/,
-  //       "영문/숫자/특수문자포함 8-16자로 입력해주세요."
-  //     ),
-  //   passwordConfirm: yup
-  //     .string()
-  //     .oneOf([yup.ref("password")], "비밀번호가 다릅니다."),
-  //   nickname: yup
-  //     .string()
-  //     .required("한글,영문 2~10자로 작성해주세요.")
-  //     .min(8, "최소 2자 이상 가능합니다.")
-  //     .max(15, "최대 10자까지만 가능합니다.")
-  //     .matches(/^[가-힣a-zA-Z]{2,10}$/, "한글,영문 2~10자로 작성해주세요."),
-  // });
 
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 

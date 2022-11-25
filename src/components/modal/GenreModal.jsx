@@ -30,7 +30,6 @@ export default GenreModal;
 const GenreBox = styled.div`
   width: 500px;
   height: 800px;
-  background-color: white;
 `;
 
 const TendencyWrap = styled.div``;

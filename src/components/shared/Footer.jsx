@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 const Footer = () => {
@@ -8,11 +9,18 @@ const Footer = () => {
   const ggggraceful = "https://github.com/ggggraceful";
   const soojin_dev = "https://github.com/soojin-dev";
   // const ogaeng1 = "https://github.com/ogaeng1";
+  const navigate = useNavigate();
   return (
     <Container>
       <Logo>로고</Logo>
       <STFooter>
-        Copyright &copy; 2022
+        <span
+          onClick={() => {
+            navigate("/test");
+          }}
+        >
+          Copyright &copy; 2022
+        </span>
         <DevPart>UI/UX</DevPart>
         <DevInfo>전현주</DevInfo>
         <DevPart>FE</DevPart>

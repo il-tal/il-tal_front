@@ -1,10 +1,16 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { korDate } from "../../utils/timeFormater";
 
 const MyReviews = (props) => {
+  const navigate = useNavigate();
   return (
     <>
-      <ReviewBox>
+      <ReviewBox
+        onClick={() => {
+          navigate(`/theme/${props.id}`);
+        }}
+      >
         <ThemeName>{props.themeName}</ThemeName>
         <ThemeDiv>
           <ThemeRank>{"⭐".repeat(props.score)}</ThemeRank>
@@ -19,9 +25,8 @@ const MyReviews = (props) => {
 export default MyReviews;
 
 const ReviewBox = styled.div`
-  width: 25rem;
-  height: 15rem;
-  position: absolute;
+  min-width: 25rem;
+  min-height: 15rem;
   background-color: #d9d9d9;
   box-shadow: 0.1rem 0.1rem 3rem rgb(0, 0, 0, 0.15);
   margin: 20px;
