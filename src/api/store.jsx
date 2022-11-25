@@ -37,3 +37,8 @@ export const companyLocation = atom({
   key: "companyLocation",
   default: "",
 });
+
+export const headerClicked = atom({
+  key: "clicked",
+  default: 0,
+});

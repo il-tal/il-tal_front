@@ -40,21 +40,24 @@ const CategoryBtn = ({ categoryIndex, state, setState }) => {
 export default CategoryBtn;
 
 const Btn = styled.button`
+  min-width: 70px;
+  height: 35px;
   margin: 3px;
-  font-size: 12px;
+  font-size: 16px;
   color: ${({ backgroundColor }) => (backgroundColor ? "white" : "black")};
   background-color: ${({ backgroundColor }) =>
-    backgroundColor ? "#428bca" : "#fff"};
+    backgroundColor ? "rgba(255, 183, 67, 1)" : "#fff"};
   border: 1px solid #e5e5e5;
-  border-radius: 4px;
+  border-radius: 8px;
   outline: none;
   cursor: pointer;
+  padding: 0 10px;
 
   &:hover {
     color: #333;
     color: ${({ backgroundColor }) => (backgroundColor ? "white" : "black")};
     background-color: ${({ backgroundColor }) =>
-      backgroundColor ? "#428bca" : "#e6e6e6"};
-    border-color: #adadad;
+      backgroundColor ? "rgba(255, 183, 67, 1)" : "#e6e6e6"};
+    border-color: grey;
   }
 `;

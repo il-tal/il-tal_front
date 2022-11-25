@@ -1,15 +1,44 @@
 import styled from "styled-components";
 import ThemePoster from "./ThemePoster";
+import { companyWish } from "../../api";
+import { useNavigate } from "react-router-dom";
 import Carousel from "./Carousel";
+import { useQueryClient, useMutation } from "@tanstack/react-query";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { useEffect, useState } from "react";
 
 //ThemeWrap에서 ThemePoster는 페이징처리하여 3개씩 보여주기
 
 const Company = ({ company }) => {
+  const navigator = useNavigate();
+  const queryClient = useQueryClient();
+  const companyLike = useMutation((companyId) => companyWish(companyId), {
+    onSuccess: (res) => {
+      queryClient.invalidateQueries(["getCompanyList"]);
+      setWish(res.data.companyLikeCheck);
+    },
+  });
+
+  const [wish, setWish] = useState(company.companyLikeCheck);
+  useEffect(() => {
+    if (wish) {
+      return setWish(company.companyLikeCheck);
+    } else {
+      return setWish(company.companyLikeCheck);
+    }
+  }, [company]);
+
   return (
     <Container>
       <CompanyWrap>
         <CompanyPic>
-          <img src={company.companyImgUrl} />
+          <img
+            onClick={() => {
+              navigator(`/company/${company.id}`);
+            }}
+            alt=""
+            src={company.companyImgUrl}
+          />
         </CompanyPic>
         <CompanyText>
           <CompanyName>{company.companyName}</CompanyName>
@@ -21,7 +50,11 @@ const Company = ({ company }) => {
             홈페이지
           </HomepageUrl>
         </CompanyText>
-        <CompanyLike>❤️ {company.companyLikeCnt}</CompanyLike>
+        <CompanyLike
+          onClick={() => companyLike.mutate({ companyId: company.id })}>
+          {wish ? <AiFillHeart color={"red"} /> : <AiOutlineHeart />}{" "}
+          {company.companyLikeCnt}
+        </CompanyLike>
       </CompanyWrap>
       <ThemeWrap>
         {company.themeList.map((theme) => {
@@ -44,21 +77,25 @@ const Container = styled.div`
 const CompanyWrap = styled.div`
   position: relative;
   height: 100%;
+  transition: all 0.2s linear;
+  :hover {
+    transform: scale(1.02);
+  }
 `;
-
-const CompanyWrapTwo = styled.div``;
 
 const CompanyPic = styled.div`
   height: 351px;
   width: 285px;
   opacity: 0.8;
   position: relative;
-  filter: brightness(45%);
+  cursor: pointer;
+  filter: brightness(30%);
+  overflow: hidden;
   img {
     height: 100%;
     width: 100%;
     object-fit: cover;
-    /* background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)); */
+    border-radius: 10px;
   }
 `;
 

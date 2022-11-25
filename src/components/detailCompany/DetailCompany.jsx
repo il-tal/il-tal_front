@@ -1,9 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import styled from "styled-components";
-import { getDetailCompany } from "../../api";
+import { companyWish, getDetailCompany } from "../../api";
 import CompanyTheme from "./CompanyTheme";
 import KakaoMap from "../map/KakaoMap";
 import { useNavigate, useParams } from "react-router-dom";
+import { useState } from "react";
 
 const DetailCompany = () => {
   //업체 아이디 받기
@@ -14,6 +15,16 @@ const DetailCompany = () => {
   const { data, isLoading } = useQuery(["getDetailCompany"], () =>
     getDetailCompany(id)
   );
+
+  //데이터 refetch 클라이언트
+  const queryClient = useQueryClient();
+
+  const companyLike = useMutation((companyId) => companyWish(companyId), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["getDetailCompany"]);
+      console.log(companyLike);
+    },
+  });
 
   //로딩처리
   if (isLoading) return <div>loading...</div>;
@@ -40,11 +51,18 @@ const DetailCompany = () => {
             <div className="button-wrap">
               <button
                 className="homepage"
-                onClick={() => window.open(data.data.companyUrl, "_blank")}
-              >
+                onClick={() => window.open(data.data.companyUrl, "_blank")}>
                 홈페이지
               </button>
-              <button className="like">❤좋아요{data.data.LikeCnt}</button>
+              <button
+                onClick={() => companyLike.mutate({ companyId: id })}
+                className="like">
+                {data.data.companyLikeCheck ? (
+                  <div>좋아요 취소</div>
+                ) : (
+                  <div>좋아요❤️</div>
+                )}
+              </button>
             </div>
           </CompanyText>
           <CompanyInfo>
@@ -59,8 +77,7 @@ const DetailCompany = () => {
           return (
             <div
               className="test"
-              onClick={() => navigate(`/theme/${theme.id}`)}
-            >
+              onClick={() => navigate(`/theme/${theme.id}`)}>
               <CompanyTheme theme={theme} key={theme.id} />
             </div>
           );

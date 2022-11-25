@@ -1,5 +1,4 @@
 import styled from "styled-components";
-
 const CompanyTheme = ({ theme }) => {
   return (
     <Container>
