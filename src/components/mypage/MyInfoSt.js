@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export const Container = styled.div`
   height: 100%;
-  width: 75rem;
+  width: 90rem;
   display: grid;
   grid-template-rows: repeat(auto-fit, minmax(0, auto));
 `;
@@ -18,13 +18,13 @@ export const BoxWrap = styled.div`
   justify-content: center;
   align-items: center;
   width: 100%;
-  max-width: 1200px;
+  max-width: 1440px;
   min-height: 100%;
   margin-bottom: 50px;
 `;
 
 export const MyInfoBox = styled.div`
-  width: 72.5rem;
+  width: 90rem;
   height: 40rem;
   display: grid;
   margin-bottom: 10px;
@@ -50,15 +50,17 @@ export const MainTitle = styled.div`
   height: 280px;
   border-radius: 12rem;
   background-color: greenyellow;
+  position: absolute;
+  top: -30%;
 `;
 
 export const UserNameBox = styled.div`
+  position: relative;
   z-index: 1;
   display: grid;
   place-items: center;
   grid-template-rows: 5fr 1fr 1fr 1fr;
   background-color: #e2c2e2;
-  position: absolute;
   top: 25%;
   width: 100%;
   height: 75%;
@@ -99,21 +101,13 @@ export const TitlesBox = styled.div`
   background-color: yellow;
   display: grid;
   grid-template-columns: repeat(8, 1fr);
-  height: ${(props) => (props.toggle ? 100 : "148px")};
+  height: ${(props) => (props.toggle ? 100 : "164px")};
   overflow: hidden;
-  .title-open {
-    height: 100%;
-    overflow: hidden;
-  }
-  .title-close {
-    height: 165px;
-    overflow: hidden;
-  }
 `;
 
 export const CollapseTitles = styled.div`
   background-color: green;
-  width: 40px;
+  width: 60px;
   height: 40px;
   border-radius: 25px;
   display: flex;
@@ -126,7 +120,7 @@ export const CollapseTitles = styled.div`
 `;
 
 export const ReviewsBox = styled.div`
-  width: 1280px;
+  width: 1440px;
   display: flex;
   overflow: hidden;
 `;
