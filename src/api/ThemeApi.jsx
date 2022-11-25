@@ -5,6 +5,7 @@ export const getThemes = async () => {
   return data;
 };
 
+//테마 페이지 테마리스트 GET요청 (무한스크롤)
 export const getFilterTheme = async ({
   genre,
   location,
@@ -15,13 +16,9 @@ export const getFilterTheme = async ({
 }) => {
   const { data } = await api.get(
     `/themes?location=${location}&genreFilter=${genre}&people=${people}&themeScore=${score}&difficulty=${difficulty}&page=${pageParam}`
-    // `/themes?location=${location}&genre=${genre}&page=${pageParam}`
-    //&themeScore=${score}
   );
   return data;
 };
-
-// `/themes?location=${location}&genre=${genre}&score=${score}&people=${people}&difficulty=${difficulty}&page=${pageParam}`
 
 //디테일테마 페이지 테마리스트 GET요청
 export const getDetailTheme = async (id) => {

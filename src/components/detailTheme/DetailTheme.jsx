@@ -1,23 +1,34 @@
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
-import { getDetailTheme } from "../../api/ThemeApi";
+import { getDetailTheme, wishTheme } from "../../api/ThemeApi";
 import KakaoMap from "../map/KakaoMap";
 import Modal from "../modal/Modal";
 import ThemeReview from "./ThemeReview";
 import ThemeSynopsis from "./ThemeSynopsis";
 const DetailTheme = () => {
   //상세페이지 조회용 id
-  const param = useParams();
+  const { id } = useParams();
 
   //카카오맵 모달창
   const [isMap, setIsMap] = useState(true);
 
+  //navigate
+  const navigate = useNavigate();
+
   //테마 상세정보 조회 GET 요청 useQuery
-  const { data, isLoading } = useQuery(["getDetail"], () =>
-    getDetailTheme(param.id)
-  );
+  const { data, isLoading } = useQuery(["getDetail"], () => getDetailTheme(id));
+
+  //데이터 refetch를 위한 쿼리클라이언트
+  const queryClient = useQueryClient();
+
+  //좋아요기능 mutation
+  const themeLike = useMutation((themeId) => wishTheme(themeId), {
+    onSuccess: () => {
+      queryClient.invalidateQueries(["getDetail"]);
+    },
+  });
 
   const difficult = () => {
     if (data.data.difficulty > 4) {
@@ -42,7 +53,7 @@ const DetailTheme = () => {
       <ThemeInfoWrap>
         <ThemePicWrap>
           <ThemePic>
-            <img src={data.data.themeImgUrl} />
+            <img src={data.data.themeImgUrl} alt="themePic" />
           </ThemePic>
         </ThemePicWrap>
 
@@ -77,13 +88,21 @@ const DetailTheme = () => {
             </TextPrice>
           </ThemeInfo>
           <ThemeBtnWrap>
-            <Btn onClick={() => setIsMap(false)}>위치보기</Btn>
+            <Btn onClick={() => navigate(`/company/${data.data.companyId}`)}>
+              업체보기
+            </Btn>
             <Btn
               onClick={() => window.open([`${data.data.themeUrl}`, "_black"])}
             >
               예약하기
             </Btn>
-            <Btn>좋아요</Btn>
+            <div onClick={() => themeLike.mutate({ themeId: id })}>
+              {data.data.themeLikeCheck ? (
+                <Btn>좋아요 취소</Btn>
+              ) : (
+                <Btn>좋아요</Btn>
+              )}
+            </div>
           </ThemeBtnWrap>
         </ThemeTextWrap>
       </ThemeInfoWrap>
@@ -219,4 +238,5 @@ const Btn = styled.div`
   justify-content: center;
   align-items: center;
   font-size: 13px;
+  cursor: pointer;
 `;

@@ -34,6 +34,7 @@ const ThemeList = () => {
     isFetching,
     isError,
     error,
+
     refetch,
   } = useInfiniteQuery(
     ["getThemeList"],
@@ -45,6 +46,7 @@ const ThemeList = () => {
         score,
         people,
         difficulty,
+        refetch,
       }),
     {
       getNextPageParam: (lastPage, allPages) => {
@@ -66,15 +68,14 @@ const ThemeList = () => {
 
   return (
     <Container>
-      <div className="filter">
+      {/* <div className="filter">
         <Filter onClick={() => setIsFilter(!isFilter)}>
           {isFilter ? "필터 닫기" : "필터 열기"}
         </Filter>
         {isFilter ? <ThemeFilter refetch={refetch} /> : null}
-      </div>
-
+      </div> */}
+      <ThemeFilter refetch={refetch} />
       <PosterWrap>
-        {isFetching && <div>Loading...</div>}
         <InfiniteScroll
           className="infinite"
           loadMore={fetchNextPage}
@@ -84,12 +85,23 @@ const ThemeList = () => {
             return pagedata.data.map((theme) => {
               return (
                 <div>
-                  <ThemePoster theme={theme} onClick={() => alert("hi")} />
+                  <ThemePoster
+                    theme={theme}
+                    data={data}
+                    onClick={() => alert("hi")}
+                  />
                 </div>
               );
             });
           })}
         </InfiniteScroll>
+        <div>
+          {isFetching
+            ? "loading..."
+            : hasNextPage
+            ? "더보기"
+            : "더이상 테마가 없어요!"}
+        </div>
       </PosterWrap>
     </Container>
   );
@@ -101,7 +113,7 @@ const Container = styled.div`
   width: 100%;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   justify-content: flex-start;
   .filter {
     display: flex;
