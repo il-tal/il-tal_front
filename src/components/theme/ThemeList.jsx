@@ -84,7 +84,7 @@ const ThemeList = () => {
           {data.pages.map((pagedata) => {
             return pagedata.data.map((theme) => {
               return (
-                <div>
+                <div className="hover">
                   <ThemePoster
                     theme={theme}
                     data={data}

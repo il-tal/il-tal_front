@@ -57,6 +57,7 @@ const Comment = ({
     {
       onSuccess: () => {
         queryClient.invalidateQueries(["getComments"]);
+        queryClient.invalidateQueries(["getDetail"]);
         setIsEdit(false);
       },
     }
@@ -66,6 +67,7 @@ const Comment = ({
   const deleteComment = useMutation((id) => delComment(id), {
     onSuccess: () => {
       queryClient.invalidateQueries(["getComments"]);
+      queryClient.invalidateQueries(["getDetail"]);
     },
   });
 

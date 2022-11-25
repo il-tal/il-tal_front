@@ -128,19 +128,22 @@ const Container = styled.div`
 `;
 
 const ThemeInfoWrap = styled.div`
-  height: 400px;
+  height: 730px;
   width: 100%;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
 `;
 
 const ThemePicWrap = styled.div`
-  height: 100%;
-  width: 100%;
+  height: 586px;
+  width: 586px;
 `;
 
 const ThemePic = styled.div`
-  height: 350px;
-  width: 350px;
+  height: 586px;
+  width: 586px;
   background-color: teal;
   display: flex;
   justify-content: center;
@@ -153,35 +156,35 @@ const ThemePic = styled.div`
   }
 `;
 const ThemeTextWrap = styled.div`
-  height: 100%;
-  width: 100%;
+  height: 586px;
+  width: 800px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `;
 
 const TextGenre = styled.div`
-  height: 30px;
+  height: 50px;
   width: 100%;
   display: flex;
 `;
 const TextDifficulty = styled.div`
-  height: 30px;
+  height: 50px;
   width: 100%;
   display: flex;
 `;
 const TextPeople = styled.div`
-  height: 30px;
+  height: 50px;
   width: 100%;
   display: flex;
 `;
 const TextTime = styled.div`
-  height: 30px;
+  height: 50px;
   width: 100%;
   display: flex;
 `;
 const TextPrice = styled.div`
-  height: 30px;
+  height: 50px;
   width: 100%;
   display: flex;
 `;
@@ -194,12 +197,14 @@ const ThemeInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   .type {
-    height: 30px;
-    width: 100px;
-    font-size: 15px;
+    height: 60px;
+    width: 130px;
+    font-size: 20px;
+    color: grey;
   }
   .content {
-    font-size: 15px;
+    font-size: 20px;
+    height: 60px;
   }
 `;
 
@@ -212,16 +217,18 @@ const ThemeHeaderWrap = styled.div`
 `;
 
 const ThemeCompany = styled.div`
-  height: 100%;
-  width: 100%;
-  margin: 5px 0;
-  font-size: 15px;
+  height: 23px;
+  width: 830px;
+
+  font-size: 20px;
+  color: grey;
 `;
 const ThemeTitle = styled.div`
-  height: 100%;
-  width: 100%;
-  margin: 5px 0;
-  font-size: 30px;
+  height: 52px;
+  width: 830px;
+  margin-top: 20px;
+  font-size: 40px;
+  font-weight: bold;
 `;
 const ThemeBtnWrap = styled.div`
   height: 50px;

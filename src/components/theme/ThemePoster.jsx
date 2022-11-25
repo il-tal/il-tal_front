@@ -63,11 +63,10 @@ const Container = styled.div`
   align-items: center;
   border-radius: 8px;
   overflow: hidden;
-  margin: 27px 12px;
-  transform: scale(1);
-  &hover {
-    border: 2px solid rgba(255, 183, 67, 1);
-    transform: scale(1.03);
+  margin: 27px 10px;
+
+  &:hover {
+    border: 1px solid rgba(255, 183, 67, 1);
   }
 `;
 
