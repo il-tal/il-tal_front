@@ -1,7 +1,8 @@
 import styled from "styled-components";
 import Company from "./Company";
-import { companyList } from "../../api";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { companyList, companyWish } from "../../api";
+import { wishTheme } from "../../api/ThemeApi";
+import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
 import InfiniteScroll from "react-infinite-scroller";
 import { useState } from "react";
 import Locations from "./Locations";
@@ -9,8 +10,6 @@ import { useRecoilState } from "recoil";
 import { companyLocation } from "../../api/store";
 
 const CompanyList = () => {
-  const [isFilter, setIsFilter] = useState(false);
-
   const [comLocation, setComLocation] = useRecoilState(companyLocation);
 
   const {
@@ -34,7 +33,7 @@ const CompanyList = () => {
       },
     }
   );
-
+  console.log(data);
   const onChangeHandler = (e) => {
     setComLocation(e.target.value);
   };
@@ -43,10 +42,11 @@ const CompanyList = () => {
   if (isLoading) {
     return <div>Loading</div>;
   }
+
   return (
     <Container>
       <Category>
-        <SearchResult>검색결과</SearchResult>
+        <SearchResult>검색결과 30개</SearchResult>
         <StarFilter>별점순</StarFilter>
         <div>
           <select
@@ -61,9 +61,6 @@ const CompanyList = () => {
               );
             })}
           </select>
-          {/* <Filter onClick={() => setIsFilter(!isFilter)}>
-          {isFilter ? <div>지역선택⬇️</div> : <div>지역선택⬆️</div>}
-        </Filter> */}
         </div>
       </Category>
       <CompanyWrap>
