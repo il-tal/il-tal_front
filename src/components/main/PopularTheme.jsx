@@ -14,13 +14,15 @@ const PopularTheme = (props) => {
         <RankWrap>
           <ThemeRank>{props.rank}</ThemeRank>
         </RankWrap>
+      </ThemePic>
+      <TextWrap>
         <ThemeText fontSize={1} fontWeight={100}>
           {props.companyName}
         </ThemeText>
         <ThemeText fontSize={1.5} fontWeight={700}>
           {props.themeName}
         </ThemeText>
-      </ThemePic>
+      </TextWrap>
     </Container>
   );
 };
@@ -32,6 +34,7 @@ const Container = styled.div`
   margin: 25px;
   display: table;
   flex-direction: column;
+  box-shadow: 0.5rem 0.5rem 0.625rem #ababab;
 `;
 
 const ThemePic = styled.div`
@@ -44,7 +47,6 @@ const ThemePic = styled.div`
   display: grid;
   grid-template-rows: 3fr 0.5fr;
   background-color: #e1e1e1;
-  box-shadow: 0.5rem 0.5rem 0.625rem #ababab;
 `;
 
 const RankWrap = styled.div`
@@ -68,9 +70,14 @@ const ThemeRank = styled.div`
   border-radius: 0rem 0rem 9px 9px;
 `;
 
+const TextWrap = styled.div`
+  max-width: 100%;
+  background-color: #ffb743;
+`;
+
 const ThemeText = styled.div`
   height: 30px;
-  max-width: 20rem;
+  min-width: 20rem;
   font-size: ${(props) => props.fontSize}rem;
   font-weight: ${(props) => props.fontWeight};
   text-align: left;

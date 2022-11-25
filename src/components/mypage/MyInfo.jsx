@@ -1,14 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { SwiperSlide } from "swiper/react";
-import {
-  editNickName,
-  getAllBadges,
-  getMyCompany,
-  getMyPage,
-  getMyReview,
-  getMyTheme,
-} from "../../api/myAccount";
+import * as api from "../../api/myAccount";
 import { Carousel } from "../../utils/carousel";
 import ProgressBar from "../../utils/progressBar";
 import ComLike from "./ComLike";
@@ -22,18 +15,18 @@ import GenreModal from "../modal/GenreModal";
 
 const MyInfo = () => {
   const queryClient = useQueryClient();
-  const User = useQuery(["getMyPage"], getMyPage);
-  const Badges = useQuery(["getBadges"], getAllBadges);
-  const Review = useQuery(["getReviews"], getMyReview);
-  const Company = useQuery(["getCompany"], getMyCompany);
-  const Theme = useQuery(["getTheme"], getMyTheme);
+  const User = useQuery(["getMyPage"], api.getMyPage);
+  const Badges = useQuery(["getBadges"], api.getAllBadges);
+  const Review = useQuery(["getReviews"], api.getMyReview);
+  const Company = useQuery(["getCompany"], api.getMyCompany);
+  const Theme = useQuery(["getTheme"], api.getMyTheme);
   const [isModal, setIsModal] = useState(false);
   const [isBadge, setBadge] = useState(false);
   const [collapse, setCollapse] = useState(true);
   const [isEdit, setIsEdit] = useState(false);
   const [nameEdit, setNameEdit] = useState("");
   const postNick = useMutation(
-    ({ nickname: userNick }) => editNickName(userNick),
+    ({ nickname: userNick }) => api.editNickName(userNick),
     {
       onSuccess: () => {
         setIsEdit(false);
@@ -46,7 +39,6 @@ const MyInfo = () => {
     const { name, value } = e.target;
     setNameEdit({ ...nameEdit, [name]: value });
   };
-  console.log(Company);
   return (
     <>
       {isModal ? (
@@ -101,7 +93,12 @@ const MyInfo = () => {
                     {User.isLoading ? "" : User.data.nickname}
                   </Styled.UserName>
                 )}
-                <ProgressBar bgcolor={"#123120"} completed={10} goal={20} />
+                <ProgressBar
+                  bgcolor={"#123120"}
+                  completed={10}
+                  goal={20}
+                  height={`2rem`}
+                />
               </Styled.UserNameBox>
             </Styled.BoxWrap>
             <Styled.BoxWrap>
