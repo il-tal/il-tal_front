@@ -17,7 +17,31 @@ const Header = () => {
     sessionStorage.removeItem("refresh_token");
   };
 
-  const [showLogin, setShowLogin] = useState(true);
+  const [isClicked, setIsClicked] = useRecoilState(headerClicked);
+  const url = useLocation();
+  console.log("유알엘", url);
+  useEffect(() => {
+    if (url.pathname === "/") {
+      setIsClicked(0);
+    } else if (url.pathname === "/company") {
+      setIsClicked(1);
+    } else if (url.pathname === "/theme") {
+      setIsClicked(2);
+    }
+  }, [setIsClicked]);
+
+  const onClickLogo = () => {
+    setIsClicked(0);
+    navigater("/");
+  };
+  const onClickCompany = () => {
+    setIsClicked(1);
+    navigater("/company");
+  };
+  const onClickGenre = () => {
+    setIsClicked(2);
+    navigater("/theme");
+  };
 
   return (
     <Container>
@@ -26,19 +50,18 @@ const Header = () => {
           <div className="logo" onClick={onClickLogo}>
             일탈
           </div>
-          <div className="noneline" onClick={() => navigater("/company")}>
+          <div
+            className={isClicked === 1 ? "online" : "noneline"}
+            onClick={onClickCompany}>
             업체별
           </div>
-          <div className="noneline" onClick={() => navigater("/theme")}>
+          <div
+            className={isClicked === 2 ? "online" : "noneline"}
+            onClick={onClickGenre}>
             테마별
           </div>
         </div>
-
-        <div className="right-wrap">
-          <Btn onClick={() => navigater("/myaccount")}>마이페이지</Btn>
-          <Btn onClick={() => setIsLogin(false)}>로그인</Btn>
-          <Btn onClick={onLogout}>로그아웃</Btn>
-        </div>
+        <LoginBtn onClick={() => setIsLogin(false)}>로그인</LoginBtn>
         {isLogin ? null : (
           <Modal closeModal={() => setIsLogin(true)}>
             <LoginRegisterForm setIsLogin={setIsLogin} />
@@ -121,17 +144,18 @@ const HeaderWrap = styled.div`
   align-items: center;
 `;
 
-const Btn = styled.button`
-  width: 110px;
+const LoginBtn = styled.button`
+  width: 99px;
   border: none;
   font-size: 21px;
   background-color: transparent;
   cursor: pointer;
+  cursor: pointer;
 `;
 
-// const LogoutBtn = styled.button`
-//   height: 30px;
-//   width: 70px;
-//   border: 1px solid black;
-//   cursor: pointer;
-// `;
+const LogoutBtn = styled.button`
+  height: 30px;
+  width: 70px;
+  border: 1px solid black;
+  cursor: pointer;
+`;
