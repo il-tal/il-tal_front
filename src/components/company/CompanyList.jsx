@@ -64,7 +64,6 @@ const CompanyList = () => {
         </div>
       </Category>
       <CompanyWrap>
-        {isFetching && <div>Loading</div>}
         <InfiniteScroll
           className="infinite"
           loadMore={fetchNextPage}
