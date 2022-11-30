@@ -19,7 +19,7 @@ const Header = () => {
 
   const [isClicked, setIsClicked] = useRecoilState(headerClicked);
   const url = useLocation();
-  console.log("유알엘", url);
+
   useEffect(() => {
     if (url.pathname === "/") {
       setIsClicked(0);
@@ -52,14 +52,12 @@ const Header = () => {
           </div>
           <div
             className={isClicked === 1 ? "online" : "noneline"}
-            onClick={onClickCompany}
-          >
+            onClick={onClickCompany}>
             업체별
           </div>
           <div
             className={isClicked === 2 ? "online" : "noneline"}
-            onClick={onClickGenre}
-          >
+            onClick={onClickGenre}>
             테마별
           </div>
         </div>

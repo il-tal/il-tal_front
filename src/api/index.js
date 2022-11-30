@@ -30,10 +30,8 @@ export const loginForm = async (userData) => {
   return data;
 };
 
-export const companyList = async (payload) => {
-  const { data } = await api.get(
-    `/companies?${payload.loc}&page=${payload.id}`
-  );
+export const companyList = async ({ comPage, comLocation }) => {
+  const { data } = await api.get(`/companies?${comLocation}&page=${comPage}`);
   return data;
 };
 

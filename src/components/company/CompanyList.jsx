@@ -1,43 +1,29 @@
 import styled from "styled-components";
 import Company from "./Company";
-import { companyList, companyWish } from "../../api";
-import { wishTheme } from "../../api/ThemeApi";
-import { useInfiniteQuery, useMutation } from "@tanstack/react-query";
-import InfiniteScroll from "react-infinite-scroller";
-import { useState } from "react";
+import { companyList } from "../../api";
+import { useQuery } from "@tanstack/react-query";
 import Locations from "./Locations";
 import { useRecoilState } from "recoil";
-import { companyLocation } from "../../api/store";
+import { companyLocation, companyPages } from "../../api/store";
+import Pagination from "react-js-pagination";
+import { ref } from "yup";
 
 const CompanyList = () => {
   const [comLocation, setComLocation] = useRecoilState(companyLocation);
+  const [comPage, setCompanyPage] = useRecoilState(companyPages);
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isLoading,
-    isFetching,
-    isError,
-    error,
-  } = useInfiniteQuery(
-    ["getCompanyList", comLocation],
-    ({ pageParam = 0 }) => companyList({ id: pageParam, loc: comLocation }),
-    {
-      getNextPageParam: (lastpage, allpages) => {
-        if (lastpage.data.length === 5) {
-          return allpages.length;
-        } else if (lastpage.data.length < 5) {
-          return undefined;
-        }
-      },
-    }
+  const { data, isLoading, isError, error, refetch } = useQuery(
+    ["getCompanyList", comLocation, comPage],
+    () => companyList({ comPage, comLocation })
   );
-  console.log(data);
+
   const onChangeHandler = (e) => {
     setComLocation(e.target.value);
   };
-  console.log("왜언디파인드임?", comLocation);
+
+  const onPageHandler = (page) => {
+    setCompanyPage(page - 1);
+  };
 
   if (isLoading) {
     return <div>Loading</div>;
@@ -65,19 +51,25 @@ const CompanyList = () => {
         </div>
       </Category>
       <CompanyWrap>
-        {/* {isFetching && <div>Loading</div>} */}
-        <InfiniteScroll
-          className="infinite"
-          loadMore={fetchNextPage}
-          hasMore={hasNextPage}
-        >
-          {data.pages.map((pagedata) => {
-            return pagedata.data.map((company) => {
-              return <Company company={company} />;
-            });
-          })}
-        </InfiniteScroll>
+        {data.data.map((company) => {
+          return (
+            <div>
+              <Company company={company} />
+            </div>
+          );
+        })}
       </CompanyWrap>
+      <div className="pagenation">
+        <Pagination
+          activePage={comPage + 1}
+          itemsCountPerPage={9}
+          totalItemsCount={data.size.totalSize}
+          pageRangeDisplayed={5}
+          prevPageText={"<"}
+          nextPageText={">"}
+          onChange={onPageHandler}
+        />
+      </div>
     </Container>
   );
 };
@@ -90,6 +82,62 @@ const Container = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  .pagenation {
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul.pagination li {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border: 1px solid #e2e2e2;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1rem;
+    }
+
+    ul.pagination li:first-child {
+      border-radius: 5px 0 0 5px;
+    }
+
+    ul.pagination li:last-child {
+      border-radius: 0 5px 5px 0;
+    }
+
+    ul.pagination li a {
+      text-decoration: none;
+      color: #337ab7;
+      font-size: 1rem;
+    }
+
+    ul.pagination li.active a {
+      color: white;
+    }
+
+    ul.pagination li.active {
+      background-color: #337ab7;
+    }
+
+    ul.pagination li a:hover,
+    ul.pagination li a.active {
+      color: blue;
+    }
+
+    .page-selection {
+      width: 48px;
+      height: 30px;
+      color: #337ab7;
+    }
+  }
 `;
 
 const Category = styled.div`
