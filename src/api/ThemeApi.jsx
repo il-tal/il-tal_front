@@ -12,10 +12,10 @@ export const getFilterTheme = async ({
   score,
   people,
   difficulty,
-  pageParam,
+  themePagenation,
 }) => {
   const { data } = await api.get(
-    `/themes?location=${location}&genreFilter=${genre}&people=${people}&themeScore=${score}&difficulty=${difficulty}&page=${pageParam}`
+    `/themes?location=${location}&genreFilter=${genre}&people=${people}&themeScore=${score}&difficulty=${difficulty}&page=${themePagenation}`
   );
   return data;
 };

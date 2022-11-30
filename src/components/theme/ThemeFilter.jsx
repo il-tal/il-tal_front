@@ -4,14 +4,16 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import Category from "./Category";
 import CategoryBtn from "./CategoryBtn";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import {
   difficultyState,
   genreState,
   locationState,
   peopleState,
   scoreState,
+  themePages,
 } from "../../api/store";
+import { useQueryClient } from "@tanstack/react-query";
 const ThemeFilter = ({ refetch }) => {
   //전역변수로 선언된 각 필터별 스테이트 (Recoil)
   const [genre, setGenre] = useRecoilState(genreState);
@@ -82,6 +84,8 @@ const ThemeFilter = ({ refetch }) => {
     setScore([0, 5]);
     setDifficulty([1, 5]);
   };
+
+  const setPage = useSetRecoilState(themePages);
 
   return (
     <Container>
@@ -179,7 +183,14 @@ const ThemeFilter = ({ refetch }) => {
       </FilterWrap>
       <div className="button-wrap">
         <SearchBtn2 onClick={() => resetCategory()}>초기화</SearchBtn2>
-        <SearchBtn onClick={() => refetch()}>적용</SearchBtn>
+        <SearchBtn
+          onClick={() => {
+            refetch();
+            setPage(0);
+          }}
+        >
+          적용
+        </SearchBtn>
       </div>
     </Container>
   );

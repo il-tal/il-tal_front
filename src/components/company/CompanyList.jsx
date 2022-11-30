@@ -38,7 +38,8 @@ const CompanyList = () => {
           <select
             className="filter"
             onChange={onChangeHandler}
-            value={comLocation}>
+            value={comLocation}
+          >
             {Locations.location.map((arg) => {
               return (
                 <option key={arg.value} value={arg.value}>

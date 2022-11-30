@@ -109,7 +109,6 @@ const Comment = ({
       <Header>
         <div className="nick">{nickname}</div>
         <div className="date">
-          플레이날짜
           {isEdit ? (
             <input
               type="date"
@@ -118,7 +117,7 @@ const Comment = ({
               defaultValue={playDate}
             />
           ) : (
-            playDate
+            `플레이날짜 ${playDate}`
           )}
         </div>
       </Header>
@@ -159,7 +158,9 @@ const Comment = ({
               ? "보통이에요"
               : "쉬웠어요"}
           </div>
-          <div className="hint">{`힌트 ${hint}회`}</div>
+          <div className="hint">
+            {hint === 5 ? "힌트 5회 이상" : `힌트 ${hint}회`}
+          </div>
           <div className="score">{"⭐".repeat(score)}</div>
         </Middle>
       )}
@@ -184,9 +185,9 @@ const Comment = ({
 export default Comment;
 
 const Container = styled.div`
-  height: 130px;
-  width: 100%;
-  border: 1px solid grey;
+  height: 200px;
+  width: 650px;
+  /* border: 1px solid grey; */
   margin: 15px 0;
   display: flex;
   flex-direction: column;
@@ -235,12 +236,13 @@ const Container = styled.div`
   .edit-text-wrap {
     display: flex;
     justify-content: flex-start;
+    height: 150px;
     width: 100%;
     .edit-text {
       display: flex;
-      width: 1300px;
-      height: 65px;
-      margin: 10px;
+      width: 625px;
+      height: 90px;
+      margin: 10px auto;
       padding: 10px;
       box-sizing: border-box;
       resize: none;
@@ -253,13 +255,18 @@ const Container = styled.div`
 
   .edit-select {
     position: absolute;
-    top: 8px;
+    top: 11px;
+    left: 70px;
     display: flex;
+    select {
+      width: 100px;
+      border-radius: 8px;
+    }
   }
 `;
 
 const Header = styled.div`
-  height: 100%;
+  height: 50px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -274,10 +281,15 @@ const Header = styled.div`
   .date {
     font-size: 13px;
     margin-right: 10px;
+    input {
+      height: 27px;
+      border-radius: 8px;
+      border: 1px solid grey;
+    }
   }
 `;
 const Middle = styled.div`
-  height: 100%;
+  height: 45px;
   width: 100%;
   display: flex;
   div {
@@ -286,7 +298,7 @@ const Middle = styled.div`
   }
 `;
 const Body = styled.div`
-  height: 100%;
+  height: 100px;
   width: 100%;
 
   font-size: 15px;
