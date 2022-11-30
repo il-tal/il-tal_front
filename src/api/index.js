@@ -49,9 +49,8 @@ export const getDetailCompany = async (id) => {
   return data;
 };
 
-//테스트 카카오 로그인
-export const kakaologin2 = async (kakaocode) => {
+//카카오 로그인
+export const kakaologin = async (kakaocode) => {
   const data = await api.get(`/kakao/callback?code=${kakaocode}`);
-  console.log("카카오로그인", data);
   return data;
 };
