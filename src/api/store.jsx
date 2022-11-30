@@ -38,6 +38,12 @@ export const companyLocation = atom({
   default: "",
 });
 
+//업체별 페이지 전역 스테이트
+export const companyPages = atom({
+  key: "companyPage",
+  default: 0,
+});
+
 export const headerClicked = atom({
   key: "clicked",
   default: 0,

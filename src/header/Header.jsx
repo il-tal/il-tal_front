@@ -19,7 +19,7 @@ const Header = () => {
 
   const [isClicked, setIsClicked] = useRecoilState(headerClicked);
   const url = useLocation();
-  console.log("유알엘", url);
+
   useEffect(() => {
     if (url.pathname === "/") {
       setIsClicked(0);

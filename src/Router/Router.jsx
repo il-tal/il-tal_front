@@ -8,6 +8,7 @@ import ErrorPage from "../page/ErrorPage";
 import CompanyPage from "../page/CompanyPage";
 import MainLayout from "../page/MainLayout";
 import Test from "../page/Test";
+import KakaoLogin from "../components/modal/KakaoLogin";
 
 const Router = () => {
   return (
@@ -15,6 +16,7 @@ const Router = () => {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<MainPage />} />
+          <Route path="/kakao/callback" element={<KakaoLogin />} />
           <Route path="/theme" element={<ThemePage />} />
           <Route path="/theme/:id" element={<DetailTheme />} />
           <Route path="/company" element={<CompanyPage />} />
