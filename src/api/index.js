@@ -26,6 +26,7 @@ export const signUpForm = async (userData) => {
 
 export const loginForm = async (userData) => {
   const data = await api.post("/login", userData);
+  console.log("그냥로그인", data);
   return data;
 };
 
@@ -45,5 +46,12 @@ export const companyWish = async (userData) => {
 //업체상세페이지 GET요청
 export const getDetailCompany = async (id) => {
   const { data } = await api.get(`/company/${id}`);
+  return data;
+};
+
+//테스트 카카오 로그인
+export const kakaologin2 = async (kakaocode) => {
+  const data = await api.get(`/kakao/callback?code=${kakaocode}`);
+  console.log("카카오로그인", data);
   return data;
 };

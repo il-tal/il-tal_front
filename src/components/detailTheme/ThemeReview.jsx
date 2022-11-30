@@ -87,9 +87,9 @@ const Container = styled.div`
 const ReviewWrap = styled.div`
   height: 100%;
   width: 100%;
-
+  justify-content: space-between;
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   align-items: center;
 `;
 const ReviewHeader = styled.div`
@@ -99,6 +99,7 @@ const ReviewHeader = styled.div`
   justify-content: space-between;
   margin: 20px 0 10px 0;
   align-items: center;
+
   .review-score-wrap {
     display: flex;
     font-size: 18px;

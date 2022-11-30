@@ -42,3 +42,8 @@ export const headerClicked = atom({
   key: "clicked",
   default: 0,
 });
+
+export const themePages = atom({
+  key: "themePages",
+  default: 0,
+});

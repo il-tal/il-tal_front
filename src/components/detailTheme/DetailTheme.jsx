@@ -7,6 +7,7 @@ import KakaoMap from "../map/KakaoMap";
 import Modal from "../modal/Modal";
 import ThemeReview from "./ThemeReview";
 import ThemeSynopsis from "./ThemeSynopsis";
+import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 const DetailTheme = () => {
   //상세페이지 조회용 id
   const { id } = useParams();
@@ -88,21 +89,24 @@ const DetailTheme = () => {
             </TextPrice>
           </ThemeInfo>
           <ThemeBtnWrap>
+            <div onClick={() => themeLike.mutate({ themeId: id })}>
+              {data.data.themeLikeCheck ? (
+                <Btn>
+                  {<AiFillHeart color="red" size="20" />}
+                  좋아요 {data.data.totalLikeCnt}
+                </Btn>
+              ) : (
+                <Btn>
+                  {<AiOutlineHeart size="20" />} 좋아요 {data.data.totalLikeCnt}
+                </Btn>
+              )}
+            </div>
             <Btn onClick={() => navigate(`/company/${data.data.companyId}`)}>
               업체보기
             </Btn>
-            <Btn
-              onClick={() => window.open([`${data.data.themeUrl}`, "_black"])}
-            >
+            <Btn onClick={() => window.open([`${data.data.themeUrl}`])}>
               예약하기
             </Btn>
-            <div onClick={() => themeLike.mutate({ themeId: id })}>
-              {data.data.themeLikeCheck ? (
-                <Btn>좋아요 취소</Btn>
-              ) : (
-                <Btn>좋아요</Btn>
-              )}
-            </div>
           </ThemeBtnWrap>
         </ThemeTextWrap>
       </ThemeInfoWrap>
@@ -128,7 +132,7 @@ const Container = styled.div`
 `;
 
 const ThemeInfoWrap = styled.div`
-  height: 730px;
+  height: 610px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -137,13 +141,14 @@ const ThemeInfoWrap = styled.div`
 `;
 
 const ThemePicWrap = styled.div`
-  height: 586px;
-  width: 586px;
+  height: 464px;
+  width: 684px;
+  margin-right: 30px;
 `;
 
 const ThemePic = styled.div`
-  height: 586px;
-  width: 586px;
+  height: 464px;
+  width: 684px;
   background-color: teal;
   display: flex;
   justify-content: center;
@@ -156,7 +161,7 @@ const ThemePic = styled.div`
   }
 `;
 const ThemeTextWrap = styled.div`
-  height: 586px;
+  height: 464px;
   width: 800px;
   display: flex;
   flex-direction: column;
@@ -164,27 +169,23 @@ const ThemeTextWrap = styled.div`
 `;
 
 const TextGenre = styled.div`
-  height: 50px;
   width: 100%;
   display: flex;
+  align-items: center;
 `;
 const TextDifficulty = styled.div`
-  height: 50px;
   width: 100%;
   display: flex;
 `;
 const TextPeople = styled.div`
-  height: 50px;
   width: 100%;
   display: flex;
 `;
 const TextTime = styled.div`
-  height: 50px;
   width: 100%;
   display: flex;
 `;
 const TextPrice = styled.div`
-  height: 50px;
   width: 100%;
   display: flex;
 `;
@@ -197,14 +198,18 @@ const ThemeInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   .type {
-    height: 60px;
+    height: 50px;
     width: 130px;
     font-size: 20px;
     color: grey;
+    display: flex;
+    align-items: center;
   }
   .content {
     font-size: 20px;
-    height: 60px;
+    height: 50px;
+    display: flex;
+    align-items: center;
   }
 `;
 
@@ -232,18 +237,21 @@ const ThemeTitle = styled.div`
 `;
 const ThemeBtnWrap = styled.div`
   height: 50px;
-  width: 100%;
+  width: 700px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
 `;
 
 const Btn = styled.div`
-  height: 30px;
-  width: 100px;
+  height: 48px;
+  width: 220px;
   border: 1px solid;
+  border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 13px;
+
   cursor: pointer;
 `;
