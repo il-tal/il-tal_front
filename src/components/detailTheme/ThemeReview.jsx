@@ -15,10 +15,14 @@ const ThemeReview = ({ props }) => {
   //코멘트 조회 useQuery
   const { data, isLoading } = useQuery(["getComments"], () => getComment(id));
 
+  //댓글 더보기 state
+  const [more, setMore] = useState(true);
+
   //코멘트 로딩 처리
   if (isLoading) {
     return <div>댓글을 불러오는 중입니다...!</div>;
   }
+
   return (
     <Container>
       <ReviewHeader>
@@ -37,22 +41,39 @@ const ThemeReview = ({ props }) => {
       </div>
 
       <ReviewWrap>
-        {data.data.map((comment) => {
-          return (
-            <Comment
-              key={comment.id}
-              id={comment.id}
-              nickname={comment.nickname}
-              playDate={comment.playDate}
-              score={comment.score}
-              success={comment.success}
-              difficulty={comment.difficulty}
-              hint={comment.hint}
-              comment={comment.comment}
-            />
-          );
-        })}
+        {more
+          ? data.data.slice(0, 4).map((comment) => {
+              return (
+                <Comment
+                  key={comment.id}
+                  id={comment.id}
+                  nickname={comment.nickname}
+                  playDate={comment.playDate}
+                  score={comment.score}
+                  success={comment.success}
+                  difficulty={comment.difficulty}
+                  hint={comment.hint}
+                  comment={comment.comment}
+                />
+              );
+            })
+          : data.data.map((comment) => {
+              return (
+                <Comment
+                  key={comment.id}
+                  id={comment.id}
+                  nickname={comment.nickname}
+                  playDate={comment.playDate}
+                  score={comment.score}
+                  success={comment.success}
+                  difficulty={comment.difficulty}
+                  hint={comment.hint}
+                  comment={comment.comment}
+                />
+              );
+            })}
       </ReviewWrap>
+      <div onClick={() => setMore(!more)}>{more ? "모든댓글보기" : "닫기"}</div>
     </Container>
   );
 };
@@ -87,6 +108,7 @@ const Container = styled.div`
 const ReviewWrap = styled.div`
   height: 100%;
   width: 100%;
+
   justify-content: space-between;
   display: flex;
   flex-wrap: wrap;

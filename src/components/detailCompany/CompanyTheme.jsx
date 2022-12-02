@@ -11,7 +11,7 @@ const CompanyTheme = ({ theme }) => {
             <span className="genre">{theme.genre}</span>
             <span className="title">{theme.themeName}</span>
             <span className="review">⭐ {theme.themeScore}</span>
-            <span>{theme.price}원</span>
+            <span className="price">{theme.price}원</span>
           </div>
           <div className="info-like-wrap">
             <span>
@@ -19,7 +19,7 @@ const CompanyTheme = ({ theme }) => {
               {theme.maxPeople}명 | {theme.playTime}분
             </span>
 
-            <button>❤ 좋아요 {theme.totalLikeCnt}</button>
+            <button className="like-btn">❤ 좋아요 {theme.totalLikeCnt}</button>
           </div>
         </ThemeText>
       </ThemeInfo>
@@ -30,20 +30,21 @@ const CompanyTheme = ({ theme }) => {
 export default CompanyTheme;
 
 const Container = styled.div`
-  height: 200px;
-  width: 100%;
+  height: 280px;
+  width: 1440px;
   display: flex;
-  margin: 30px 0;
-  box-shadow: 5px 5px 5px 5px gray;
+  margin: 20px 0;
+  border-radius: 8px;
+  border: 1px solid gray;
+  overflow: hidden;
   cursor: pointer;
-  transform: scale(1);
-  &hover {
-    transform: scale(1.5);
+  &:hover {
+    border: 1px solid rgba(255, 183, 67, 1);
   }
 `;
 const ThemePic = styled.div`
-  height: 200px;
-  width: 350px;
+  height: 280px;
+  width: 440px;
   img {
     width: 100%;
     height: 100%;
@@ -55,7 +56,7 @@ const ThemeInfo = styled.div`
   width: 100%;
 `;
 const ThemeText = styled.div`
-  height: 200px;
+  height: 280px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -68,13 +69,17 @@ const ThemeText = styled.div`
       margin-bottom: 10px;
     }
     .genre {
-      font-size: 18px;
+      font-size: 24px;
     }
     .title {
-      font-size: 25px;
+      font-size: 32px;
+      font-weight: bold;
     }
     .review {
-      font-size: 18px;
+      font-size: 24px;
+    }
+    .price {
+      font-size: 24px;
     }
   }
   .info-like-wrap {
@@ -84,10 +89,13 @@ const ThemeText = styled.div`
     span {
       font-size: 18px;
     }
-    button {
-      height: 35px;
-      width: 150px;
+    .like-btn {
+      height: 48px;
+      width: 220px;
       font-size: 18px;
+      border-radius: 8px;
+      background-color: white;
+      border: 1px solid gray;
     }
   }
 `;

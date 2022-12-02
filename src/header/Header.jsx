@@ -3,19 +3,28 @@ import styled from "styled-components";
 import LoginRegisterForm from "../components/modal/LoginRegisterForm";
 import Modal from "../components/modal/Modal";
 import { useEffect, useState } from "react";
-import { set } from "date-fns";
+import { FiLogOut } from "react-icons/fi";
 import { useRecoilState } from "recoil";
-import { headerClicked } from "../api/store";
+import { headerClicked, loginCheck } from "../api/store";
 
 const Header = () => {
   const navigater = useNavigate();
   const [isLogin, setIsLogin] = useState(true);
+  const [loginState, setLoginState] = useRecoilState(loginCheck);
   const onLogout = () => {
     sessionStorage.removeItem("username");
     sessionStorage.removeItem("nickname");
     sessionStorage.removeItem("access_token");
     sessionStorage.removeItem("refresh_token");
+    setLoginState(false);
   };
+
+  useEffect(() => {
+    const userinformation = JSON.parse(sessionStorage.getItem("userinfo"));
+    if (userinformation) {
+      setLoginState(true);
+    }
+  }, []);
 
   const [isClicked, setIsClicked] = useRecoilState(headerClicked);
   const url = useLocation();
@@ -52,16 +61,35 @@ const Header = () => {
           </div>
           <div
             className={isClicked === 1 ? "online" : "noneline"}
-            onClick={onClickCompany}>
+            onClick={onClickCompany}
+          >
             업체별
           </div>
           <div
             className={isClicked === 2 ? "online" : "noneline"}
-            onClick={onClickGenre}>
+            onClick={onClickGenre}
+          >
             테마별
           </div>
         </div>
-        <LoginBtn onClick={() => setIsLogin(false)}>로그인</LoginBtn>
+        {loginState ? (
+          <div className="login">
+            <LoginBtn onClick={() => navigater("/myaccount")}>
+              마이페이지
+            </LoginBtn>{" "}
+            <div
+              onClick={() => {
+                onLogout();
+                navigater("/");
+              }}
+            >
+              <FiLogOut size="28" />
+            </div>
+          </div>
+        ) : (
+          <LoginBtn onClick={() => setIsLogin(false)}>로그인</LoginBtn>
+        )}
+
         {isLogin ? null : (
           <Modal closeModal={() => setIsLogin(true)}>
             <LoginRegisterForm setIsLogin={setIsLogin} />
@@ -134,6 +162,12 @@ const Container = styled.div`
     cursor: pointer;
     border-bottom: 4px solid rgba(255, 183, 67, 1);
   }
+  .login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
 `;
 
 const HeaderWrap = styled.div`
@@ -145,7 +179,7 @@ const HeaderWrap = styled.div`
 `;
 
 const LoginBtn = styled.button`
-  width: 99px;
+  width: 120px;
   border: none;
   font-size: 21px;
   background-color: transparent;

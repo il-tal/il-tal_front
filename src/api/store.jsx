@@ -53,3 +53,8 @@ export const themePages = atom({
   key: "themePages",
   default: 0,
 });
+
+export const loginCheck = atom({
+  key: "loginCheck",
+  default: false,
+});

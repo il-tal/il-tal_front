@@ -12,26 +12,28 @@ const Footer = () => {
   const navigate = useNavigate();
   return (
     <Container>
-      <Logo>로고</Logo>
-      <STFooter>
-        <span
-          onClick={() => {
-            navigate("/test");
-          }}
-        >
-          Copyright &copy; 2022
-        </span>
-        <DevPart>UI/UX</DevPart>
-        <DevInfo>전현주</DevInfo>
-        <DevPart>FE</DevPart>
-        <DevInfo onClick={() => window.open(clorose)}>정영훈</DevInfo>
-        <DevInfo onClick={() => window.open(hwirin_Kim)}>김휘린</DevInfo>
-        <DevInfo onClick={() => window.open(hyemin0901)}>박혜민</DevInfo>
-        <DevPart>BE</DevPart>
-        <DevInfo onClick={() => window.open(liam_Geni)}>이기재</DevInfo>
-        <DevInfo onClick={() => window.open(ggggraceful)}>남궁은</DevInfo>
-        <DevInfo onClick={() => window.open(soojin_dev)}>한수진</DevInfo>
-      </STFooter>
+      <div className="layout">
+        <Logo>로고</Logo>
+        <STFooter>
+          <span
+            onClick={() => {
+              navigate("/test");
+            }}
+          >
+            Copyright &copy; 2022
+          </span>
+          <DevPart>UI/UX</DevPart>
+          <DevInfo>전현주</DevInfo>
+          <DevPart>FE</DevPart>
+          <DevInfo onClick={() => window.open(clorose)}>정영훈</DevInfo>
+          <DevInfo onClick={() => window.open(hwirin_Kim)}>김휘린</DevInfo>
+          <DevInfo onClick={() => window.open(hyemin0901)}>박혜민</DevInfo>
+          <DevPart>BE</DevPart>
+          <DevInfo onClick={() => window.open(liam_Geni)}>이기재</DevInfo>
+          <DevInfo onClick={() => window.open(ggggraceful)}>남궁은</DevInfo>
+          <DevInfo onClick={() => window.open(soojin_dev)}>한수진</DevInfo>
+        </STFooter>
+      </div>
     </Container>
   );
 };
@@ -39,27 +41,37 @@ const Footer = () => {
 export default Footer;
 
 const Container = styled.footer`
-  width: 100%;
+  width: 100vw;
   margin-top: 2rem;
-  height: 5rem;
-  background-color: #0e0e0e;
-  display: grid;
+  height: 175px;
+  border-top: 1px solid gray;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   grid-template-columns: 1fr 1fr;
+  .layout {
+    height: 92%;
+    width: 1440px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 `;
 
 const Logo = styled.div`
   display: flex;
   margin: 0 30px;
   align-items: center;
-  color: #fefefe;
+  font-size: 48px;
+  color: rgba(255, 183, 67, 1); ;
 `;
 
 const STFooter = styled.div`
   display: flex;
-  margin: 0 auto;
+
   align-items: center;
-  text-align: right;
-  color: #fefefe;
+
+  color: grey;
 `;
 
 const DevPart = styled.span`
