@@ -49,12 +49,16 @@ body {
   object-fit: cover;
 }
 
-.swiper {
-  margin-left: auto;
-  margin-right: auto;
+.swiper-wrapper:hover ~ .swiper-button-prev {
+  background: url(/src/asset/left_arrow.png) no-repeat;
+  background-position: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 0.5px solid #cccccc;
 }
 
-.swiper-button-next {
+.swiper-wrapper:hover ~ .swiper-button-next {
   background: url(/src/asset/right_arrow.png) no-repeat;
   background-position: center;
   width: 35px;
@@ -63,7 +67,30 @@ body {
   border: 0.5px solid #cccccc;
 }
 
-.swiper-button-prev {
+.swiper {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.swiper-button-next:hover {
+  background: url(/src/asset/right_arrow.png) no-repeat;
+  background-position: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 0.5px solid #cccccc;
+}
+
+/* .swiper-button-next:hover ~ .swiper-button-prev {
+  background: url(/src/asset/left_arrow.png) no-repeat;
+  background-position: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 0.5px solid #cccccc;
+} */
+
+.swiper-button-prev:hover {
   background: url(/src/asset/left_arrow.png) no-repeat;
   background-position: center;
   width: 35px;

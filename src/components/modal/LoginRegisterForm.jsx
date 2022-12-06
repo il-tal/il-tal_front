@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { signUpForm, loginForm } from "../../api/index";
 import { REST_API_KEY, REDIRECT_URI } from "./KakaoLoginData";
 import kakaoLogo from "../../asset/kakao_login.png";
-import Logo from "../../asset/ourLogo.png";
+import Logo from "../../asset/LoginLogo.png";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { loginCheck } from "../../api/store";

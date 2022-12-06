@@ -7,6 +7,10 @@ import { useRecoilState } from "recoil";
 import { companyLocation, companyPages } from "../../api/store";
 import Pagination from "react-js-pagination";
 import Narrow from "../../asset/gray_narrow.png";
+import nextgray from "../../asset/next-gray.png";
+import prevgray from "../../asset/prev-gray.png";
+import nextgreen from "../../asset/next-green.png";
+import prevgreen from "../../asset/prev-green.png";
 import { ref } from "yup";
 
 const CompanyList = () => {
@@ -65,8 +69,21 @@ const CompanyList = () => {
           itemsCountPerPage={9}
           totalItemsCount={data.data.totalElements}
           pageRangeDisplayed={5}
-          prevPageText={"<"}
-          nextPageText={">"}
+          hideFirstLastPages={true}
+          prevPageText={
+            comPage === 0 ? (
+              <img src={prevgray} alt="next" />
+            ) : (
+              <img src={prevgreen} alt="next" />
+            )
+          }
+          nextPageText={
+            comPage + 1 === data.data.totalPages ? (
+              <img src={nextgray} alt="next" />
+            ) : (
+              <img src={nextgreen} alt="next" />
+            )
+          }
           onChange={onPageHandler}
         />
       </div>
@@ -96,9 +113,9 @@ const Container = styled.div`
 
     ul.pagination li {
       display: inline-block;
-      width: 30px;
-      height: 30px;
-      border: 1px solid #e2e2e2;
+      width: 60px;
+      height: 60px;
+      /* border: 1px solid #e2e2e2; */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -115,8 +132,8 @@ const Container = styled.div`
 
     ul.pagination li a {
       text-decoration: none;
-      color: #337ab7;
-      font-size: 1rem;
+      color: black;
+      font-size: 22px;
     }
 
     ul.pagination li.active a {
@@ -124,10 +141,14 @@ const Container = styled.div`
     }
 
     ul.pagination li.active {
-      background-color: #337ab7;
+      /* scale: 1.3; */
+      border-radius: 50% 50%;
+      background-color: var(--color-main);
     }
 
-    ul.pagination li a:hover,
+    ul.pagination li a:hover {
+      color: black;
+    }
     ul.pagination li a.active {
       color: blue;
     }

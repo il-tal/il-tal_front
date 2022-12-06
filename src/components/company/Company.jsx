@@ -29,8 +29,6 @@ const Company = ({ company }) => {
     }
   }, [company]);
 
-  console.log(company.companyScore);
-
   return (
     <Container>
       <CompanyWrap>
