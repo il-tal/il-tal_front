@@ -5,6 +5,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { signUpForm, loginForm } from "../../api/index";
 import { REST_API_KEY, REDIRECT_URI } from "./KakaoLoginData";
+import kakaoLogo from "../../asset/kakao_login.png";
+import Logo from "../../asset/ourLogo.png";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
@@ -82,7 +84,7 @@ const RegisterForm = ({ setIsLogin }) => {
 
   return (
     <Container>
-      <LogoBox />
+      <img src={Logo} alt="iltalLogo" />
       {logIn ? (
         <Wrap>
           <form onSubmit={handleSubmit(submitLoginSignUp)}>
@@ -103,10 +105,9 @@ const RegisterForm = ({ setIsLogin }) => {
           </BottomBox>
           <Line />
           <SocialLoginBox>
-            <KakaoLoginBtn onClick={handleLogin}>
-              카카오톡으로 로그인
-            </KakaoLoginBtn>
-            <GoogleLoginBtn>구글로 로그인</GoogleLoginBtn>
+            {/* <KakaoLoginBtn onClick={handleLogin}> */}
+            <img onClick={handleLogin} alt="kakaoLogo" src={kakaoLogo} />
+            {/* </KakaoLoginBtn> */}
           </SocialLoginBox>
         </Wrap>
       ) : (
@@ -215,12 +216,12 @@ const Wrap = styled.div`
   align-items: center;
 `;
 
-const LogoBox = styled.div`
-  height: 59px;
-  width: 157px;
-  margin: 50px 0 30px 0;
-  background-color: #d9d9d9;
-`;
+// const LogoBox = styled.div`
+//   height: 59px;
+//   width: 157px;
+//   margin: 50px 0 30px 0;
+//   background-image: url(/src/asset/OurLogo.png);
+// `;
 
 ///////////////////////////////////////////
 //로그인 css
@@ -273,9 +274,8 @@ const Line = styled.hr`
 const SocialLoginBox = styled.div`
   display: flex;
   flex-direction: column;
-  height: 170px;
+  height: 70px;
   width: 300px;
-  /* border: 1px solid red; */
 `;
 
 const KakaoLoginBtn = styled.button`
@@ -283,10 +283,8 @@ const KakaoLoginBtn = styled.button`
   height: 50px;
   width: 299px;
   margin-top: 15px;
-  background-color: #fae301;
   border-radius: 5px;
   border: none;
-  color: #828282;
   cursor: pointer;
 `;
 

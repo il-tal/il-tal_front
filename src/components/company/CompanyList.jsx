@@ -6,6 +6,7 @@ import Locations from "./Locations";
 import { useRecoilState } from "recoil";
 import { companyLocation, companyPages } from "../../api/store";
 import Pagination from "react-js-pagination";
+import Narrow from "../../asset/gray_narrow.png";
 import { ref } from "yup";
 
 const CompanyList = () => {
@@ -38,8 +39,7 @@ const CompanyList = () => {
           <select
             className="filter"
             onChange={onChangeHandler}
-            value={comLocation}
-          >
+            value={comLocation}>
             {Locations.location.map((arg) => {
               return (
                 <option key={arg.value} value={arg.value}>
@@ -51,7 +51,7 @@ const CompanyList = () => {
         </div>
       </Category>
       <CompanyWrap>
-        {data.data.map((company) => {
+        {data.data.content.map((company) => {
           return (
             <div>
               <Company company={company} />
@@ -63,7 +63,7 @@ const CompanyList = () => {
         <Pagination
           activePage={comPage + 1}
           itemsCountPerPage={9}
-          totalItemsCount={data.size.totalSize}
+          totalItemsCount={data.data.totalElements}
           pageRangeDisplayed={5}
           prevPageText={"<"}
           nextPageText={">"}
@@ -147,21 +147,30 @@ const Category = styled.div`
   justify-content: space-between;
   align-items: center;
   .filter {
-    height: 30px;
-    width: 100px;
-    font-size: 12px;
+    height: 48px;
+    width: 127px;
+    font-size: 18px;
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid #8a8a8a;
+    border-radius: 8px;
+    text-align: left;
+    padding-left: 20px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background: url(${Narrow}) no-repeat 95% 50%;
+    ::-ms-expand {
+      display: none;
+    }
+    cursor: pointer;
   }
 `;
 
-const SearchResult = styled.div``;
-
-const Filter = styled.button`
-  border: 1px solid gray;
-  background-color: transparent;
-  font-size: 17px;
+const SearchResult = styled.div`
+  font-size: 21px;
+  font-weight: bold;
 `;
 
 const StarFilter = styled.button`
@@ -172,17 +181,13 @@ const StarFilter = styled.button`
   font-size: 17px;
 `;
 
-const LocationFilter = styled.button`
-  border: none;
-  background-color: transparent;
-  cursor: pointer;
-  font-size: 17px;
-`;
-
 const CompanyWrap = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  column-gap: 24px;
+  row-gap: 49px;
+  margin-bottom: 70px;
 `;
