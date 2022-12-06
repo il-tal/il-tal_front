@@ -39,7 +39,7 @@ const Container = styled.div`
   overflow: hidden;
   cursor: pointer;
   &:hover {
-    border: 1px solid rgba(255, 183, 67, 1);
+    border: 1px solid var(--color-main);
   }
 `;
 const ThemePic = styled.div`

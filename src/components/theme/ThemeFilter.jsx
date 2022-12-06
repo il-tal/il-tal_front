@@ -14,7 +14,7 @@ import {
   themePages,
 } from "../../api/store";
 import { useQueryClient } from "@tanstack/react-query";
-const ThemeFilter = ({ refetch }) => {
+const ThemeFilter = ({ refetch, filterCnt }) => {
   //전역변수로 선언된 각 필터별 스테이트 (Recoil)
   const [genre, setGenre] = useRecoilState(genreState);
   const [location, setLocation] = useRecoilState(locationState);
@@ -189,7 +189,9 @@ const ThemeFilter = ({ refetch }) => {
             setPage(0);
           }}
         >
-          적용
+          {filterCnt.isLoading
+            ? "Loading.."
+            : `총${filterCnt.data.data}개 결과`}
         </SearchBtn>
       </div>
     </Container>
@@ -198,13 +200,13 @@ const ThemeFilter = ({ refetch }) => {
 export default ThemeFilter;
 
 const Container = styled.div`
-  height: 100%;
+  height: 900px;
   width: 340px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  margin-top: 27px;
+
   border: 1px solid gray;
   border-radius: 8px;
 `;
@@ -247,7 +249,7 @@ const FilterWrap = styled.div`
     font-size: 16px;
 
     color: white;
-    background-color: rgba(255, 183, 67, 1);
+    background-color: var(--color-main);
   }
   .category {
     margin: 20px 0;
@@ -263,7 +265,7 @@ const FilterWrap = styled.div`
 const SearchBtn = styled.button`
   height: 48px;
   width: 132px;
-  background-color: rgba(255, 183, 67, 1);
+  background-color: var(--color-main);
   color: white;
   border: none;
   cursor: pointer;

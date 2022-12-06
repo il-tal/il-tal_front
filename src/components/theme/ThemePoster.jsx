@@ -63,10 +63,10 @@ const Container = styled.div`
   align-items: center;
   border-radius: 8px;
   overflow: hidden;
-  margin: 27px 10px;
+  margin: 0 10px 27px 0;
 
   &:hover {
-    border: 1px solid rgba(255, 183, 67, 1);
+    border: 1px solid var(--color-main);
   }
 `;
 

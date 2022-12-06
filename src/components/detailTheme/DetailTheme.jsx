@@ -149,7 +149,7 @@ const ThemePicWrap = styled.div`
 const ThemePic = styled.div`
   height: 464px;
   width: 684px;
-  background-color: teal;
+
   display: flex;
   justify-content: center;
   align-items: center;

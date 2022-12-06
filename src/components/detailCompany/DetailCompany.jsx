@@ -6,7 +6,11 @@ import KakaoMap from "../map/KakaoMap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { FiMapPin, FiPhone } from "react-icons/fi";
-import { AiOutlineClockCircle } from "react-icons/ai";
+import {
+  AiOutlineClockCircle,
+  AiFillHeart,
+  AiOutlineHeart,
+} from "react-icons/ai";
 
 const DetailCompany = () => {
   //업체 아이디 받기
@@ -62,9 +66,15 @@ const DetailCompany = () => {
                 className="like"
               >
                 {data.data.companyLikeCheck ? (
-                  <div>좋아요 취소</div>
+                  <div>
+                    {<AiFillHeart color="red" size="20" />}
+                    좋아요 {data.data.totalLikeCnt}
+                  </div>
                 ) : (
-                  <div>좋아요❤️</div>
+                  <div>
+                    {<AiOutlineHeart size="20" />} 좋아요
+                    {data.data.totalLikeCnt}
+                  </div>
                 )}
               </button>
             </div>
@@ -169,7 +179,7 @@ const CompanyText = styled.div`
     width: 220px;
     height: 48px;
     border-radius: 8px;
-    background-color: rgba(255, 183, 67, 1);
+    background-color: var(--color-main);
     color: white;
     border: none;
     font-size: 16px;
@@ -180,6 +190,7 @@ const CompanyText = styled.div`
     border-radius: 8px;
     border: 1px solid gray;
     font-size: 16px;
+    background-color: white;
   }
 `;
 

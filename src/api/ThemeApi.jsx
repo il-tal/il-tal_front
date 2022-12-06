@@ -13,9 +13,10 @@ export const getFilterTheme = async ({
   people,
   difficulty,
   themePagenation,
+  sort,
 }) => {
   const { data } = await api.get(
-    `/themes?location=${location}&genreFilter=${genre}&people=${people}&themeScore=${score}&difficulty=${difficulty}&page=${themePagenation}`
+    `/themes?location=${location}&genreFilter=${genre}&people=${people}&themeScore=${score}&difficulty=${difficulty}&sort=${sort}&page=${themePagenation}`
   );
   return data;
 };
@@ -54,5 +55,21 @@ export const delComment = async (id) => {
 //테마&디테일테마 페이지 찜하기 POST요청
 export const wishTheme = async (payload) => {
   const { data } = await api.post("/theme/wish", payload);
+  return data;
+};
+
+//테마 필터 적용시 미리 개수 보여주는 GET요청
+export const getFilterCnt = async ({
+  genre,
+  location,
+  score,
+  people,
+  difficulty,
+  themePagenation,
+  sort,
+}) => {
+  const { data } = await api.get(
+    `/themes/filterCnt?location=${location}&genreFilter=${genre}&people=${people}&themeScore=${score}&difficulty=${difficulty}`
+  );
   return data;
 };

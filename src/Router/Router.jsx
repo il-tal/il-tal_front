@@ -9,6 +9,7 @@ import CompanyPage from "../page/CompanyPage";
 import MainLayout from "../page/MainLayout";
 import Test from "../page/Test";
 import KakaoLogin from "../components/modal/KakaoLogin";
+import SerchPage from "../page/SerchPage";
 
 const Router = () => {
   return (
@@ -22,6 +23,7 @@ const Router = () => {
           <Route path="/company" element={<CompanyPage />} />
           <Route path="/company/:id" element={<DetailCompanyPage />} />
           <Route path="/myaccount" element={<MyPage />} />
+          <Route path="/serch" element={<SerchPage />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
         <Route path="/test" element={<Test />} />

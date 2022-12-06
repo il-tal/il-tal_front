@@ -41,14 +41,14 @@ const Footer = () => {
 export default Footer;
 
 const Container = styled.footer`
-  width: 100vw;
+  width: 100%;
   margin-top: 2rem;
   height: 175px;
   border-top: 1px solid gray;
   display: flex;
   justify-content: center;
   align-items: center;
-  grid-template-columns: 1fr 1fr;
+
   .layout {
     height: 92%;
     width: 1440px;
@@ -63,7 +63,7 @@ const Logo = styled.div`
   margin: 0 30px;
   align-items: center;
   font-size: 48px;
-  color: rgba(255, 183, 67, 1); ;
+  color: var(--color-main); ;
 `;
 
 const STFooter = styled.div`

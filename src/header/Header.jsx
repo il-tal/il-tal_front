@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { FiLogOut } from "react-icons/fi";
 import { useRecoilState } from "recoil";
 import { headerClicked, loginCheck } from "../api/store";
+import SerchForm from "../components/serch/SertchForm";
 
 const Header = () => {
   const navigater = useNavigate();
@@ -72,6 +73,7 @@ const Header = () => {
             테마별
           </div>
         </div>
+        <SerchForm />
         {loginState ? (
           <div className="login">
             <LoginBtn onClick={() => navigater("/myaccount")}>
@@ -127,7 +129,7 @@ const Container = styled.div`
     height: 100%;
     width: 220px;
     font-size: 36px;
-    color: rgba(255, 183, 67, 1);
+    color: var(--color-main);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -160,7 +162,7 @@ const Container = styled.div`
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border-bottom: 4px solid rgba(255, 183, 67, 1);
+    border-bottom: 4px solid var(--color-main);
   }
   .login {
     display: flex;

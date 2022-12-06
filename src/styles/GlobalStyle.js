@@ -24,6 +24,9 @@ const GlobalStyle = createGlobalStyle`
   body{
     font-family: 'Pretendard-Regular';
   }
+  html {
+    --color-main:  #06c387; //main point color
+  }
 `;
 
 export default GlobalStyle;
