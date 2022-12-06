@@ -38,13 +38,18 @@ const ThemePoster = ({ theme }) => {
         <ThemeTextGenre>{theme.genre}</ThemeTextGenre>
         <ThemeTextBottom>
           <div>
-            ⭐ {theme.themeScore} <span>({theme.reviewCnt})</span>
+            <span className="star">★</span> {theme.themeScore}{" "}
+            <span>({theme.reviewCnt})</span>
           </div>
           <div
             className="like"
             onClick={() => themeLike.mutate({ themeId: theme.id })}
           >
-            {likeState ? <AiFillHeart color={"red"} /> : <AiOutlineHeart />}
+            {likeState ? (
+              <AiFillHeart color={"var(--color-main)"} />
+            ) : (
+              <AiOutlineHeart />
+            )}
           </div>
         </ThemeTextBottom>
       </ThemeTextWrap>
@@ -57,23 +62,26 @@ export default ThemePoster;
 const Container = styled.div`
   height: 440px;
   width: 340px;
-  border: 1px solid gray;
+  border: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 8px;
   overflow: hidden;
-  margin: 27px 10px;
+  margin: 0 18px 27px 0;
+  box-sizing: border-box;
+  scale: 1;
 
   &:hover {
-    border: 1px solid rgba(255, 183, 67, 1);
+    box-shadow: 0 4px 15px 1px rgba(6, 195, 135, 0.25);
+    border: 1px solid var(--color-main);
   }
 `;
 
 const ThemePic = styled.div`
   height: 216px;
-  width: 340px;
-
+  width: 100%;
+  border: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -135,5 +143,10 @@ const ThemeTextBottom = styled.div`
   }
   span {
     color: gray;
+  }
+  .star {
+    color: var(--color-main);
+    font-size: 25px;
+    font-weight: bold;
   }
 `;

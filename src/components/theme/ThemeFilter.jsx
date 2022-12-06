@@ -14,7 +14,9 @@ import {
   themePages,
 } from "../../api/store";
 import { useQueryClient } from "@tanstack/react-query";
-const ThemeFilter = ({ refetch }) => {
+import lock from "../../asset/lock.png";
+
+const ThemeFilter = ({ refetch, filterCnt }) => {
   //전역변수로 선언된 각 필터별 스테이트 (Recoil)
   const [genre, setGenre] = useRecoilState(genreState);
   const [location, setLocation] = useRecoilState(locationState);
@@ -138,8 +140,8 @@ const ThemeFilter = ({ refetch }) => {
         <div className="category">
           <p>평점</p>
           <div className="state-text">
-            {score[0] === 0 ? "평가 없음" : "⭐".repeat(score[0])} -
-            {"⭐".repeat(score[1])}
+            {score[0] === 0 ? "평가 없음" : "★".repeat(score[0])} -
+            {"★".repeat(score[1])}
           </div>
 
           <SliderWrap>
@@ -162,7 +164,13 @@ const ThemeFilter = ({ refetch }) => {
         <div className="category">
           <p>난이도</p>
           <div className="state-text">
-            {"😨".repeat(difficulty[0])} - {"😨".repeat(difficulty[1])}
+            {[...Array(difficulty[0])].map((arg, index) => {
+              return <img src={lock} alt="lock" key={`key${index}`} />;
+            })}
+            -
+            {[...Array(difficulty[1])].map((arg, index) => {
+              return <img src={lock} alt="lock" key={`key${index}`} />;
+            })}
           </div>
           <SliderWrap>
             <Slider
@@ -189,7 +197,9 @@ const ThemeFilter = ({ refetch }) => {
             setPage(0);
           }}
         >
-          적용
+          {filterCnt.isLoading
+            ? "Loading.."
+            : `총${filterCnt.data.data}개 결과`}
         </SearchBtn>
       </div>
     </Container>
@@ -198,15 +208,18 @@ const ThemeFilter = ({ refetch }) => {
 export default ThemeFilter;
 
 const Container = styled.div`
-  height: 100%;
+  height: 900px;
   width: 340px;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  margin-top: 27px;
-  border: 1px solid gray;
-  border-radius: 8px;
+
+  border: none;
+  border-right: 1px solid;
+  margin-right: 10px;
+  padding-right: 10px;
+  border-color: var(--color-border);
 `;
 
 const FilterWrap = styled.div`
@@ -247,7 +260,7 @@ const FilterWrap = styled.div`
     font-size: 16px;
 
     color: white;
-    background-color: rgba(255, 183, 67, 1);
+    background-color: var(--color-main);
   }
   .category {
     margin: 20px 0;
@@ -256,6 +269,11 @@ const FilterWrap = styled.div`
     }
     .state-text {
       margin-top: 20px;
+      font-size: 22px;
+      display: flex;
+      /* justify-content: center; */
+      align-items: center;
+      color: grey;
     }
   }
 `;
@@ -263,34 +281,24 @@ const FilterWrap = styled.div`
 const SearchBtn = styled.button`
   height: 48px;
   width: 132px;
-  background-color: rgba(255, 183, 67, 1);
+  background-color: var(--color-main);
   color: white;
   border: none;
   cursor: pointer;
   border-radius: 8px;
   font-size: 16px;
   margin: 10px;
-
-  &:hover {
-    background-color: black;
-    color: white;
-  }
 `;
 const SearchBtn2 = styled.button`
   height: 48px;
   width: 132px;
   background-color: white;
   color: black;
-  border: 1px solid gray;
+  border: 1px solid var(--color-border);
   cursor: pointer;
   border-radius: 8px;
   font-size: 16px;
   margin: 10px;
-
-  &:hover {
-    background-color: black;
-    color: white;
-  }
 `;
 
 const SliderWrap = styled.div`

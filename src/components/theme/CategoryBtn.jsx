@@ -25,7 +25,7 @@ const CategoryBtn = ({ categoryIndex, state, setState }) => {
       {categoryIndex.map((element) => (
         <Btn
           name={element.name}
-          key={element.name}
+          key={`${element.name}${element.value}`}
           type="button"
           onClick={categoryHandler}
           value={element.value}
@@ -46,7 +46,7 @@ const Btn = styled.button`
   font-size: 16px;
   color: ${({ backgroundColor }) => (backgroundColor ? "white" : "black")};
   background-color: ${({ backgroundColor }) =>
-    backgroundColor ? "rgba(255, 183, 67, 1)" : "#fff"};
+    backgroundColor ? "var(--color-main)" : "#fff"};
   border: 1px solid #e5e5e5;
   border-radius: 8px;
   outline: none;
@@ -57,7 +57,7 @@ const Btn = styled.button`
     color: #333;
     color: ${({ backgroundColor }) => (backgroundColor ? "white" : "black")};
     background-color: ${({ backgroundColor }) =>
-      backgroundColor ? "rgba(255, 183, 67, 1)" : "#e6e6e6"};
+      backgroundColor ? "var(--color-main)" : "#e6e6e6"};
     border-color: grey;
   }
 `;

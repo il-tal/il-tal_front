@@ -9,8 +9,11 @@ import kakaoLogo from "../../asset/kakao_login.png";
 import Logo from "../../asset/ourLogo.png";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { loginCheck } from "../../api/store";
+import { useRecoilState } from "recoil";
 
 const RegisterForm = ({ setIsLogin }) => {
+  const [loginState, setLoginState] = useRecoilState(loginCheck);
   const navigate = useNavigate();
   const {
     register,
@@ -36,6 +39,7 @@ const RegisterForm = ({ setIsLogin }) => {
       sessionStorage.setItem("access_token", res.headers.access_token);
       sessionStorage.setItem("refresh_token", res.headers.refresh_token);
       sessionStorage.setItem("userinfo", JSON.stringify(res.data.data));
+      setLoginState(true);
       setIsLogin(true);
     },
     onError: (err) => {

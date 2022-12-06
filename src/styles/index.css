@@ -1,6 +1,6 @@
 .rc-slider {
   position: relative;
-  width: 280px;
+  width: 295px;
   height: 10px;
   padding: 5px 0;
   border-radius: 6px;
@@ -22,7 +22,7 @@
 .rc-slider-track {
   position: absolute;
   height: 11px;
-  background-color: rgba(255, 183, 67, 1);
+  background-color: var(--color-main);
   border-radius: 6px;
 }
 .rc-slider-handle {
@@ -30,7 +30,7 @@
   width: 20px;
   height: 20px;
   margin-top: -4px;
-  background-color: rgba(255, 183, 67, 1);
+  background-color: var(--color-main);
   border: solid 4px ivory;
   border-radius: 50%;
   box-shadow: 0 0 5px 0px grey;
@@ -49,19 +49,19 @@
   outline: none;
 }
 .rc-slider-handle:focus-visible {
-  border-color: rgba(255, 183, 67, 1);
+  border-color: var(--color-main);
   background-color: white;
 }
 .rc-slider-handle-click-focused:focus {
-  border-color: rgba(255, 183, 67, 1);
+  border-color: var(--color-main);
   background-color: white;
 }
 .rc-slider-handle:hover {
-  border-color: rgba(255, 183, 67, 1);
+  border-color: var(--color-main);
   background-color: white;
 }
 .rc-slider-handle:active {
-  border-color: rgba(255, 183, 67, 1);
+  border-color: var(--color-main);
   background-color: white;
   cursor: -webkit-grabbing;
   cursor: grabbing;

@@ -3,23 +3,44 @@ import styled from "styled-components";
 import LoginRegisterForm from "../components/modal/LoginRegisterForm";
 import Modal from "../components/modal/Modal";
 import { useEffect, useState } from "react";
-import { set } from "date-fns";
+import { FiLogOut } from "react-icons/fi";
 import { useRecoilState } from "recoil";
-import { headerClicked } from "../api/store";
+import { headerClicked, loginCheck } from "../api/store";
+import SerchForm from "../components/serch/SertchForm";
+import logo from "../asset/HeaderLogo.png";
 
 const Header = () => {
+  //페이지 이동에 사용
   const navigater = useNavigate();
+
+  //로그인 모달창 토글 스테이트
   const [isLogin, setIsLogin] = useState(true);
+
+  //로그인 체크 전역 스테이트
+  const [loginState, setLoginState] = useRecoilState(loginCheck);
+
+  //로그아웃
   const onLogout = () => {
     sessionStorage.removeItem("username");
     sessionStorage.removeItem("nickname");
     sessionStorage.removeItem("access_token");
     sessionStorage.removeItem("refresh_token");
+    setLoginState(false);
   };
 
+  //로그인 체크 후 스테이트값 변경
+  useEffect(() => {
+    const userinformation = JSON.parse(sessionStorage.getItem("userinfo"));
+    if (userinformation) {
+      setLoginState(true);
+    }
+  }, []);
+
+  //업체or테마 카테고리 눌린거 구분해주는 전역 스테이트
   const [isClicked, setIsClicked] = useRecoilState(headerClicked);
   const url = useLocation();
 
+  //업체or테마 카테고리별 눌려있는 부분에 따라 스테이트 변경
   useEffect(() => {
     if (url.pathname === "/") {
       setIsClicked(0);
@@ -30,14 +51,19 @@ const Header = () => {
     }
   }, [setIsClicked]);
 
+  //로고 클릭시 홈이동
   const onClickLogo = () => {
     setIsClicked(0);
     navigater("/");
   };
+
+  //업체 클릭시 업체페이지 이동
   const onClickCompany = () => {
     setIsClicked(1);
     navigater("/company");
   };
+
+  //테마 클릭시 테마페이지 이동
   const onClickGenre = () => {
     setIsClicked(2);
     navigater("/theme");
@@ -48,20 +74,40 @@ const Header = () => {
       <div className="layout">
         <div className="left-wrap">
           <div className="logo" onClick={onClickLogo}>
-            일탈
+            <img src={logo} alt="logo" />
           </div>
           <div
             className={isClicked === 1 ? "online" : "noneline"}
-            onClick={onClickCompany}>
+            onClick={onClickCompany}
+          >
             업체별
           </div>
           <div
             className={isClicked === 2 ? "online" : "noneline"}
-            onClick={onClickGenre}>
+            onClick={onClickGenre}
+          >
             테마별
           </div>
         </div>
-        <LoginBtn onClick={() => setIsLogin(false)}>로그인</LoginBtn>
+        <SerchForm />
+        {loginState ? (
+          <div className="login">
+            <LoginBtn onClick={() => navigater("/myaccount")}>
+              마이페이지
+            </LoginBtn>{" "}
+            <div
+              onClick={() => {
+                onLogout();
+                navigater("/");
+              }}
+            >
+              <FiLogOut size="28" />
+            </div>
+          </div>
+        ) : (
+          <LoginBtn onClick={() => setIsLogin(false)}>로그인</LoginBtn>
+        )}
+
         {isLogin ? null : (
           <Modal closeModal={() => setIsLogin(true)}>
             <LoginRegisterForm setIsLogin={setIsLogin} />
@@ -79,7 +125,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
   background-color: white;
@@ -93,13 +139,14 @@ const Container = styled.div`
   }
   .left-wrap {
     height: 100%;
+    width: 400px;
     display: flex;
   }
   .logo {
     height: 100%;
-    width: 220px;
-    font-size: 36px;
-    color: rgba(255, 183, 67, 1);
+    width: 96px;
+    margin-right: 80px;
+    color: var(--color-main);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -119,6 +166,7 @@ const Container = styled.div`
     height: 100%;
     width: 98px;
     font-size: 21px;
+    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -128,11 +176,18 @@ const Container = styled.div`
     height: 100%;
     width: 98px;
     font-size: 21px;
+    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border-bottom: 4px solid rgba(255, 183, 67, 1);
+    border-bottom: 5px solid var(--color-main);
+  }
+  .login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
   }
 `;
 
@@ -145,7 +200,7 @@ const HeaderWrap = styled.div`
 `;
 
 const LoginBtn = styled.button`
-  width: 99px;
+  width: 120px;
   border: none;
   font-size: 21px;
   background-color: transparent;

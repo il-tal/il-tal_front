@@ -5,6 +5,12 @@ import CompanyTheme from "./CompanyTheme";
 import KakaoMap from "../map/KakaoMap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
+import { FiMapPin, FiPhone } from "react-icons/fi";
+import {
+  AiOutlineClockCircle,
+  AiFillHeart,
+  AiOutlineHeart,
+} from "react-icons/ai";
 
 const DetailCompany = () => {
   //업체 아이디 받기
@@ -22,7 +28,6 @@ const DetailCompany = () => {
   const companyLike = useMutation((companyId) => companyWish(companyId), {
     onSuccess: () => {
       queryClient.invalidateQueries(["getDetailCompany"]);
-      console.log(companyLike);
     },
   });
 
@@ -46,29 +51,46 @@ const DetailCompany = () => {
           <CompanyText>
             <div className="company">{data.data.companyName}</div>
             <div className="review">
-              ⭐{data.data.companyScore} 이용후기 {data.data.totalReviewCnt}건
+              ⭐ {data.data.companyScore} ({data.data.totalReviewCnt})
             </div>
             <div className="button-wrap">
               <button
                 className="homepage"
-                onClick={() => window.open(data.data.companyUrl, "_blank")}>
+                onClick={() => window.open(data.data.companyUrl)}
+              >
                 홈페이지
               </button>
               <button
                 onClick={() => companyLike.mutate({ companyId: id })}
-                className="like">
+                className="like"
+              >
                 {data.data.companyLikeCheck ? (
-                  <div>좋아요 취소</div>
+                  <div>
+                    {<AiFillHeart color="red" size="20" />}
+                    좋아요 {data.data.totalLikeCnt}
+                  </div>
                 ) : (
-                  <div>좋아요❤️</div>
+                  <div>
+                    {<AiOutlineHeart size="20" />} 좋아요
+                    {data.data.totalLikeCnt}
+                  </div>
                 )}
               </button>
             </div>
           </CompanyText>
           <CompanyInfo>
-            <span>{data.data.address}</span>
-            <span>{data.data.phoneNumber}</span>
-            <span>{data.data.workHour}</span>
+            <div className="icon-wrap">
+              <FiMapPin size="25px" />
+              <span>{data.data.address}</span>
+            </div>
+            <div className="icon-wrap">
+              <FiPhone size="25px" />
+              <span>{data.data.phoneNumber}</span>
+            </div>
+            <div className="icon-wrap">
+              <AiOutlineClockCircle size="25px" />
+              <span>{data.data.workHour}</span>
+            </div>
           </CompanyInfo>
         </div>
       </CompanyWrap>
@@ -77,7 +99,8 @@ const DetailCompany = () => {
           return (
             <div
               className="test"
-              onClick={() => navigate(`/theme/${theme.id}`)}>
+              onClick={() => navigate(`/theme/${theme.id}`)}
+            >
               <CompanyTheme theme={theme} key={theme.id} />
             </div>
           );
@@ -98,25 +121,26 @@ const Container = styled.div`
   justify-content: flex-start;
 `;
 const CompanyWrap = styled.div`
-  height: 100%;
-  width: 100%;
+  height: 840px;
+  width: 1440px;
   display: flex;
-
+  justify-content: center;
   flex-direction: column;
   .pic-map-wrap {
+    width: 1440px;
     display: flex;
     justify-content: space-between;
   }
   .text-info-wrap {
     display: flex;
     justify-content: space-between;
-    margin: 10px 0%;
+    margin: 40px 0;
   }
 `;
 const CompanyPic = styled.div`
-  height: 350px;
-  width: 650px;
-
+  height: 520px;
+  width: 830px;
+  border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -131,51 +155,69 @@ const CompanyPic = styled.div`
 
 const CompanyText = styled.div`
   height: 150px;
-  width: 650px;
+  width: 840px;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   .company {
-    font-size: 25px;
+    font-size: 40px;
     font-weight: bold;
   }
   .review {
-    font-size: 18px;
+    margin-top: 20px;
+    font-size: 24px;
+  }
+  .button-wrap {
+    margin-top: 30px;
+    width: 500px;
+    display: flex;
+    justify-content: space-between;
   }
   .homepage {
-    width: 80px;
-    height: 30px;
-    margin-right: 20px;
+    width: 220px;
+    height: 48px;
+    border-radius: 8px;
+    background-color: var(--color-main);
+    color: white;
+    border: none;
+    font-size: 16px;
   }
   .like {
-    width: 100px;
-    height: 30px;
+    width: 220px;
+    height: 48px;
+    border-radius: 8px;
+    border: 1px solid gray;
+    font-size: 16px;
+    background-color: white;
   }
 `;
 
 const CompanyInfo = styled.div`
-  width: 450px;
+  width: 580px;
   height: 150px;
 
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   span {
-    font-size: 18px;
+    font-size: 16px;
+    margin-left: 10px;
+  }
+  .icon-wrap {
+    display: flex;
+    align-items: center;
   }
 `;
 
 const CompanyMap = styled.div`
-  height: 350px;
-  width: 450px;
+  height: 520px;
+  width: 580px;
+  border-radius: 8px;
+  overflow: hidden;
 `;
 
 const ThemeWrap = styled.div`
   height: 100%;
   width: 100%;
-  .test:hover {
-    transform: scale(1.04);
-    transition: all ease 0.5s;
-  }
 `;

@@ -92,7 +92,7 @@ const DetailTheme = () => {
             <div onClick={() => themeLike.mutate({ themeId: id })}>
               {data.data.themeLikeCheck ? (
                 <Btn>
-                  {<AiFillHeart color="red" size="20" />}
+                  {<AiFillHeart color="var(--color-main)" size="20" />}
                   좋아요 {data.data.totalLikeCnt}
                 </Btn>
               ) : (
@@ -104,9 +104,9 @@ const DetailTheme = () => {
             <Btn onClick={() => navigate(`/company/${data.data.companyId}`)}>
               업체보기
             </Btn>
-            <Btn onClick={() => window.open([`${data.data.themeUrl}`])}>
+            <Btn2 onClick={() => window.open([`${data.data.themeUrl}`])}>
               예약하기
-            </Btn>
+            </Btn2>
           </ThemeBtnWrap>
         </ThemeTextWrap>
       </ThemeInfoWrap>
@@ -149,7 +149,7 @@ const ThemePicWrap = styled.div`
 const ThemePic = styled.div`
   height: 464px;
   width: 684px;
-  background-color: teal;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -252,6 +252,18 @@ const Btn = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+
+  cursor: pointer;
+`;
+const Btn2 = styled.div`
+  height: 48px;
+  width: 220px;
+  color: white;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-main);
 
   cursor: pointer;
 `;
