@@ -14,6 +14,8 @@ import {
   themePages,
 } from "../../api/store";
 import { useQueryClient } from "@tanstack/react-query";
+import lock from "../../asset/lock.png";
+
 const ThemeFilter = ({ refetch, filterCnt }) => {
   //전역변수로 선언된 각 필터별 스테이트 (Recoil)
   const [genre, setGenre] = useRecoilState(genreState);
@@ -138,8 +140,8 @@ const ThemeFilter = ({ refetch, filterCnt }) => {
         <div className="category">
           <p>평점</p>
           <div className="state-text">
-            {score[0] === 0 ? "평가 없음" : "⭐".repeat(score[0])} -
-            {"⭐".repeat(score[1])}
+            {score[0] === 0 ? "평가 없음" : "★".repeat(score[0])} -
+            {"★".repeat(score[1])}
           </div>
 
           <SliderWrap>
@@ -162,7 +164,13 @@ const ThemeFilter = ({ refetch, filterCnt }) => {
         <div className="category">
           <p>난이도</p>
           <div className="state-text">
-            {"😨".repeat(difficulty[0])} - {"😨".repeat(difficulty[1])}
+            {[...Array(difficulty[0])].map((arg, index) => {
+              return <img src={lock} alt="lock" key={`key${index}`} />;
+            })}
+            -
+            {[...Array(difficulty[1])].map((arg, index) => {
+              return <img src={lock} alt="lock" key={`key${index}`} />;
+            })}
           </div>
           <SliderWrap>
             <Slider
@@ -207,8 +215,11 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
 
-  border: 1px solid gray;
-  border-radius: 8px;
+  border: none;
+  border-right: 1px solid;
+  margin-right: 10px;
+  padding-right: 10px;
+  border-color: var(--color-border);
 `;
 
 const FilterWrap = styled.div`
@@ -258,6 +269,11 @@ const FilterWrap = styled.div`
     }
     .state-text {
       margin-top: 20px;
+      font-size: 22px;
+      display: flex;
+      /* justify-content: center; */
+      align-items: center;
+      color: grey;
     }
   }
 `;
@@ -272,27 +288,17 @@ const SearchBtn = styled.button`
   border-radius: 8px;
   font-size: 16px;
   margin: 10px;
-
-  &:hover {
-    background-color: black;
-    color: white;
-  }
 `;
 const SearchBtn2 = styled.button`
   height: 48px;
   width: 132px;
   background-color: white;
   color: black;
-  border: 1px solid gray;
+  border: 1px solid var(--color-border);
   cursor: pointer;
   border-radius: 8px;
   font-size: 16px;
   margin: 10px;
-
-  &:hover {
-    background-color: black;
-    color: white;
-  }
 `;
 
 const SliderWrap = styled.div`

@@ -28,7 +28,6 @@ const DetailCompany = () => {
   const companyLike = useMutation((companyId) => companyWish(companyId), {
     onSuccess: () => {
       queryClient.invalidateQueries(["getDetailCompany"]);
-      console.log(companyLike);
     },
   });
 

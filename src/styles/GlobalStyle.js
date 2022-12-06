@@ -26,6 +26,7 @@ const GlobalStyle = createGlobalStyle`
   }
   html {
     --color-main:  #06c387; //main point color
+    --color-border: #d1cccc; //border color
   }
 `;
 

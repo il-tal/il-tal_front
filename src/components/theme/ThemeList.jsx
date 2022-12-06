@@ -17,6 +17,11 @@ import {
 import Pagination from "react-js-pagination";
 import { useEffect } from "react";
 
+import nextgray from "../../asset/next-gray.png";
+import prevgray from "../../asset/prev-gray.png";
+import nextgreen from "../../asset/next-green.png";
+import prevgreen from "../../asset/prev-green.png";
+
 const ThemeList = () => {
   //페이지 전역상태
   const [themePagenation, setThemePage] = useRecoilState(themePages);
@@ -90,7 +95,7 @@ const ThemeList = () => {
               defaultChecked={sort}
               onChange={onChangeSort}
             />
-            <label for="review">· 리뷰순</label>
+            <label htmlFor="review">· 리뷰순</label>
             <input
               type="radio"
               className="radio-btn"
@@ -99,7 +104,7 @@ const ThemeList = () => {
               name="sort"
               onChange={onChangeSort}
             />
-            <label for="score">· 별점순</label>
+            <label htmlFor="score">· 별점순</label>
 
             <input
               type="radio"
@@ -109,7 +114,7 @@ const ThemeList = () => {
               name="sort"
               onChange={onChangeSort}
             />
-            <label for="like">· 좋아요순</label>
+            <label htmlFor="like">· 좋아요순</label>
             <input
               type="radio"
               className="radio-btn"
@@ -118,14 +123,14 @@ const ThemeList = () => {
               name="sort"
               onChange={onChangeSort}
             />
-            <label for="abc">· 가나다순</label>
+            <label htmlFor="abc">· 가나다순</label>
           </div>
         </div>
         <BodyWrap>
           <PosterWrap>
             {data.data.content.map((theme) => {
               return (
-                <div className="theme-wrap" key={theme.id}>
+                <div className="theme-wrap" key={`poster${theme.id}`}>
                   <ThemePoster theme={theme} />
                 </div>
               );
@@ -133,15 +138,30 @@ const ThemeList = () => {
           </PosterWrap>
 
           <div className="pagenation">
-            <Pagination
-              activePage={themePagenation + 1}
-              itemsCountPerPage={9}
-              totalItemsCount={data.data.totalElements}
-              pageRangeDisplayed={5}
-              prevPageText={"<"}
-              nextPageText={">"}
-              onChange={onPageHandler}
-            />
+            {data.data.totalPages > 1 ? (
+              <Pagination
+                activePage={themePagenation + 1}
+                itemsCountPerPage={9}
+                totalItemsCount={data.data.totalElements}
+                pageRangeDisplayed={5}
+                hideFirstLastPages={true}
+                prevPageText={
+                  themePagenation === 0 ? (
+                    <img src={prevgray} alt="next" />
+                  ) : (
+                    <img src={prevgreen} alt="next" />
+                  )
+                }
+                nextPageText={
+                  themePagenation + 1 === data.data.totalPages ? (
+                    <img src={nextgray} alt="next" />
+                  ) : (
+                    <img src={nextgreen} alt="next" />
+                  )
+                }
+                onChange={onPageHandler}
+              />
+            ) : null}
           </div>
         </BodyWrap>
       </div>
@@ -206,6 +226,7 @@ const BodyWrap = styled.div`
       display: flex;
       justify-content: center;
       margin-top: 15px;
+      align-items: center;
     }
 
     ul {
@@ -215,8 +236,8 @@ const BodyWrap = styled.div`
 
     ul.pagination li {
       display: inline-block;
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       /* border: 1px solid #e2e2e2; */
       display: flex;
       justify-content: center;
@@ -235,7 +256,7 @@ const BodyWrap = styled.div`
     ul.pagination li a {
       text-decoration: none;
       color: black;
-      font-size: 22px;
+      font-size: 24px;
     }
 
     ul.pagination li.active a {

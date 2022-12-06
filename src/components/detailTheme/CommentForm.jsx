@@ -67,7 +67,6 @@ const CommentForm = ({ setIsEdit, isEdit }) => {
       },
     }
   );
-  console.log("스테이트", cmt);
 
   return (
     <Container>
@@ -130,20 +129,26 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding: 10px 0;
+  border-radius: 8px;
+  border: 1px solid grey;
 `;
 const DateInput = styled.input`
   height: 26px;
   width: 100px;
+  border-radius: 8px;
+  border: 1px solid grey;
 `;
 const TextInput = styled.textarea`
   height: 150px;
   width: 1370px;
   margin: 10px 0;
-  border: 1px solid grey;
+  border: none;
   resize: none;
   padding: 5px;
   box-sizing: border-box;
   font-size: 15px;
+  background-color: #efefef;
+  border-radius: 8px;
 `;
 const FormHeaderWrap = styled.div`
   height: 50px;
@@ -159,6 +164,7 @@ const FormHeaderWrap = styled.div`
 const FormWrap = styled.div`
   height: 100%;
   width: 100%;
+  border-radius: 8px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -168,7 +174,8 @@ const FormWrap = styled.div`
 const Btn = styled.div`
   height: 30px;
   width: 100px;
-  background-color: black;
+  border-radius: 8px;
+  background-color: var(--color-main);
   color: white;
   cursor: pointer;
 

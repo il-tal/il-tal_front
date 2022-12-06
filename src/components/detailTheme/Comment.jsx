@@ -48,7 +48,6 @@ const Comment = ({
   const onChangeEdit = (e) => {
     const { name, value } = e.target;
     setEditValue({ ...editValue, [name]: value });
-    console.log("수정글", editValue);
   };
 
   //댓글 수정 mutation
@@ -91,7 +90,24 @@ const Comment = ({
   };
   return (
     <Container>
-      {userinfo.nickname === nickname ? (
+      {userinfo ? (
+        userinfo.nickname === nickname ? (
+          <>
+            <div className="del" onClick={() => deleteComment.mutate(id)}>
+              <AiOutlineDelete />
+            </div>
+            <div className="edit" onClick={() => setIsEdit(!isEdit)}>
+              {isEdit ? <AiOutlineClose /> : <AiOutlineEdit />}
+            </div>
+            {isEdit ? (
+              <div className="save" onClick={onSubmitHandler}>
+                <AiOutlineSave />
+              </div>
+            ) : null}
+          </>
+        ) : null
+      ) : null}
+      {/* {userinfo.nickname === nickname ? (
         <>
           <div className="del" onClick={() => deleteComment.mutate(id)}>
             <AiOutlineDelete />
@@ -105,7 +121,7 @@ const Comment = ({
             </div>
           ) : null}
         </>
-      ) : null}
+      ) : null} */}
       <Header>
         <div className="nick">{nickname}</div>
         <div className="date">
@@ -161,7 +177,7 @@ const Comment = ({
           <div className="hint">
             {hint === 5 ? "힌트 5회 이상" : `힌트 ${hint}회`}
           </div>
-          <div className="score">{"⭐".repeat(score)}</div>
+          <div className="score">{"★".repeat(score)}</div>
         </Middle>
       )}
       {isEdit ? (
@@ -191,7 +207,7 @@ const Container = styled.div`
   margin: 15px 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   position: relative;
   .del {
@@ -273,13 +289,13 @@ const Header = styled.div`
   align-items: center;
 
   .nick {
-    font-size: 18px;
+    font-size: 24px;
     font-weight: bold;
 
     margin: 10px;
   }
   .date {
-    font-size: 13px;
+    font-size: 16px;
     margin-right: 10px;
     input {
       height: 27px;
@@ -289,19 +305,25 @@ const Header = styled.div`
   }
 `;
 const Middle = styled.div`
-  height: 45px;
+  height: 30px;
   width: 100%;
   display: flex;
+  align-items: center;
+  margin-bottom: 20px;
   div {
     margin-left: 10px;
-    font-size: 13px;
+    font-size: 16px;
+  }
+  .score {
+    color: var(--color-main);
+    font-size: 18px;
   }
 `;
 const Body = styled.div`
   height: 100px;
   width: 100%;
 
-  font-size: 15px;
+  font-size: 20px;
   span {
     margin: 10px;
   }

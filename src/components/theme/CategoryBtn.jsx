@@ -25,7 +25,7 @@ const CategoryBtn = ({ categoryIndex, state, setState }) => {
       {categoryIndex.map((element) => (
         <Btn
           name={element.name}
-          key={element.name}
+          key={`${element.name}${element.value}`}
           type="button"
           onClick={categoryHandler}
           value={element.value}

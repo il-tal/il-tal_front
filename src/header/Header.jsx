@@ -7,11 +7,19 @@ import { FiLogOut } from "react-icons/fi";
 import { useRecoilState } from "recoil";
 import { headerClicked, loginCheck } from "../api/store";
 import SerchForm from "../components/serch/SertchForm";
+import logo from "../asset/HeaderLogo.png";
 
 const Header = () => {
+  //페이지 이동에 사용
   const navigater = useNavigate();
+
+  //로그인 모달창 토글 스테이트
   const [isLogin, setIsLogin] = useState(true);
+
+  //로그인 체크 전역 스테이트
   const [loginState, setLoginState] = useRecoilState(loginCheck);
+
+  //로그아웃
   const onLogout = () => {
     sessionStorage.removeItem("username");
     sessionStorage.removeItem("nickname");
@@ -20,6 +28,7 @@ const Header = () => {
     setLoginState(false);
   };
 
+  //로그인 체크 후 스테이트값 변경
   useEffect(() => {
     const userinformation = JSON.parse(sessionStorage.getItem("userinfo"));
     if (userinformation) {
@@ -27,9 +36,11 @@ const Header = () => {
     }
   }, []);
 
+  //업체or테마 카테고리 눌린거 구분해주는 전역 스테이트
   const [isClicked, setIsClicked] = useRecoilState(headerClicked);
   const url = useLocation();
 
+  //업체or테마 카테고리별 눌려있는 부분에 따라 스테이트 변경
   useEffect(() => {
     if (url.pathname === "/") {
       setIsClicked(0);
@@ -40,14 +51,19 @@ const Header = () => {
     }
   }, [setIsClicked]);
 
+  //로고 클릭시 홈이동
   const onClickLogo = () => {
     setIsClicked(0);
     navigater("/");
   };
+
+  //업체 클릭시 업체페이지 이동
   const onClickCompany = () => {
     setIsClicked(1);
     navigater("/company");
   };
+
+  //테마 클릭시 테마페이지 이동
   const onClickGenre = () => {
     setIsClicked(2);
     navigater("/theme");
@@ -58,7 +74,7 @@ const Header = () => {
       <div className="layout">
         <div className="left-wrap">
           <div className="logo" onClick={onClickLogo}>
-            일탈
+            <img src={logo} alt="logo" />
           </div>
           <div
             className={isClicked === 1 ? "online" : "noneline"}
@@ -109,7 +125,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border-bottom: 1px solid gray;
+  border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
   background-color: white;
@@ -123,12 +139,13 @@ const Container = styled.div`
   }
   .left-wrap {
     height: 100%;
+    width: 400px;
     display: flex;
   }
   .logo {
     height: 100%;
-    width: 220px;
-    font-size: 36px;
+    width: 96px;
+    margin-right: 80px;
     color: var(--color-main);
     display: flex;
     align-items: center;
@@ -149,6 +166,7 @@ const Container = styled.div`
     height: 100%;
     width: 98px;
     font-size: 21px;
+    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -158,11 +176,12 @@ const Container = styled.div`
     height: 100%;
     width: 98px;
     font-size: 21px;
+    font-weight: bold;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    border-bottom: 4px solid var(--color-main);
+    border-bottom: 5px solid var(--color-main);
   }
   .login {
     display: flex;

@@ -91,3 +91,9 @@ export const serchComPages = atom({
   key: "serchComPage",
   default: 0,
 });
+
+//댓글 페이지 전역 스테이트
+export const commnetPages = atom({
+  key: "commentPages",
+  default: 0,
+});

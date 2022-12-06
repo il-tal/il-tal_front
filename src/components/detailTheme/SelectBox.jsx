@@ -24,4 +24,6 @@ const Select = styled.select`
   justify-content: center;
   align-items: center;
   margin-right: 15px;
+  border-radius: 8px;
+  border: 1px solid grey;
 `;

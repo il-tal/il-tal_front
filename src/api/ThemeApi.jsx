@@ -23,7 +23,6 @@ export const getFilterTheme = async ({
 
 //디테일테마 페이지 테마리스트 GET요청
 export const getDetailTheme = async (id) => {
-  console.log("겟요청 파람", id);
   const { data } = await api.get(`/theme/${id}`);
   return data;
 };
@@ -35,8 +34,8 @@ export const postComment = async (payload) => {
 };
 
 //디테일테마 페이지 댓글조회 GET요청
-export const getComment = async (id) => {
-  const { data } = await api.get(`/theme/${id}/reviews`);
+export const getComment = async ({ id, commentPage }) => {
+  const { data } = await api.get(`/theme/${id}/reviews?page=${commentPage}`);
   return data;
 };
 

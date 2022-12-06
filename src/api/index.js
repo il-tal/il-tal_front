@@ -26,7 +26,6 @@ export const signUpForm = async (userData) => {
 
 export const loginForm = async (userData) => {
   const data = await api.post("/login", userData);
-  console.log("그냥로그인", data);
   return data;
 };
 

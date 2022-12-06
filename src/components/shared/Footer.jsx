@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import logo from "../../asset/HeaderLogo.png";
 
 const Footer = () => {
   const clorose = "https://github.com/clorose";
@@ -13,7 +14,9 @@ const Footer = () => {
   return (
     <Container>
       <div className="layout">
-        <Logo>로고</Logo>
+        <Logo>
+          <img src={logo} alt="logo" />
+        </Logo>
         <STFooter>
           <span
             onClick={() => {
@@ -44,7 +47,7 @@ const Container = styled.footer`
   width: 100%;
   margin-top: 2rem;
   height: 175px;
-  border-top: 1px solid gray;
+  border-top: 1px solid var(--color-border);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,10 +63,9 @@ const Container = styled.footer`
 
 const Logo = styled.div`
   display: flex;
-  margin: 0 30px;
+  /* margin: 0 30px; */
   align-items: center;
   font-size: 48px;
-  color: var(--color-main); ;
 `;
 
 const STFooter = styled.div`
