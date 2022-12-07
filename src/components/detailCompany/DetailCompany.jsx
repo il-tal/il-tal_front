@@ -6,11 +6,8 @@ import KakaoMap from "../map/KakaoMap";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState } from "react";
 import { FiMapPin, FiPhone } from "react-icons/fi";
-import {
-  AiOutlineClockCircle,
-  AiFillHeart,
-  AiOutlineHeart,
-} from "react-icons/ai";
+import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
+import { AiOutlineClockCircle } from "react-icons/ai";
 
 const DetailCompany = () => {
   //업체 아이디 받기
@@ -51,27 +48,26 @@ const DetailCompany = () => {
           <CompanyText>
             <div className="company">{data.data.companyName}</div>
             <div className="review">
-              ⭐ {data.data.companyScore} ({data.data.totalReviewCnt})
+              <span>★</span> {data.data.companyScore} (
+              {data.data.totalReviewCnt})
             </div>
             <div className="button-wrap">
               <button
                 className="homepage"
-                onClick={() => window.open(data.data.companyUrl)}
-              >
+                onClick={() => window.open(data.data.companyUrl)}>
                 홈페이지
               </button>
               <button
                 onClick={() => companyLike.mutate({ companyId: id })}
-                className="like"
-              >
+                className="like">
                 {data.data.companyLikeCheck ? (
-                  <div>
-                    {<AiFillHeart color="red" size="20" />}
-                    좋아요 {data.data.totalLikeCnt}
+                  <div className="like-wrap">
+                    {<BsSuitHeartFill color={"#06c387"} size="20" />} 좋아요{" "}
+                    {data.data.totalLikeCnt}
                   </div>
                 ) : (
-                  <div>
-                    {<AiOutlineHeart size="20" />} 좋아요
+                  <div className="like-wrap">
+                    {<BsSuitHeart size="20" />} 좋아요
                     {data.data.totalLikeCnt}
                   </div>
                 )}
@@ -97,10 +93,7 @@ const DetailCompany = () => {
       <ThemeWrap>
         {data.data.themeList.map((theme) => {
           return (
-            <div
-              className="test"
-              onClick={() => navigate(`/theme/${theme.id}`)}
-            >
+            <div className="test">
               <CompanyTheme theme={theme} key={theme.id} />
             </div>
           );
@@ -156,7 +149,6 @@ const CompanyPic = styled.div`
 const CompanyText = styled.div`
   height: 150px;
   width: 840px;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -167,6 +159,10 @@ const CompanyText = styled.div`
   .review {
     margin-top: 20px;
     font-size: 24px;
+    span {
+      font-size: 23px;
+      color: var(--color-main);
+    }
   }
   .button-wrap {
     margin-top: 30px;
@@ -182,6 +178,7 @@ const CompanyText = styled.div`
     color: white;
     border: none;
     font-size: 16px;
+    cursor: pointer;
   }
   .like {
     width: 220px;
@@ -190,6 +187,16 @@ const CompanyText = styled.div`
     border: 1px solid gray;
     font-size: 16px;
     background-color: white;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .like-wrap {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 72px;
   }
 `;
 

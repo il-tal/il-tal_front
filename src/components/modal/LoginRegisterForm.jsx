@@ -3,34 +3,63 @@ import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import { signUpForm, loginForm } from "../../api/index";
+import {
+  signUpForm,
+  loginForm,
+  dupUsername,
+  dupNickname,
+} from "../../api/index";
 import { REST_API_KEY, REDIRECT_URI } from "./KakaoLoginData";
-import kakaoLogo from "../../asset/kakao_login.png";
-import Logo from "../../asset/LoginLogo.png";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
+import kakaoLogo from "../../asset/kakaoLogo.png";
 import { loginCheck } from "../../api/store";
 import { useRecoilState } from "recoil";
+import Logo from "../../asset/LoginLogo.png";
 
 const RegisterForm = ({ setIsLogin }) => {
   const [loginState, setLoginState] = useRecoilState(loginCheck);
-  const navigate = useNavigate();
+  const navigator = useNavigate();
   const {
     register,
     handleSubmit,
     setValue,
     getValues,
-    watch,
-    formState: { errors },
-  } = useForm();
-  // ({ mode: "onChange", resolver: yupResolver(formSchema) });
+    formState: { errors, isSubmitting },
+  } = useForm({ mode: "onChange" });
   const { mutate: toSign } = useMutation(signUpForm, {
     onSuccess: () => {
       alert("회원가입이 완료되었습니다.");
       setLogIn(true);
     },
-    onError: () => {
-      alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+    onError: ({ response }) => {
+      alert(response.data.error.detail);
+    },
+  });
+
+  const { mutate: duplicateId } = useMutation(dupUsername, {
+    onSuccess: (res) => {
+      alert("사용 가능한 아이디 입니다.");
+      setValue("username");
+    },
+    onError: (err) => {
+      if (err.response.status === 409) {
+        alert("이미 사용 된 아이디 입니다.");
+      } else {
+        alert("예상치 못한 오류 발생");
+      }
+    },
+  });
+
+  const { mutate: duplicateNick } = useMutation(dupNickname, {
+    onSuccess: (res) => {
+      alert("사용 가능한 닉네임 입니다.");
+      setValue("nickname");
+    },
+    onError: (err) => {
+      if (err.response.status === 409) {
+        alert("이미 사용 된 닉네임 입니다.");
+      } else {
+        alert("예상치 못한 오류 발생");
+      }
     },
   });
 
@@ -80,6 +109,16 @@ const RegisterForm = ({ setIsLogin }) => {
     }
   };
 
+  const idCheck = () => {
+    const { username } = getValues();
+    duplicateId(username);
+  };
+
+  const nickCheck = () => {
+    const { nickname } = getValues();
+    duplicateNick(nickname);
+  };
+
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
 
   const handleLogin = () => {
@@ -88,19 +127,24 @@ const RegisterForm = ({ setIsLogin }) => {
 
   return (
     <Container>
-      <img src={Logo} alt="iltalLogo" />
+      <LogoBox
+        onClick={() => {
+          navigator("/");
+        }}>
+        <img src={Logo} alt="iltalLogo" />
+      </LogoBox>
       {logIn ? (
         <Wrap>
           <form onSubmit={handleSubmit(submitLoginSignUp)}>
             <LoginFormBox>
-              <Input {...register("username")} placeholder=" 아이디" />
+              <Input {...register("username")} placeholder="  아이디" />
               <br />
               <Input
                 type="password"
                 {...register("password")}
-                placeholder=" 비밀번호"
+                placeholder="  비밀번호"
               />
-              <LoginBtn>로그인</LoginBtn>
+              <LoginBtn disabled={isSubmitting}>로그인</LoginBtn>
             </LoginFormBox>
           </form>
           <BottomBox>
@@ -109,9 +153,10 @@ const RegisterForm = ({ setIsLogin }) => {
           </BottomBox>
           <Line />
           <SocialLoginBox>
-            {/* <KakaoLoginBtn onClick={handleLogin}> */}
-            <img onClick={handleLogin} alt="kakaoLogo" src={kakaoLogo} />
-            {/* </KakaoLoginBtn> */}
+            <KakaoLoginBtn onClick={handleLogin}>
+              <img className="kakaoLogo" src={kakaoLogo} alt="kakaologo" />
+              카카오로 로그인
+            </KakaoLoginBtn>
           </SocialLoginBox>
         </Wrap>
       ) : (
@@ -122,31 +167,25 @@ const RegisterForm = ({ setIsLogin }) => {
                 <IdNickBox>
                   <CreateId
                     type="text"
-                    placeholder="아이디"
+                    placeholder="  아이디"
                     {...register("username", {
                       required: true,
-                      // minLength: {
-                      //   value: 4,
-                      //   message: "영문/숫자 포함 4-12자로 입력해주세요.",
-                      // },
                       pattern: {
                         value: /^(?=.*[a-zA-Z])(?=.*\d)[-a-zA-Z0-9]{4,12}$/,
                         message: "영문/숫자 포함 4-12자로 입력해주세요.",
                       },
                     })}
                   />
-                  <DuplicationIdCheckBtn>중복확인</DuplicationIdCheckBtn>
+                  <DuplicationIdCheckBtn onClick={idCheck}>
+                    중복확인
+                  </DuplicationIdCheckBtn>
                 </IdNickBox>
                 {errors?.username && <p>{errors.username.message}</p>}
                 <InputPW
                   type="password"
-                  placeholder="비밀번호"
+                  placeholder="  비밀번호"
                   {...register("password1", {
                     required: true,
-                    // minLength: {
-                    //   value: 8,
-                    //   message: "영문/숫자/특수문자포함 8-16자로 입력해주세요.",
-                    // },
                     pattern: {
                       value:
                         /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,
@@ -157,7 +196,7 @@ const RegisterForm = ({ setIsLogin }) => {
                 {errors?.password1 && <p>{errors.password1.message}</p>}
                 <InputPW
                   type="password"
-                  placeholder="비밀번호확인"
+                  placeholder="  비밀번호확인"
                   {...register("password2", {
                     required: true,
                     validate: {
@@ -172,7 +211,7 @@ const RegisterForm = ({ setIsLogin }) => {
                 <IdNickBox>
                   <CreateNickname
                     type="text"
-                    placeholder="닉네임"
+                    placeholder="  닉네임"
                     {...register("nickname", {
                       required: true,
                       pattern: {
@@ -182,7 +221,9 @@ const RegisterForm = ({ setIsLogin }) => {
                       },
                     })}
                   />
-                  <DuplicationIdCheckBtn>중복확인</DuplicationIdCheckBtn>
+                  <DuplicationIdCheckBtn onClick={nickCheck}>
+                    중복확인
+                  </DuplicationIdCheckBtn>
                 </IdNickBox>
                 {errors?.nickname && <p>{errors.nickname.message}</p>}
                 {/* 아이디 영문숫자포함 4-12자, 닉네임 한글영어포함 2-10자, 비밀번호 영문 특수문자포함 8-16자*/}
@@ -190,10 +231,10 @@ const RegisterForm = ({ setIsLogin }) => {
               <RegisterBtn>회원가입</RegisterBtn>
             </FormBox>
           </form>
-          <BottomBox>
+          <BottomBox2>
             이미 계정이 있으신가요?{" "}
             <GoToLoginBtn onClick={toLogin}> 로그인 </GoToLoginBtn>
-          </BottomBox>
+          </BottomBox2>
         </Wrap>
       )}
     </Container>
@@ -203,13 +244,19 @@ export default RegisterForm;
 
 //공통으로 적용되는 레이아웃
 const Container = styled.div`
-  height: 632px;
-  width: 467px;
+  height: 646px;
+  width: 512px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: white;
+`;
+
+const LogoBox = styled.div`
+  height: 140px;
+  width: 140px;
+  cursor: pointer;
 `;
 
 const Wrap = styled.div`
@@ -220,76 +267,86 @@ const Wrap = styled.div`
   align-items: center;
 `;
 
-// const LogoBox = styled.div`
-//   height: 59px;
-//   width: 157px;
-//   margin: 50px 0 30px 0;
-//   background-image: url(/src/asset/OurLogo.png);
-// `;
-
-///////////////////////////////////////////
 //로그인 css
 
 const LoginFormBox = styled.div`
   display: flex;
   flex-direction: column;
-  height: 200px;
-  width: 300px;
+  height: 246px;
+  width: 393px;
+  justify-content: center;
 `;
 
 const Input = styled.input`
   box-sizing: border-box;
-  height: 50px;
-  width: 299px;
-  background-color: #d9d9d9;
-  border-radius: 5px;
+  height: 66px;
+  width: 393px;
+  background-color: #eeeeee;
+  border-radius: 8px;
   border: none;
+  margin-top: 8px;
+  font-size: 18px;
 `;
 
 const LoginBtn = styled.button`
   box-sizing: border-box;
-  height: 50px;
-  width: 299px;
-  margin-top: 15px;
-  background-color: #575757;
-  border-radius: 5px;
+  height: 66px;
+  width: 393px;
+  background-color: #06c387;
+  border-radius: 8px;
   border: none;
+  color: white;
+  margin-top: 21px;
+  font-size: 17px;
+  font-weight: bold;
+  cursor: pointer;
 `;
 
 const BottomBox = styled.div`
-  height: 25px;
-  margin: 10px auto;
+  margin: 25px 0 15px 0;
+  color: #828282;
 `;
 
 const GoToRegisterBtn = styled.button`
   background-color: white;
   border: none;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 16px;
+  color: #828282;
   cursor: pointer;
 `;
 
 const Line = styled.hr`
-  margin-bottom: 15px;
-  width: 300px;
-  color: #d9d9d9;
+  margin-bottom: 20px;
+  width: 393px;
+  color: #cccccc;
 `;
 
 const SocialLoginBox = styled.div`
   display: flex;
   flex-direction: column;
-  height: 70px;
-  width: 300px;
+  height: 80px;
+  width: 393px;
 `;
 
 const KakaoLoginBtn = styled.button`
   box-sizing: border-box;
-  height: 50px;
-  width: 299px;
-  margin-top: 15px;
-  border-radius: 5px;
+  height: 66px;
+  width: 393px;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
+  background-color: #fee500;
+  position: relative;
+  font-size: 17px;
+  color: #423630;
+  .kakaoLogo {
+    position: absolute;
+    left: 112px;
+    top: 24px;
+    width: 22px;
+    height: 19px;
+  }
 `;
 
 const GoogleLoginBtn = styled.button`
@@ -307,18 +364,19 @@ const GoogleLoginBtn = styled.button`
 //회원가입 css
 
 const FormBox = styled.div`
-  height: 400px;
-  width: 300px;
+  height: 470px;
+  width: 393px;
   display: flex;
+  align-items: center;
   flex-direction: column;
-  row-gap: 10px;
+  row-gap: 18px;
   font-size: 15px;
 `;
 
 const InputBox = styled.div`
   display: flex;
   flex-direction: column;
-  row-gap: 10px;
+  row-gap: 18px;
 `;
 
 const IdNickBox = styled.div`
@@ -329,20 +387,21 @@ const IdNickBox = styled.div`
 const CreateId = styled.input`
   box-sizing: border-box;
   height: 50px;
-  width: 197px;
-  background-color: #d9d9d9;
-  border-radius: 5px;
+  width: 246px;
+  background-color: #eeeeee;
+  border-radius: 8px;
   border: none;
+  font-size: 17px;
 `;
 
 const DuplicationIdCheckBtn = styled.button`
   box-sizing: border-box;
   height: 50px;
-  width: 82px;
-  background-color: #d9d9d9;
-  border-radius: 5px;
-  border: 1px solid #7986cb;
-  font-family: sans-serif;
+  width: 123px;
+  background-color: #ffffff;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  font-size: 17px;
   &:hover {
     background: white;
     transition: 0.3s;
@@ -353,40 +412,45 @@ const DuplicationIdCheckBtn = styled.button`
 const InputPW = styled.input`
   box-sizing: border-box;
   height: 50px;
-  width: 299px;
-  background-color: #d9d9d9;
-  border-radius: 5px;
+  width: 393px;
+  background-color: #eeeeee;
+  border-radius: 8px;
   border: none;
+  font-size: 17px;
 `;
 
 const CreateNickname = styled.input`
   box-sizing: border-box;
   height: 50px;
-  width: 197px;
-  background-color: #d9d9d9;
-  border-radius: 5px;
+  width: 246px;
+  background-color: #eeeeee;
+  border-radius: 8px;
   border: none;
+  font-size: 17px;
 `;
 
 const RegisterBtn = styled.button`
   box-sizing: border-box;
   height: 50px;
-  width: 299px;
-  margin-top: 15px;
-  background-color: #575757;
-  border-radius: 5px;
-  border: 1px solid #575757;
-  &:hover {
-    background: white;
-    transition: 0.3s;
-  }
+  width: 393px;
+  border-radius: 8px;
+  border: none;
+  background-color: #06c387;
+  color: white;
+  font-size: 17px;
+  font-weight: bold;
   cursor: pointer;
+`;
+
+const BottomBox2 = styled.div`
+  color: #828282;
 `;
 
 const GoToLoginBtn = styled.button`
   background-color: white;
   border: none;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 16px;
+  color: #8a8a8a;
   cursor: pointer;
 `;

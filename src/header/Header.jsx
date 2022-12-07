@@ -21,8 +21,7 @@ const Header = () => {
 
   //로그아웃
   const onLogout = () => {
-    sessionStorage.removeItem("username");
-    sessionStorage.removeItem("nickname");
+    sessionStorage.removeItem("userinfo");
     sessionStorage.removeItem("access_token");
     sessionStorage.removeItem("refresh_token");
     setLoginState(false);
@@ -78,14 +77,12 @@ const Header = () => {
           </div>
           <div
             className={isClicked === 1 ? "online" : "noneline"}
-            onClick={onClickCompany}
-          >
+            onClick={onClickCompany}>
             업체별
           </div>
           <div
             className={isClicked === 2 ? "online" : "noneline"}
-            onClick={onClickGenre}
-          >
+            onClick={onClickGenre}>
             테마별
           </div>
         </div>
@@ -99,8 +96,7 @@ const Header = () => {
               onClick={() => {
                 onLogout();
                 navigater("/");
-              }}
-            >
+              }}>
               <FiLogOut size="28" />
             </div>
           </div>
