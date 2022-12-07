@@ -22,7 +22,6 @@ export default api;
 //회원가입, 아이디 및 닉네임 중복확인 POST 요청
 export const signUpForm = async (userData) => {
   const { data } = await api.post("/signup", userData);
-  console.log(data);
   return data;
 };
 
@@ -59,7 +58,6 @@ export const kakaologin = async (kakaocode) => {
 //아이디 중복확인 POST 요청
 export const dupUsername = async (username) => {
   const data = await api.post("/username", { username: username });
-  console.log(data);
   return data;
 };
 

@@ -2,8 +2,6 @@ import { useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-
-
 import { useNavigate } from "react-router-dom";
 import {
   signUpForm,
@@ -11,12 +9,11 @@ import {
   dupUsername,
   dupNickname,
 } from "../../api/index";
-import { REST_API_KEY, REDIRECT_URI } from "./KakaoLoginData";
 import kakaoLogo from "../../asset/kakaoLogo.png";
-
 import { loginCheck } from "../../api/store";
 import { useRecoilState } from "recoil";
 import Logo from "../../asset/LoginLogo.png";
+import Swal from "sweetalert2";
 
 const RegisterForm = ({ setIsLogin }) => {
   const [loginState, setLoginState] = useRecoilState(loginCheck);
@@ -29,44 +26,73 @@ const RegisterForm = ({ setIsLogin }) => {
     setValue,
     getValues,
 
-
     formState: { errors, isSubmitting },
   } = useForm({ mode: "onChange" });
 
   const { mutate: toSign } = useMutation(signUpForm, {
     onSuccess: () => {
-      alert("회원가입이 완료되었습니다.");
+      Swal.fire({
+        icon: "success",
+        title: "회원가입 완료",
+        text: "일탈에 회원이 되신것을 환영합니다!",
+      });
       setLogIn(true);
     },
     onError: ({ response }) => {
-      alert(response.data.error.detail);
+      Swal.fire({
+        icon: "error",
+        title: "회원가입 실패",
+        text: response.data.error.detail,
+      });
     },
   });
 
   const { mutate: duplicateId } = useMutation(dupUsername, {
     onSuccess: (res) => {
-      alert("사용 가능한 아이디 입니다.");
-      setValue("username");
+      Swal.fire({
+        icon: "success",
+        title: "ID 사용 가능",
+        text: "사용 가능한 아이디 입니다!",
+      });
     },
     onError: (err) => {
       if (err.response.status === 409) {
-        alert("이미 사용 된 아이디 입니다.");
+        Swal.fire({
+          icon: "error",
+          title: "중복된 아이디",
+          text: "이미 사용된 아이디 입니다!",
+        });
       } else {
-        alert("예상치 못한 오류 발생");
+        Swal.fire({
+          icon: "error",
+          title: "오류 발생",
+          text: "오류가 발생하였습니다. 다시 시도하세요!",
+        });
       }
     },
   });
 
   const { mutate: duplicateNick } = useMutation(dupNickname, {
     onSuccess: (res) => {
-      alert("사용 가능한 닉네임 입니다.");
-      setValue("nickname");
+      Swal.fire({
+        icon: "success",
+        title: "닉네임 사용 가능",
+        text: "사용 가능한 닉네임 입니다!",
+      });
     },
     onError: (err) => {
       if (err.response.status === 409) {
-        alert("이미 사용 된 닉네임 입니다.");
+        Swal.fire({
+          icon: "error",
+          title: "중복된 닉네임",
+          text: "이미 사용된 닉네임 입니다!",
+        });
       } else {
-        alert("예상치 못한 오류 발생");
+        Swal.fire({
+          icon: "error",
+          title: "오류 발생",
+          text: "오류가 발생하였습니다. 다시 시도하세요!",
+        });
       }
     },
   });
@@ -80,7 +106,11 @@ const RegisterForm = ({ setIsLogin }) => {
       setIsLogin(true);
     },
     onError: (err) => {
-      alert("로그인에 실패했습니다.");
+      Swal.fire({
+        icon: "error",
+        title: "로그인 실패",
+        text: "로그인에 실패하였습니다. 다시 시도해 주세요!",
+      });
     },
   });
 
@@ -117,7 +147,6 @@ const RegisterForm = ({ setIsLogin }) => {
     }
   };
 
-
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_KAKAO_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`;
 
   const idCheck = () => {
@@ -130,9 +159,6 @@ const RegisterForm = ({ setIsLogin }) => {
     duplicateNick(nickname);
   };
 
- 
-
-
   const handleLogin = () => {
     window.location.href = KAKAO_AUTH_URL;
   };
@@ -142,7 +168,8 @@ const RegisterForm = ({ setIsLogin }) => {
       <LogoBox
         onClick={() => {
           navigator("/");
-        }}>
+        }}
+      >
         <img src={Logo} alt="iltalLogo" />
       </LogoBox>
       {logIn ? (
@@ -189,7 +216,7 @@ const RegisterForm = ({ setIsLogin }) => {
                       },
                     })}
                   />
-                  <DuplicationIdCheckBtn onClick={idCheck}>
+                  <DuplicationIdCheckBtn type="button" onClick={idCheck}>
                     중복확인
                   </DuplicationIdCheckBtn>
                 </IdNickBox>
@@ -235,7 +262,7 @@ const RegisterForm = ({ setIsLogin }) => {
                       },
                     })}
                   />
-                  <DuplicationIdCheckBtn onClick={nickCheck}>
+                  <DuplicationIdCheckBtn type="button" onClick={nickCheck}>
                     중복확인
                   </DuplicationIdCheckBtn>
                 </IdNickBox>
@@ -361,17 +388,6 @@ const KakaoLoginBtn = styled.button`
     width: 22px;
     height: 19px;
   }
-`;
-
-const GoogleLoginBtn = styled.button`
-  box-sizing: border-box;
-  height: 50px;
-  width: 299px;
-  margin-top: 15px;
-  background-color: white;
-  border-radius: 5px;
-  color: #828282;
-  cursor: pointer;
 `;
 
 ///////////////////////////////////////////

@@ -7,7 +7,9 @@ import { useEffect, useState } from "react";
 import { SwiperSlide } from "swiper/react";
 import { CompanyCarousel } from "./CompanyCarousel";
 import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
-
+import { useRecoilValue } from "recoil";
+import { loginCheck } from "../../api/store";
+import Swal from "sweetalert2";
 //ThemeWrap에서 ThemePoster는 페이징처리하여 3개씩 보여주기
 
 const Company = ({ company }) => {
@@ -19,6 +21,22 @@ const Company = ({ company }) => {
       setWish(res.data.companyLikeCheck);
     },
   });
+
+  //로그인 유무 판별
+  const loginCheckState = useRecoilValue(loginCheck);
+
+  //좋아요 회원만 가능하도록 알람띄우기
+  const likeOnlyMemeber = () => {
+    if (loginCheckState) {
+      companyLike.mutate({ companyId: company.id });
+    } else {
+      Swal.fire({
+        title: "로그인 후 이용하세요!",
+        text: "비회원은 좋아요를 보낼수 없어요 😢",
+        icon: "warning",
+      });
+    }
+  };
 
   const [wish, setWish] = useState(company.companyLikeCheck);
   useEffect(() => {
@@ -43,9 +61,9 @@ const Company = ({ company }) => {
                 src={company.companyImgUrl}
               />
             </SwiperSlide>
-            {company.themeList.map((themePics) => {
+            {company.themeList.map((themePics, index) => {
               return (
-                <SwiperSlide>
+                <SwiperSlide key={`themepics${index}`}>
                   <img
                     onClick={() => {
                       navigator(`/company/${company.id}`);
@@ -88,9 +106,7 @@ const Company = ({ company }) => {
           >
             홈페이지
           </HomepageUrl>
-          <CompanyLike
-            onClick={() => companyLike.mutate({ companyId: company.id })}
-          >
+          <CompanyLike onClick={() => likeOnlyMemeber()}>
             {wish ? <BsSuitHeartFill color={"#06c387"} /> : <BsSuitHeart />}{" "}
           </CompanyLike>
         </CompanyInfo>
