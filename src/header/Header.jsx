@@ -8,6 +8,7 @@ import { useRecoilState } from "recoil";
 import { headerClicked, loginCheck } from "../api/store";
 import SerchForm from "../components/serch/SertchForm";
 import logo from "../asset/HeaderLogo.png";
+import Swal from "sweetalert2";
 
 const Header = () => {
   //페이지 이동에 사용
@@ -21,11 +22,23 @@ const Header = () => {
 
   //로그아웃
   const onLogout = () => {
-    sessionStorage.removeItem("username");
-    sessionStorage.removeItem("nickname");
-    sessionStorage.removeItem("access_token");
-    sessionStorage.removeItem("refresh_token");
-    setLoginState(false);
+    Swal.fire({
+      title: "로그아웃 하시겠습니까?",
+      text: "로그아웃을 하면 후기를 작성할 수 없어요! 😢",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "로그아웃",
+      cancelButtonText: "취소",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        sessionStorage.removeItem("username");
+        sessionStorage.removeItem("nickname");
+        sessionStorage.removeItem("userinfo");
+        sessionStorage.removeItem("access_token");
+        sessionStorage.removeItem("refresh_token");
+        setLoginState(false);
+      }
+    });
   };
 
   //로그인 체크 후 스테이트값 변경
@@ -98,7 +111,6 @@ const Header = () => {
             <div
               onClick={() => {
                 onLogout();
-                navigater("/");
               }}
             >
               <FiLogOut size="28" />

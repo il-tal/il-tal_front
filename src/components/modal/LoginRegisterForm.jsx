@@ -2,19 +2,15 @@ import { useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
 import { signUpForm, loginForm } from "../../api/index";
-import { REST_API_KEY, REDIRECT_URI } from "./KakaoLoginData";
 import kakaoLogo from "../../asset/kakao_login.png";
 import Logo from "../../asset/LoginLogo.png";
-import { yupResolver } from "@hookform/resolvers/yup";
-import * as yup from "yup";
 import { loginCheck } from "../../api/store";
 import { useRecoilState } from "recoil";
 
 const RegisterForm = ({ setIsLogin }) => {
   const [loginState, setLoginState] = useRecoilState(loginCheck);
-  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -80,7 +76,7 @@ const RegisterForm = ({ setIsLogin }) => {
     }
   };
 
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_KAKAO_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`;
 
   const handleLogin = () => {
     window.location.href = KAKAO_AUTH_URL;
