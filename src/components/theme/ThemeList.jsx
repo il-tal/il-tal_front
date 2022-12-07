@@ -8,6 +8,7 @@ import {
   difficultyState,
   genreState,
   locationState,
+  loginCheck,
   peopleState,
   scoreState,
   sortState,
@@ -33,12 +34,15 @@ const ThemeList = () => {
   const score = useRecoilValue(scoreState);
   const difficulty = useRecoilValue(difficultyState);
 
+  //로그인 유무 판별
+  const loginCheckState = useRecoilValue(loginCheck);
+
   //정렬 전역 스테이트
   const [sort, setSort] = useRecoilState(sortState);
 
   //페이징처리된 데이터 받아오기
   const { data, isError, error, isLoading, refetch } = useQuery(
-    ["getThemes", themePagenation],
+    ["getThemes", themePagenation, loginCheckState],
     () =>
       getFilterTheme({
         genre,

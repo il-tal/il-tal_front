@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "http://3.35.205.228",
+  baseURL: `${process.env.REACT_APP_AXIOS_API}`,
 });
 
 // api요청 주소가 login 또는 singup이 아닐 경우 로컬스토리지에 존재하는  access token 토큰을 가져온다.

@@ -2,6 +2,8 @@ import { useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
+
+
 import { useNavigate } from "react-router-dom";
 import {
   signUpForm,
@@ -11,20 +13,26 @@ import {
 } from "../../api/index";
 import { REST_API_KEY, REDIRECT_URI } from "./KakaoLoginData";
 import kakaoLogo from "../../asset/kakaoLogo.png";
+
 import { loginCheck } from "../../api/store";
 import { useRecoilState } from "recoil";
 import Logo from "../../asset/LoginLogo.png";
 
 const RegisterForm = ({ setIsLogin }) => {
   const [loginState, setLoginState] = useRecoilState(loginCheck);
+
   const navigator = useNavigate();
+
   const {
     register,
     handleSubmit,
     setValue,
     getValues,
+
+
     formState: { errors, isSubmitting },
   } = useForm({ mode: "onChange" });
+
   const { mutate: toSign } = useMutation(signUpForm, {
     onSuccess: () => {
       alert("회원가입이 완료되었습니다.");
@@ -109,6 +117,9 @@ const RegisterForm = ({ setIsLogin }) => {
     }
   };
 
+
+  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_KAKAO_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`;
+
   const idCheck = () => {
     const { username } = getValues();
     duplicateId(username);
@@ -119,7 +130,8 @@ const RegisterForm = ({ setIsLogin }) => {
     duplicateNick(nickname);
   };
 
-  const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
+ 
+
 
   const handleLogin = () => {
     window.location.href = KAKAO_AUTH_URL;
@@ -170,6 +182,7 @@ const RegisterForm = ({ setIsLogin }) => {
                     placeholder="  아이디"
                     {...register("username", {
                       required: true,
+
                       pattern: {
                         value: /^(?=.*[a-zA-Z])(?=.*\d)[-a-zA-Z0-9]{4,12}$/,
                         message: "영문/숫자 포함 4-12자로 입력해주세요.",
@@ -186,6 +199,7 @@ const RegisterForm = ({ setIsLogin }) => {
                   placeholder="  비밀번호"
                   {...register("password1", {
                     required: true,
+
                     pattern: {
                       value:
                         /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,

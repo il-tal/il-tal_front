@@ -62,7 +62,8 @@ const Company = ({ company }) => {
           <CompanyName
             onClick={() => {
               navigator(`/company/${company.id}`);
-            }}>
+            }}
+          >
             {company.companyName}
           </CompanyName>
           <CompanyScore>
@@ -83,11 +84,13 @@ const Company = ({ company }) => {
             })} */}
           </CompanyThemeNameGenre>
           <HomepageUrl
-            onClick={() => window.open(`${company.companyUrl}`, "_black")}>
+            onClick={() => window.open(`${company.companyUrl}`, "_black")}
+          >
             홈페이지
           </HomepageUrl>
           <CompanyLike
-            onClick={() => companyLike.mutate({ companyId: company.id })}>
+            onClick={() => companyLike.mutate({ companyId: company.id })}
+          >
             {wish ? <BsSuitHeartFill color={"#06c387"} /> : <BsSuitHeart />}{" "}
           </CompanyLike>
         </CompanyInfo>

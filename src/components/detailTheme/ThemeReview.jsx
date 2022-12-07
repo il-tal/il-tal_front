@@ -6,15 +6,19 @@ import { getComment } from "../../api/ThemeApi";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import Pagination from "react-js-pagination";
-import { commnetPages } from "../../api/store";
-import { useRecoilState } from "recoil";
+import { commnetPages, loginCheck } from "../../api/store";
+import { useRecoilState, useRecoilValue } from "recoil";
 import nextgray from "../../asset/next-gray.png";
 import prevgray from "../../asset/prev-gray.png";
 import nextgreen from "../../asset/next-green.png";
 import prevgreen from "../../asset/prev-green.png";
+import { useEffect } from "react";
 const ThemeReview = ({ props }) => {
   //코멘트 조회용 테마 id
   const { id } = useParams();
+
+  //로그인 유무 판별
+  const loginCheckState = useRecoilValue(loginCheck);
 
   //리뷰 작성하기 토글
   const [isEdit, setIsEdit] = useState(true);
@@ -51,9 +55,11 @@ const ThemeReview = ({ props }) => {
             {props.themeScore})
           </div>
         </div>
-        <span className="comment" onClick={() => setIsEdit(!isEdit)}>
-          {isEdit ? "리뷰작성" : "취소"}
-        </span>
+        {loginCheckState ? (
+          <span className="comment" onClick={() => setIsEdit(!isEdit)}>
+            {isEdit ? "리뷰작성" : "취소"}
+          </span>
+        ) : null}
       </ReviewHeader>
       <div className={isEdit ? "test2" : "test1"}>
         <CommentForm isEdit={isEdit} setIsEdit={setIsEdit} />

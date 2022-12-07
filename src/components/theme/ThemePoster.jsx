@@ -1,19 +1,43 @@
 import styled from "styled-components";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { wishTheme } from "../../api/ThemeApi";
+import { useRecoilValue } from "recoil";
+import { loginCheck } from "../../api/store";
+import Swal from "sweetalert2";
 
 const ThemePoster = ({ theme }) => {
+  //페이지 이동에 사용
   const navigate = useNavigate();
+
+  //쿼리 클라이언트 선언
   const queryClient = useQueryClient();
+
+  //좋아요 기능 mutation
   const themeLike = useMutation((themeId) => wishTheme(themeId), {
     onSuccess: (res) => {
       queryClient.invalidateQueries(["getThemeList"]);
       setLikeState(res.data.themeLikeCheck);
     },
   });
+
+  //로그인 유무 판별
+  const loginCheckState = useRecoilValue(loginCheck);
+
+  //좋아요 회원만 가능하도록 알람띄우기
+  const likeOnlyMemeber = () => {
+    if (loginCheckState) {
+      themeLike.mutate({ themeId: theme.id });
+    } else {
+      Swal.fire({
+        title: "로그인 후 이용하세요!",
+        text: "비회원은 좋아요를 보낼수 없어요 😢",
+        icon: "warning",
+      });
+    }
+  };
 
   //좋아요 스테이트 (theme에서 체크여부를 바로 받으면 너무 느리게 바뀌므로 wishTheme요청값을 이용하기위해 사용)
   const [likeState, setLikeState] = useState(theme.themeLikeCheck);
@@ -41,14 +65,11 @@ const ThemePoster = ({ theme }) => {
             <span className="star">★</span> {theme.themeScore}{" "}
             <span>({theme.reviewCnt})</span>
           </div>
-          <div
-            className="like"
-            onClick={() => themeLike.mutate({ themeId: theme.id })}
-          >
+          <div className="like" onClick={() => likeOnlyMemeber()}>
             {likeState ? (
-              <AiFillHeart color={"var(--color-main)"} />
+              <BsSuitHeartFill color={"var(--color-main)"} />
             ) : (
-              <AiOutlineHeart />
+              <BsSuitHeart />
             )}
           </div>
         </ThemeTextBottom>

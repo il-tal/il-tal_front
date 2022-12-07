@@ -7,10 +7,16 @@ import KakaoMap from "../map/KakaoMap";
 import Modal from "../modal/Modal";
 import ThemeReview from "./ThemeReview";
 import ThemeSynopsis from "./ThemeSynopsis";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
+import { useRecoilValue } from "recoil";
+import { loginCheck } from "../../api/store";
+import Swal from "sweetalert2";
 const DetailTheme = () => {
   //상세페이지 조회용 id
   const { id } = useParams();
+
+  //로그인 유무 판별
+  const loginCheckState = useRecoilValue(loginCheck);
 
   //카카오맵 모달창
   const [isMap, setIsMap] = useState(true);
@@ -19,10 +25,25 @@ const DetailTheme = () => {
   const navigate = useNavigate();
 
   //테마 상세정보 조회 GET 요청 useQuery
-  const { data, isLoading } = useQuery(["getDetail"], () => getDetailTheme(id));
+  const { data, isLoading } = useQuery(["getDetail", loginCheckState], () =>
+    getDetailTheme(id)
+  );
 
   //데이터 refetch를 위한 쿼리클라이언트
   const queryClient = useQueryClient();
+
+  //좋아요 회원만 가능하도록 알람띄우기
+  const likeOnlyMemeber = () => {
+    if (loginCheckState) {
+      themeLike.mutate({ themeId: id });
+    } else {
+      Swal.fire({
+        title: "로그인 후 이용하세요!",
+        text: "비회원은 좋아요를 보낼수 없어요 😢",
+        icon: "warning",
+      });
+    }
+  };
 
   //좋아요기능 mutation
   const themeLike = useMutation((themeId) => wishTheme(themeId), {
@@ -89,15 +110,15 @@ const DetailTheme = () => {
             </TextPrice>
           </ThemeInfo>
           <ThemeBtnWrap>
-            <div onClick={() => themeLike.mutate({ themeId: id })}>
+            <div onClick={() => likeOnlyMemeber()}>
               {data.data.themeLikeCheck ? (
                 <Btn>
-                  {<AiFillHeart color="var(--color-main)" size="20" />}
+                  {<BsSuitHeartFill color="var(--color-main)" size="20" />}
                   좋아요 {data.data.totalLikeCnt}
                 </Btn>
               ) : (
                 <Btn>
-                  {<AiOutlineHeart size="20" />} 좋아요 {data.data.totalLikeCnt}
+                  {<BsSuitHeart size="20" />} 좋아요 {data.data.totalLikeCnt}
                 </Btn>
               )}
             </div>
