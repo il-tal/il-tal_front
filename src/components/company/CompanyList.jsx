@@ -42,7 +42,8 @@ const CompanyList = () => {
           <select
             className="filter"
             onChange={onChangeHandler}
-            value={comLocation}>
+            value={comLocation}
+          >
             {Locations.location.map((arg) => {
               return (
                 <option key={arg.value} value={arg.value}>
@@ -54,9 +55,9 @@ const CompanyList = () => {
         </div>
       </Category>
       <CompanyWrap>
-        {data.data.content.map((company) => {
+        {data.data.content.map((company, index) => {
           return (
-            <div>
+            <div key={`company${index}`}>
               <Company company={company} />
             </div>
           );

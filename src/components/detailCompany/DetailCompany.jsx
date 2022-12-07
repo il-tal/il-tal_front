@@ -8,7 +8,9 @@ import { useState } from "react";
 import { FiMapPin, FiPhone } from "react-icons/fi";
 import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
 import { AiOutlineClockCircle } from "react-icons/ai";
-
+import { useRecoilValue } from "recoil";
+import { loginCheck } from "../../api/store";
+import Swal from "sweetalert2";
 const DetailCompany = () => {
   //업체 아이디 받기
   const { id } = useParams();
@@ -18,6 +20,22 @@ const DetailCompany = () => {
   const { data, isLoading } = useQuery(["getDetailCompany"], () =>
     getDetailCompany(id)
   );
+
+  //로그인 유무 판별
+  const loginCheckState = useRecoilValue(loginCheck);
+
+  //좋아요 회원만 가능하도록 알람띄우기
+  const likeOnlyMemeber = () => {
+    if (loginCheckState) {
+      companyLike.mutate({ companyId: id });
+    } else {
+      Swal.fire({
+        title: "로그인 후 이용하세요!",
+        text: "비회원은 좋아요를 보낼수 없어요 😢",
+        icon: "warning",
+      });
+    }
+  };
 
   //데이터 refetch 클라이언트
   const queryClient = useQueryClient();
@@ -54,12 +72,11 @@ const DetailCompany = () => {
             <div className="button-wrap">
               <button
                 className="homepage"
-                onClick={() => window.open(data.data.companyUrl)}>
+                onClick={() => window.open(data.data.companyUrl)}
+              >
                 홈페이지
               </button>
-              <button
-                onClick={() => companyLike.mutate({ companyId: id })}
-                className="like">
+              <button onClick={() => likeOnlyMemeber()} className="like">
                 {data.data.companyLikeCheck ? (
                   <div className="like-wrap">
                     {<BsSuitHeartFill color={"#06c387"} size="20" />} 좋아요{" "}
@@ -91,9 +108,9 @@ const DetailCompany = () => {
         </div>
       </CompanyWrap>
       <ThemeWrap>
-        {data.data.themeList.map((theme) => {
+        {data.data.themeList.map((theme, index) => {
           return (
-            <div className="test">
+            <div className="test" key={`themes${index}`}>
               <CompanyTheme theme={theme} key={theme.id} />
             </div>
           );

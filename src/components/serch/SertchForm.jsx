@@ -32,7 +32,7 @@ const SerchForm = () => {
     <Container>
       <Input
         onChange={onChangeSerch}
-        placeholder="찾고싶은 업체나 테마를 검색해 보세요"
+        placeholder="찾고 싶은 업체나 테마를 검색해 보세요"
         onKeyPress={onChangeSerch}
       />
       <button onClick={onSubmitHandler}>
