@@ -9,8 +9,13 @@ import { loginCheck } from "../../api/store";
 import Swal from "sweetalert2";
 
 const ThemePoster = ({ theme }) => {
+  //페이지 이동에 사용
   const navigate = useNavigate();
+
+  //쿼리 클라이언트 선언
   const queryClient = useQueryClient();
+
+  //좋아요 기능 mutation
   const themeLike = useMutation((themeId) => wishTheme(themeId), {
     onSuccess: (res) => {
       queryClient.invalidateQueries(["getThemeList"]);

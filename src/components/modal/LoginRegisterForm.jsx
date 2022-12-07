@@ -18,7 +18,7 @@ const RegisterForm = ({ setIsLogin }) => {
     getValues,
     watch,
     formState: { errors },
-  } = useForm();
+  } = useForm({ mode: "onChange" });
   // ({ mode: "onChange", resolver: yupResolver(formSchema) });
   const { mutate: toSign } = useMutation(signUpForm, {
     onSuccess: () => {
@@ -121,10 +121,10 @@ const RegisterForm = ({ setIsLogin }) => {
                     placeholder="아이디"
                     {...register("username", {
                       required: true,
-                      // minLength: {
-                      //   value: 4,
-                      //   message: "영문/숫자 포함 4-12자로 입력해주세요.",
-                      // },
+                      minLength: {
+                        value: 4,
+                        message: "영문/숫자 포함 4-12자로 입력해주세요.",
+                      },
                       pattern: {
                         value: /^(?=.*[a-zA-Z])(?=.*\d)[-a-zA-Z0-9]{4,12}$/,
                         message: "영문/숫자 포함 4-12자로 입력해주세요.",
@@ -139,10 +139,10 @@ const RegisterForm = ({ setIsLogin }) => {
                   placeholder="비밀번호"
                   {...register("password1", {
                     required: true,
-                    // minLength: {
-                    //   value: 8,
-                    //   message: "영문/숫자/특수문자포함 8-16자로 입력해주세요.",
-                    // },
+                    minLength: {
+                      value: 8,
+                      message: "영문/숫자/특수문자포함 8-16자로 입력해주세요.",
+                    },
                     pattern: {
                       value:
                         /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,

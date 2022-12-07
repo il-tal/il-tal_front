@@ -11,6 +11,7 @@ import nextgray from "../../asset/next-gray.png";
 import prevgray from "../../asset/prev-gray.png";
 import nextgreen from "../../asset/next-green.png";
 import prevgreen from "../../asset/prev-green.png";
+import noDataImg from "../../asset/no-data-word.png";
 
 const SerchList = () => {
   //페이지 이동에 사용
@@ -58,23 +59,27 @@ const SerchList = () => {
           <>
             <Title>업체검색결과 {companyList.data.data.totalElements}개</Title>
             <ListWrap>
-              {companyList.data.data.content.map((com, index) => {
-                return (
-                  <div
-                    onClick={() => navigate(`/company/${com.id}`)}
-                    key={`comserch${index}`}
-                  >
-                    <ThemeSerch
-                      img={com.companyImgUrl}
-                      title={com.companyName}
-                      topinfo={com.location}
-                      botinfo={com.address}
-                      score={com.companyScore}
-                      reivew={com.totalReviewCnt}
-                    />
-                  </div>
-                );
-              })}
+              {companyList.data.data.content.length ? (
+                companyList.data.data.content.map((com, index) => {
+                  return (
+                    <div
+                      onClick={() => navigate(`/company/${com.id}`)}
+                      key={`comserch${index}`}
+                    >
+                      <ThemeSerch
+                        img={com.companyImgUrl}
+                        title={com.companyName}
+                        topinfo={com.location}
+                        botinfo={com.address}
+                        score={com.companyScore}
+                        reivew={com.totalReviewCnt}
+                      />
+                    </div>
+                  );
+                })
+              ) : (
+                <img className="no-data" src={noDataImg} alt="no-data" />
+              )}
             </ListWrap>
             {companyList.data.data.totalPages > 1 ? (
               <Pagination
@@ -110,23 +115,27 @@ const SerchList = () => {
           <>
             <Title>테마검색결과 {themeList.data.data.totalElements}개</Title>
             <ListWrap>
-              {themeList.data.data.content.map((theme, index) => {
-                return (
-                  <div
-                    onClick={() => navigate(`/theme/${theme.id}`)}
-                    key={`themeserch${index}`}
-                  >
-                    <ThemeSerch
-                      img={theme.themeImgUrl}
-                      title={theme.themeName}
-                      topinfo={theme.companyName}
-                      botinfo={theme.genre}
-                      score={theme.themeScore}
-                      reivew={theme.reviewCnt}
-                    />
-                  </div>
-                );
-              })}
+              {themeList.data.data.content.length ? (
+                themeList.data.data.content.map((theme, index) => {
+                  return (
+                    <div
+                      onClick={() => navigate(`/theme/${theme.id}`)}
+                      key={`themeserch${index}`}
+                    >
+                      <ThemeSerch
+                        img={theme.themeImgUrl}
+                        title={theme.themeName}
+                        topinfo={theme.companyName}
+                        botinfo={theme.genre}
+                        score={theme.themeScore}
+                        reivew={theme.reviewCnt}
+                      />
+                    </div>
+                  );
+                })
+              ) : (
+                <img className="no-data" src={noDataImg} alt="no-data" />
+              )}
             </ListWrap>
             {themeList.data.data.totalPages > 1 ? (
               <Pagination
@@ -242,4 +251,7 @@ const ListWrap = styled.div`
   height: 470px;
   display: flex;
   flex-wrap: wrap;
+  .no-data {
+    margin: 0 auto;
+  }
 `;

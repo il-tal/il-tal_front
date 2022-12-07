@@ -47,7 +47,7 @@ const Header = () => {
     if (userinformation) {
       setLoginState(true);
     }
-  }, []);
+  }, [setLoginState]);
 
   //업체or테마 카테고리 눌린거 구분해주는 전역 스테이트
   const [isClicked, setIsClicked] = useRecoilState(headerClicked);
