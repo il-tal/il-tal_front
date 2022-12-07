@@ -2,8 +2,6 @@ import { useState } from "react";
 import styled from "styled-components";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-
-
 import { useNavigate } from "react-router-dom";
 import {
   signUpForm,
@@ -11,7 +9,6 @@ import {
   dupUsername,
   dupNickname,
 } from "../../api/index";
-import { REST_API_KEY, REDIRECT_URI } from "./KakaoLoginData";
 import kakaoLogo from "../../asset/kakaoLogo.png";
 
 import { loginCheck } from "../../api/store";
@@ -28,7 +25,6 @@ const RegisterForm = ({ setIsLogin }) => {
     handleSubmit,
     setValue,
     getValues,
-
 
     formState: { errors, isSubmitting },
   } = useForm({ mode: "onChange" });
@@ -117,7 +113,6 @@ const RegisterForm = ({ setIsLogin }) => {
     }
   };
 
-
   const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.REACT_APP_REST_KAKAO_API_KEY}&redirect_uri=${process.env.REACT_APP_KAKAO_REDIRECT_URI}&response_type=code`;
 
   const idCheck = () => {
@@ -129,9 +124,6 @@ const RegisterForm = ({ setIsLogin }) => {
     const { nickname } = getValues();
     duplicateNick(nickname);
   };
-
- 
-
 
   const handleLogin = () => {
     window.location.href = KAKAO_AUTH_URL;

@@ -1,10 +1,13 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 import styled from "styled-components";
+import { loginCheck } from "../../api/store";
 import { wishTheme } from "../../api/ThemeApi";
 import lock from "../../asset/lock.png";
-
+import Swal from "sweetalert2";
+import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
 const CompanyTheme = ({ theme }) => {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -13,6 +16,22 @@ const CompanyTheme = ({ theme }) => {
       queryClient.invalidateQueries(["getDetailCompany"]);
     },
   });
+
+  //로그인 유무 판별
+  const loginCheckState = useRecoilValue(loginCheck);
+
+  //좋아요 회원만 가능하도록 알람띄우기
+  const likeOnlyMemeber = () => {
+    if (loginCheckState) {
+      themeLike.mutate();
+    } else {
+      Swal.fire({
+        title: "로그인 후 이용하세요!",
+        text: "비회원은 좋아요를 보낼수 없어요 😢",
+        icon: "warning",
+      });
+    }
+  };
 
   return (
     <Container>
@@ -28,7 +47,7 @@ const CompanyTheme = ({ theme }) => {
           <div className="body-wrap">
             <span className="genre">{theme.genre}</span>
             <span className="title">{theme.themeName}</span>
-            <div>
+            <div className="star-review-wrap">
               <span className="star">★</span>
               <span className="review">{theme.themeScore}</span>
             </div>
@@ -43,8 +62,13 @@ const CompanyTheme = ({ theme }) => {
               | {theme.minPeople}~{theme.maxPeople}명 | {theme.playTime}분
             </span>
 
-            <button className="like-btn" onClick={() => themeLike.mutate()}>
-              ❤ 좋아요 {theme.totalLikeCnt}
+            <button className="like-btn" onClick={() => likeOnlyMemeber()}>
+              {theme.themeLikeCheck ? (
+                <BsSuitHeartFill size={23} color={"var(--color-main)"} />
+              ) : (
+                <BsSuitHeart size={23} />
+              )}{" "}
+              좋아요 {theme.totalLikeCnt}
             </button>
           </div>
         </ThemeText>
@@ -90,11 +114,14 @@ const ThemeText = styled.div`
   justify-content: space-between;
   box-sizing: border-box;
   padding: 15px;
+  .star-review-wrap {
+    margin-bottom: 15px;
+  }
   .body-wrap {
     display: flex;
     flex-direction: column;
     span {
-      margin-bottom: 10px;
+      margin-bottom: 20px;
     }
     .genre {
       font-size: 24px;
@@ -105,6 +132,7 @@ const ThemeText = styled.div`
     }
     .review {
       font-size: 24px;
+      margin-bottom: 10px;
     }
     .price {
       font-size: 24px;
@@ -112,6 +140,7 @@ const ThemeText = styled.div`
     .star {
       font-size: 23px;
       color: var(--color-main);
+      margin-right: 10px;
     }
   }
   .info-like-wrap {
@@ -129,6 +158,9 @@ const ThemeText = styled.div`
       background-color: white;
       border: 1px solid gray;
       cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   }
 `;
