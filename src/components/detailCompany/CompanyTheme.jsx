@@ -14,15 +14,6 @@ const CompanyTheme = ({ theme }) => {
     },
   });
 
-  // const [themeWish, setWThemeish] = useState(theme.themeL);
-  // useEffect(() => {
-  //   if (wish) {
-  //     return setWThemeish(company.companyLikeCheck);
-  //   } else {
-  //     return setWThemeish(company.companyLikeCheck);
-  //   }
-  // }, [company]);
-
   return (
     <Container>
       <ThemePic>
