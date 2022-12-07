@@ -168,8 +168,8 @@ const RegisterForm = ({ setIsLogin }) => {
       <LogoBox
         onClick={() => {
           navigator("/");
-        }}
-      >
+          setIsLogin(true);
+        }}>
         <img src={Logo} alt="iltalLogo" />
       </LogoBox>
       {logIn ? (
