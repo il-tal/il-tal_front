@@ -22,6 +22,7 @@ const Header = () => {
 
   //로그아웃
   const onLogout = () => {
+
     Swal.fire({
       title: "로그아웃 하시겠습니까?",
       text: "로그아웃을 하면 후기를 작성할 수 없어요! 😢",
@@ -31,14 +32,14 @@ const Header = () => {
       cancelButtonText: "취소",
     }).then((result) => {
       if (result.isConfirmed) {
-        sessionStorage.removeItem("username");
-        sessionStorage.removeItem("nickname");
+        
         sessionStorage.removeItem("userinfo");
         sessionStorage.removeItem("access_token");
         sessionStorage.removeItem("refresh_token");
         setLoginState(false);
       }
     });
+
   };
 
   //로그인 체크 후 스테이트값 변경
@@ -91,14 +92,12 @@ const Header = () => {
           </div>
           <div
             className={isClicked === 1 ? "online" : "noneline"}
-            onClick={onClickCompany}
-          >
+            onClick={onClickCompany}>
             업체별
           </div>
           <div
             className={isClicked === 2 ? "online" : "noneline"}
-            onClick={onClickGenre}
-          >
+            onClick={onClickGenre}>
             테마별
           </div>
         </div>
@@ -111,8 +110,10 @@ const Header = () => {
             <div
               onClick={() => {
                 onLogout();
+
               }}
             >
+
               <FiLogOut size="28" />
             </div>
           </div>

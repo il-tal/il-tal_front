@@ -98,8 +98,7 @@ const ThemeFilter = ({ refetch, filterCnt }) => {
             className={isLocationAll ? "ok" : "not"}
             onClick={() => {
               setLocation([]);
-            }}
-          >
+            }}>
             전체
           </button>
           <CategoryBtn
@@ -113,8 +112,7 @@ const ThemeFilter = ({ refetch, filterCnt }) => {
           <p>장르</p>
           <button
             className={isGenreAll ? "ok" : "not"}
-            onClick={() => setGenre([])}
-          >
+            onClick={() => setGenre([])}>
             전체
           </button>
           <CategoryBtn
@@ -127,8 +125,7 @@ const ThemeFilter = ({ refetch, filterCnt }) => {
           <p>예약 가능 인원</p>
           <button
             className={isPeopleAll ? "ok" : "not"}
-            onClick={() => setPeople([])}
-          >
+            onClick={() => setPeople([])}>
             전체
           </button>
           <CategoryBtn
@@ -195,11 +192,10 @@ const ThemeFilter = ({ refetch, filterCnt }) => {
           onClick={() => {
             refetch();
             setPage(0);
-          }}
-        >
+          }}>
           {filterCnt.isLoading
             ? "Loading.."
-            : `총${filterCnt.data.data}개 결과`}
+            : `총 ${filterCnt.data.data}개 결과`}
         </SearchBtn>
       </div>
     </Container>

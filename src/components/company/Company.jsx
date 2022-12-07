@@ -67,8 +67,10 @@ const Company = ({ company }) => {
             {company.companyName}
           </CompanyName>
           <CompanyScore>
-            ⭐️⭐️⭐️⭐️⭐️ {company.companyScore} ({company.totalReviewCnt})
+            {" "}
+            <span>★</span> {company.companyScore} ({company.totalReviewCnt})
           </CompanyScore>
+
           <CompanyThemeNameGenre>
             {company.themeList.map((themename) => {
               return `#${themename.themeName} `;
@@ -115,8 +117,6 @@ const CompanyWrap = styled.div`
   object-fit: cover;
   border-radius: 10px;
   overflow: hidden;
-  /* display: flex;
-  flex-direction: column; */
   &:hover {
     box-shadow: 0 4px 15px 1px rgba(6, 195, 135, 0.25);
     border: 1px solid #06c387;
@@ -126,11 +126,8 @@ const CompanyWrap = styled.div`
 const CompanyPic = styled.div`
   height: 300px;
   width: 464px;
-  /* opacity: 0.8; */
   position: relative;
   cursor: pointer;
-  /* filter: brightness(95%); */
-  /* overflow: hidden; */
   img {
     height: 100%;
     width: 100%;
@@ -158,6 +155,10 @@ const CompanyName = styled.div`
 const CompanyScore = styled.div`
   font-weight: bold;
   font-size: 20px;
+  span {
+    font-size: 23px;
+    color: var(--color-main);
+  }
 `;
 
 const CompanyThemeNameGenre = styled.div`

@@ -1,25 +1,60 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { wishTheme } from "../../api/ThemeApi";
+import lock from "../../asset/lock.png";
+
 const CompanyTheme = ({ theme }) => {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const themeLike = useMutation(() => wishTheme({ themeId: theme.id }), {
+    onSuccess: (res) => {
+      queryClient.invalidateQueries(["getDetailCompany"]);
+    },
+  });
+
+  // const [themeWish, setWThemeish] = useState(theme.themeL);
+  // useEffect(() => {
+  //   if (wish) {
+  //     return setWThemeish(company.companyLikeCheck);
+  //   } else {
+  //     return setWThemeish(company.companyLikeCheck);
+  //   }
+  // }, [company]);
+
   return (
     <Container>
       <ThemePic>
-        <img src={theme.themeImgUrl} />
+        <img
+          alt="themepic"
+          src={theme.themeImgUrl}
+          onClick={() => navigate(`/theme/${theme.id}`)}
+        />
       </ThemePic>
       <ThemeInfo>
         <ThemeText>
           <div className="body-wrap">
             <span className="genre">{theme.genre}</span>
             <span className="title">{theme.themeName}</span>
-            <span className="review">⭐ {theme.themeScore}</span>
+            <div>
+              <span className="star">★</span>
+              <span className="review">{theme.themeScore}</span>
+            </div>
             <span className="price">{theme.price}원</span>
           </div>
           <div className="info-like-wrap">
             <span>
-              난이도{"⭐".repeat(theme.difficulty)} | {theme.minPeople}~
-              {theme.maxPeople}명 | {theme.playTime}분
+              난이도{" "}
+              {[...Array(theme.difficulty)].map((arg, index) => {
+                return <img src={lock} alt="lock" key={`key${index}`} />;
+              })}{" "}
+              | {theme.minPeople}~{theme.maxPeople}명 | {theme.playTime}분
             </span>
 
-            <button className="like-btn">❤ 좋아요 {theme.totalLikeCnt}</button>
+            <button className="like-btn" onClick={() => themeLike.mutate()}>
+              ❤ 좋아요 {theme.totalLikeCnt}
+            </button>
           </div>
         </ThemeText>
       </ThemeInfo>
@@ -34,17 +69,19 @@ const Container = styled.div`
   width: 1440px;
   display: flex;
   margin: 20px 0;
-  border-radius: 8px;
-  border: 1px solid gray;
+  border-radius: 10px;
+  transition: all 0.1s linear;
+  border: 1px solid #8a8a8a;
   overflow: hidden;
-  cursor: pointer;
   &:hover {
+    box-shadow: 0 4px 15px 1px rgba(6, 195, 135, 0.25);
     border: 1px solid var(--color-main);
   }
 `;
 const ThemePic = styled.div`
   height: 280px;
   width: 440px;
+  cursor: pointer;
   img {
     width: 100%;
     height: 100%;
@@ -81,6 +118,10 @@ const ThemeText = styled.div`
     .price {
       font-size: 24px;
     }
+    .star {
+      font-size: 23px;
+      color: var(--color-main);
+    }
   }
   .info-like-wrap {
     display: flex;
@@ -96,6 +137,7 @@ const ThemeText = styled.div`
       border-radius: 8px;
       background-color: white;
       border: 1px solid gray;
+      cursor: pointer;
     }
   }
 `;

@@ -37,8 +37,7 @@ const CompanyList = () => {
   return (
     <Container>
       <Category>
-        <SearchResult>검색결과 30개</SearchResult>
-        <StarFilter>별점순</StarFilter>
+        <SearchResult>검색결과 {data.data.totalElements}개</SearchResult>
         <div>
           <select
             className="filter"
@@ -206,7 +205,7 @@ const CompanyWrap = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  /* justify-content: center; */
   flex-wrap: wrap;
   column-gap: 24px;
   row-gap: 49px;
