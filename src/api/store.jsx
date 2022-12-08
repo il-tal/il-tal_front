@@ -50,6 +50,16 @@ export const headerClicked = atom({
   default: 0,
 });
 
+export const genreTend = atom({
+  key: "GenreTend",
+  default: [],
+});
+
+export const questTend = atom({
+  key: "questTend",
+  default: [],
+  });
+  
 //테마별 페이지 전역 스테이트
 export const themePages = atom({
   key: "themePages",

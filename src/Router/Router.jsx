@@ -8,6 +8,7 @@ import ErrorPage from "../page/ErrorPage";
 import CompanyPage from "../page/CompanyPage";
 import MainLayout from "../page/MainLayout";
 import Test from "../page/Test";
+import MyPageLayout from "../page/MyPageLayout";
 import KakaoLogin from "../components/modal/KakaoLogin";
 import SerchPage from "../page/SerchPage";
 
@@ -22,8 +23,10 @@ const Router = () => {
           <Route path="/theme/:id" element={<DetailTheme />} />
           <Route path="/company" element={<CompanyPage />} />
           <Route path="/company/:id" element={<DetailCompanyPage />} />
-          <Route path="/myaccount" element={<MyPage />} />
           <Route path="/serch" element={<SerchPage />} />
+        </Route>
+        <Route element={<MyPageLayout />}>
+          <Route path="/myaccount" element={<MyPage />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
         <Route path="/test" element={<Test />} />

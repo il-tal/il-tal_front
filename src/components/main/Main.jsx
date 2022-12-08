@@ -1,37 +1,42 @@
-import { useQuery } from "@tanstack/react-query";
-import styled from "styled-components";
+import { QueryClient, useQuery } from "@tanstack/react-query";
 import { SwiperSlide } from "swiper/react";
-import { getAchieve, getBest, getRandom } from "../../api/mainApi";
+import { getAchieve, getBest, getHOf, getRandom } from "../../api/mainApi";
 import { Carousel } from "../../utils/carousel";
-import { Button } from "../shared/Button";
+import styled from "styled-components";
 import BestUser from "./BestUser";
 import PopSkel from "./PopSkel";
 import PopularTheme from "./PopularTheme";
 import RecommandTheme from "./RecommandTheme";
 import UserSummary from "./UserSummary";
+import * as custom from "../../styles/themeStyle";
+import main from "../../asset/main.png";
 
 const Main = () => {
-  const achieve = useQuery(["getAchieve"], getAchieve);
+  const achieve = useQuery(["getAchieve"], getAchieve, {
+    enabled: sessionStorage.userinfo ? true : false,
+  });
+
   const best = useQuery(["getBest"], getBest, { staleTime: Infinity });
   const random = useQuery(["getRandom"], getRandom, {
     staleTime: Infinity,
   });
   const totalAchievement = 20;
+  const hallOfFame = useQuery(["getHof"], getHOf);
   return (
     <Container>
       {sessionStorage.userinfo ? (
         achieve.isLoading ? (
-          <UserBox>
+          <UserBox bgimg={`${main}`}>
             <UserWarp flex={`column`} justify={`center`} mtop={`2rem`}>
               <UserIntro bold={"bold"}>
                 Guest 님
                 <br />
               </UserIntro>
-              <UserIntro bold={"normal !important"}>
+              <UserIntro bold={"normal !important"} font={`40px`}>
                 탈출할준비되셨나요
               </UserIntro>
             </UserWarp>
-            <UserInfo margin={`2rem auto`}>
+            <UserInfo margin={`100px auto`}>
               <UserSummary
                 mainBadgeImg=""
                 completed={0}
@@ -40,17 +45,17 @@ const Main = () => {
             </UserInfo>
           </UserBox>
         ) : (
-          <UserBox>
+          <UserBox bgimg={`${main}`}>
             <UserWarp flex={`column`} justify={`center`} mtop={`2rem`}>
               <UserIntro bold={"bold"}>
                 {achieve.data.nickname}님
                 <br />
               </UserIntro>
-              <UserIntro bold={"normal !important"}>
+              <UserIntro bold={"normal !important"} font={`40px`}>
                 탈출할준비되셨나요
               </UserIntro>
             </UserWarp>
-            <UserInfo margin={`2rem auto`}>
+            <UserInfo margin={`100px auto`}>
               <UserSummary
                 mainBadgeName={achieve.data.mainBadgeName}
                 RecentTitle={achieve.data.badgeImgUrl[1]}
@@ -67,37 +72,34 @@ const Main = () => {
           </UserBox>
         )
       ) : (
-        <UserBox>
-          <UserWarp justify={`left`} mtop={`3rem`}>
-            <UserIntro bold={"bold"}>
-              일상의 방탈출,
+        <UserBox bgimg={`${main}`}>
+          <UserWarp justify={`left`} mtop={`5rem`}>
+            <UserIntro bold={"bold"} font={`40px`} color={`#ffffff`}>
+              일상의 방탈출
               <br />
             </UserIntro>
-            <UserIntro bold={"normal"}>도전해보세요!</UserIntro>
+            <UserIntro bold={"normal"} font={`40px`} color={`#ffffff`}>
+              , 도전해보세요!
+            </UserIntro>
           </UserWarp>
-          <UserInfo margin={`5rem auto`}>
+          <UserInfo margin={`100px auto`}>
             <UserSummary blur={1} />
-            <Button
-              label={"로그인"}
-              position={"absolute"}
-              width={`240px`}
-              height={`50px`}
-              left={`30%`}
-            />
-            <Button
-              onClick={() => {
-                console.log("hello");
-              }}
-              label={"회원가입"}
-              position={"absolute"}
-              width={`240px`}
-              height={`50px`}
-              right={`30%`}
-            />
+            <custom.CTBox
+              margin={`0 auto`}
+              weight={`500`}
+              display={`flex`}
+              size={`24px`}
+              justify={`center`}
+              place={`center`}
+              position={`absolute`}
+              lineHeight={`43.57px`}
+            >
+              로그인 후 업적을 확인하세요!
+            </custom.CTBox>
           </UserInfo>
         </UserBox>
       )}
-      <HeaderTitle>인기테마</HeaderTitle>
+      <HeaderTitle>인기 테마</HeaderTitle>
       {best.isLoading ? (
         <PopularThemeWrap>
           <PopSkel width={22.5} height={15} />
@@ -130,7 +132,7 @@ const Main = () => {
         </PopularThemeWrap>
       )}
 
-      <HeaderTitle>추천테마</HeaderTitle>
+      <HeaderTitle>이런 테마는 어떠세요?</HeaderTitle>
       <RecommandThemeWrap>
         {random.isLoading ? (
           <>
@@ -147,7 +149,7 @@ const Main = () => {
             {random.data.map((data, index) => (
               <SwiperSlide>
                 <RecommandTheme
-                  key={index}
+                  key={"Recommand" + index}
                   id={data.id}
                   companyName={data.companyName}
                   themeName={data.themeName}
@@ -160,53 +162,26 @@ const Main = () => {
       </RecommandThemeWrap>
 
       <HeaderTitle>베스트 탈출러</HeaderTitle>
-      <BestUserWrap>
-        <BestUser
-          number={1}
-          completed={20}
-          userName={"동탄방탈출마스터"}
-          goal={totalAchievement}
-          escape={127}
-          bgcolor={"#3baf4f"}
-          imgUrl="https://cdn3.emoji.gg/emojis/1054-pochacco.png"
-        />
-        <BestUser
-          number={2}
-          userName={"FreedomFreed"}
-          completed={19}
-          goal={totalAchievement}
-          escape={121}
-          bgcolor={"#57ecb1"}
-          imgUrl="https://cdn3.emoji.gg/emojis/7556-keroppi.png"
-        />
-        <BestUser
-          number={3}
-          userName={"공원청소부장"}
-          completed={17}
-          goal={totalAchievement}
-          escape={114}
-          bgcolor={"#fe3b72"}
-          imgUrl="https://cdn3.emoji.gg/emojis/2858-kuromimug.png"
-        />
-        <BestUser
-          number={4}
-          userName={"닉네임글자수제한은몇"}
-          completed={15}
-          goal={totalAchievement}
-          escape={99}
-          bgcolor={"#675e81"}
-          imgUrl="https://cdn3.emoji.gg/emojis/8350-mymelodythumbsup.png"
-        />
-        <BestUser
-          number={5}
-          userName={"벙볕"}
-          completed={14}
-          goal={totalAchievement}
-          escape={88}
-          bgcolor={"#aeb654"}
-          imgUrl="https://cdn3.emoji.gg/emojis/4097-cinnaface.png"
-        />
-      </BestUserWrap>
+      {hallOfFame.isLoading ? (
+        <BestUserWrap>
+          <BestUser></BestUser>
+        </BestUserWrap>
+      ) : (
+        <BestUserWrap>
+          {hallOfFame.data.map((data, index) => (
+            <BestUser
+              number={index + 1}
+              imgUrl={data.mainBadgeImg}
+              userName={data.nickname}
+              completed={data.achieveBadgeCnt}
+              badge={data.mainBadgeName}
+              goal={totalAchievement}
+              escape={data.totalAchieveCnt}
+              bgcolor={"#123123"}
+            />
+          ))}
+        </BestUserWrap>
+      )}
     </Container>
   );
 };
@@ -223,17 +198,23 @@ const Container = styled.div`
 `;
 
 const UserBox = styled.div`
+  background-image: url(${(props) => props.bgimg});
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
   width: calc(100vw - 20px);
-  height: 300px;
-  margin-bottom: 10rem;
+  max-width: calc(100vw - 20px);
+  min-height: 383px;
+  max-height: 383px;
+  margin-bottom: 160px;
   font-size: 2rem;
   text-align: center;
   justify-content: center;
-  background-color: #ffb743;
 `;
 
 const UserWarp = styled.div`
   display: flex;
+  max-height: 212px;
   flex-direction: ${(props) => props.flex};
   justify-content: ${(props) => props.justify};
   text-align: left;
@@ -242,13 +223,20 @@ const UserWarp = styled.div`
 `;
 
 const UserIntro = styled.div`
-  font-size: 3rem;
+  margin-top: 24px;
+  font-size: ${(props) => props.font || `3rem`};
   font-weight: ${(props) => props.bold};
+  color: ${(props) => props.color || `#0e0e0e`};
 `;
 
 const HeaderTitle = styled.div`
-  font-size: 2rem;
-  margin: 10px;
+  display: block;
+  width: 90rem;
+  justify-content: center;
+  align-items: left !important;
+  font-size: 32px;
+  font-weight: 700;
+  margin: 24px;
 `;
 
 const UserInfo = styled.div`
@@ -258,7 +246,10 @@ const UserInfo = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #d5e5f4;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 1px 1px 20px rgba(0, 0, 0, 0.15);
+  position: relative;
 `;
 
 const PopularThemeWrap = styled.div`

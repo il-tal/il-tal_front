@@ -2,8 +2,8 @@ import api from "./index";
 
 //
 export const getAchieve = async () => {
-  const { data } = await api.get("/main/achieve");
-  return data.data;
+  const  data  = await api.get("/main/achieve");
+  return data.data.data;
 };
 
 export const getBest = async () => {
@@ -13,5 +13,10 @@ export const getBest = async () => {
 
 export const getRandom = async () => {
   const data = await api.get("/main/random");
+  return data.data.data;
+};
+
+export const getHOf = async () => {
+  const data = await api.get("/main/hof");
   return data.data.data;
 };

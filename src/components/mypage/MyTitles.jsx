@@ -1,11 +1,9 @@
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
 import styled from "styled-components";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { putMainBadge, reciveBadges } from "../../api/myAccount";
 
 const MyTitles = (props) => {
   const queryClient = useQueryClient();
-  const [id, setId] = useState(props.id);
   const giveBadge = useMutation(
     ({ badgeId: id }) => reciveBadges({ badgeId: id }),
     {
@@ -52,11 +50,20 @@ const AllTitles = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  width: 9rem;
-  height: 9rem;
+  width: 144px;
+  height: 144px;
   margin: 10px;
-  background-color: #ababab;
+  box-shadow: 1px 3px 0 rgb(0, 0, 0, 0.5);
+  background-color: #cccccc;
   border-radius: 5rem;
   &:hover {
+    border: 2px solid #06c387;
+    box-shadow: 0px 4px 15px 1px rgba(6, 195, 135, 0.25);
+  }
+  &:active {
+    filter: brightness(85%);
+    width: 148px;
+    height: 148px;
+    box-shadow: inset -3px -1px 1px -1px rgb(0, 0, 0, 0.5);
   }
 `;

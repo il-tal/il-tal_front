@@ -5,18 +5,22 @@ const RecommandTheme = (props) => {
   const navigate = useNavigate();
   return (
     <Container>
-      <ThemePic
-        img={props.themeImgUrl}
-        onClick={() => {
-          navigate(`/theme/${props.id}`);
-        }}
-      ></ThemePic>
-      <ThemeText fontSize={1} fontWeight={100}>
-        {props.companyName}
-      </ThemeText>
-      <ThemeText fontSize={1.25} fontWeight={700}>
-        {props.themeName}
-      </ThemeText>
+      <ThemeWrap>
+        <ThemePic
+          alt="props.id"
+          src={props.themeImgUrl}
+          onClick={() => {
+            navigate(`/theme/${props.id}`);
+          }}
+        />
+        <>1</>
+        <ThemeText fontSize={`20px`} fontWeight={100}>
+          {props.companyName}
+        </ThemeText>
+        <ThemeText fontSize={`32px`} fontWeight={700}>
+          {props.themeName}
+        </ThemeText>
+      </ThemeWrap>
     </Container>
   );
 };
@@ -26,27 +30,37 @@ const Container = styled.div`
   height: 100%;
   display: flex;
   flex-direction: column;
-  box-shadow: 0.5rem 0.5rem 0.625rem #ababab;
 `;
-const ThemePic = styled.div`
-  background-image: url(${(props) => props.img});
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 100%;
-  width: 25rem;
-  display: table-cell;
-  background-color: #e1e1e1;
-  box-shadow: 0.5rem 0.5rem 0.625rem #ababab;
+
+const ThemeWrap = styled.div`
+  width: 400px;
+  height: 250px;
+  display: grid;
+  grid-template-rows: 5fr 1fr 1fr;
+`;
+
+const ThemePic = styled.img`
+  filter: brightness(50%);
+  min-width: 400px;
+  min-height: 250px;
+  max-width: 400px;
+  max-height: 250px;
+  border-radius: 8px;
+  position: absolute;
+  object-fit: cover;
+  margin: 0 auto;
 `;
 
 const ThemeText = styled.div`
-  width: 25rem;
-  font-size: ${(props) => props.fontSize}rem;
+  z-index: 1;
+  max-width: 380px;
+  font-size: ${(props) => props.fontSize};
   font-weight: ${(props) => props.fontWeight};
   display: flex;
   align-items: center;
   text-align: left;
-  background-color: #ffb743;
-  box-shadow: 0.5rem 0.5rem 0.625rem #ababab;
+  color: #fff;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;

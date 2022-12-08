@@ -11,10 +11,9 @@ const MyGenre = (props) => {
 export default MyGenre;
 
 const GenreBox = styled.div`
-  padding: 10px 25px;
-  border-radius: 25px;
-  border: 1px solid;
+  padding: 10px;
   display: inline-block;
-  margin: 10px;
-  background-color: #ababab;
+  margin: 5px;
+  border: 1px solid #06c387;
+  border-radius: 8px;
 `;

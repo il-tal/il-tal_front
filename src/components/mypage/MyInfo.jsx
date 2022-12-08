@@ -1,39 +1,38 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { SwiperSlide } from "swiper/react";
-import {
-  editNickName,
-  getAllBadges,
-  getMyCompany,
-  getMyPage,
-  getMyReview,
-  getMyTheme,
-} from "../../api/myAccount";
+import * as api from "../../api/myAccount";
 import { Carousel } from "../../utils/carousel";
 import ProgressBar from "../../utils/progressBar";
-import ComLike from "./ComLike";
 import MyReviews from "./MyReviews";
 import MyTitles from "./MyTitles";
-import * as Styled from "./MyInfoSt";
+import * as Styled from "./StyledInfo";
 import ThemeLike from "./ThemeLike";
 import MyGenre from "./MyGenre";
 import Modal from "../modal/Modal";
 import GenreModal from "../modal/GenreModal";
+import { CTBox } from "../../styles/themeStyle";
+import { useNavigate } from "react-router-dom";
+import Example from "../../utils/Radar";
+import setting from "../../asset/img/settings.png";
+import down from "../../asset/img/down.png";
+import up from "../../asset/img/up.png";
 
 const MyInfo = () => {
+  const mapData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
   const queryClient = useQueryClient();
-  const User = useQuery(["getMyPage"], getMyPage);
-  const Badges = useQuery(["getBadges"], getAllBadges);
-  const Review = useQuery(["getReviews"], getMyReview);
-  const Company = useQuery(["getCompany"], getMyCompany);
-  const Theme = useQuery(["getTheme"], getMyTheme);
+  const User = useQuery(["getMyPage"], api.getMyPage);
+  const Badges = useQuery(["getBadges"], api.getAllBadges);
+  const Review = useQuery(["getReviews"], api.getMyReview);
+  const Company = useQuery(["getCompany"], api.getMyCompany);
+  const Theme = useQuery(["getTheme"], api.getMyTheme);
   const [isModal, setIsModal] = useState(false);
   const [isBadge, setBadge] = useState(false);
   const [collapse, setCollapse] = useState(true);
   const [isEdit, setIsEdit] = useState(false);
   const [nameEdit, setNameEdit] = useState("");
   const postNick = useMutation(
-    ({ nickname: userNick }) => editNickName(userNick),
+    ({ nickname: userNick }) => api.editNickName(userNick),
     {
       onSuccess: () => {
         setIsEdit(false);
@@ -46,7 +45,18 @@ const MyInfo = () => {
     const { name, value } = e.target;
     setNameEdit({ ...nameEdit, [name]: value });
   };
-  console.log(Company);
+  const Tendata = [
+    { name: "겁", value: User.data?.lessScare },
+    { name: "방", value: User.data?.roomSize },
+    { name: "자물쇠", value: User.data?.lockStyle },
+    { name: "장치", value: User.data?.device },
+    { name: "인테리어", value: User.data?.interior },
+    { name: "활동성", value: User.data?.excitePreference },
+  ];
+  const genrePref = User.data?.genrePreference.split(" ").filter(Boolean);
+  const stylePref = User.data?.stylePreference.split(" ").filter(Boolean);
+  const navigate = useNavigate();
+  console.log(Tendata);
   return (
     <>
       {isModal ? (
@@ -55,7 +65,17 @@ const MyInfo = () => {
             setIsModal(false);
           }}
         >
-          <GenreModal />
+          <GenreModal
+            genrePref={genrePref}
+            stylePref={stylePref}
+            device={User.data?.device}
+            excitePreference={User.data?.excitePreference}
+            interior={User.data?.interior}
+            lessScare={User.data?.lessScare}
+            lockStyle={User.data?.lockStyle}
+            roomSize={User.data?.roomSize}
+            surprise={User.data?.surprise}
+          />
         </Modal>
       ) : (
         ""
@@ -68,58 +88,70 @@ const MyInfo = () => {
                 <Styled.MainTitle
                   BadgeImg={User.isLoading ? "" : User.data.mainBadgeImg}
                 />
-                <Styled.UserEdit
-                  onClick={() => {
-                    setIsEdit(!isEdit);
-                  }}
-                >
+                <Styled.UserEdit>
                   {isEdit ? (
-                    <div
+                    <img
+                      src={setting}
+                      alt="setting"
                       onClick={() => {
                         postNick.mutate({ nickname: nameEdit });
+                        setIsEdit(!isEdit);
                       }}
-                    >
-                      완료
-                    </div>
+                    />
                   ) : (
-                    <div>수정</div>
+                    <img
+                      src={setting}
+                      alt="setting"
+                      onClick={() => {
+                        setIsEdit(!isEdit);
+                      }}
+                    />
                   )}
                 </Styled.UserEdit>
                 <Styled.UserTitles>
-                  {User.isLoading ? "" : User.data.mainBadgeName}
+                  <span>{User.isLoading ? "" : User.data.mainBadgeName}</span>
                 </Styled.UserTitles>
                 {isEdit ? (
                   <form>
-                    <input
+                    <Styled.NameEdit
                       name="nickname"
                       value={nameEdit.nickname}
                       onChange={onChangeEdit}
-                    ></input>
+                    ></Styled.NameEdit>
                   </form>
                 ) : (
                   <Styled.UserName>
                     {User.isLoading ? "" : User.data.nickname}
                   </Styled.UserName>
                 )}
-                <ProgressBar bgcolor={"#123120"} completed={10} goal={20} />
+                <ProgressBar
+                  completed={User.isLoading ? 0 : User.data.totalAchieveCnt}
+                  goal={20}
+                  height={`2rem`}
+                  width={`90%`}
+                  shadow={`0`}
+                />
               </Styled.UserNameBox>
             </Styled.BoxWrap>
             <Styled.BoxWrap>
               <Styled.Heading>방탈출 성향</Styled.Heading>
-              <Styled.EditGenre
-                onClick={() => {
-                  setIsModal(true);
-                }}
-              >
-                수정
-              </Styled.EditGenre>
-
               <Styled.TendencyBox>
+                <Styled.EditGenre
+                  src={setting}
+                  alt="setting"
+                  onClick={() => {
+                    setIsModal(true);
+                  }}
+                />
                 <div>
-                  <MyGenre genre={"SF/판타지"} />
-                  <MyGenre genre={"공포"} />
-                  <MyGenre genre={"문제방"} />
+                  {genrePref?.map((data, index) => (
+                    <MyGenre key={"genre" + index} genre={data} />
+                  ))}
+                  {stylePref?.map((data, index) => (
+                    <MyGenre key={"style" + index} genre={data} />
+                  ))}
                 </div>
+                <Example data={Tendata} />
               </Styled.TendencyBox>
             </Styled.BoxWrap>
           </Styled.MyInfoBox>
@@ -139,7 +171,7 @@ const MyInfo = () => {
             ) : (
               Badges.data.map((data, index) => (
                 <MyTitles
-                  key={"titl" + index}
+                  key={data.badgeName + index}
                   id={String(data.id)}
                   isBadge={isBadge}
                   BadgeName={collapse ? "" : data.badgeName}
@@ -151,7 +183,11 @@ const MyInfo = () => {
             )}
           </Styled.TitlesBox>
           <Styled.CollapseTitles onClick={() => setCollapse(!collapse)}>
-            {collapse ? "🔽" : "🔼"}
+            {collapse ? (
+              <img src={down} alt={"down"} />
+            ) : (
+              <img src={up} alt={"up"} />
+            )}
           </Styled.CollapseTitles>
         </Styled.BoxWrap>
         <Styled.BoxWrap>
@@ -164,6 +200,21 @@ const MyInfo = () => {
                 comment={"코멘트"}
                 playTime={"2022-12-25"}
               />
+            ) : Review.data.length === 0 ? (
+              <Carousel>
+                {mapData.map((data, index) => (
+                  <SwiperSlide>
+                    <MyReviews
+                      key={index + "notyet"}
+                      id={Math.floor(Math.random() * (20 * (index + 1)))}
+                      themeName={`아직 리뷰가 없습니다`}
+                      score={Math.floor(Math.random() * 5 + 1)}
+                      comment={`눌러서 무작위 테마로 이동합니다.`}
+                      playTime={new Date()}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Carousel>
             ) : (
               <Carousel>
                 {Review.data.map((data, index) => (
@@ -182,51 +233,91 @@ const MyInfo = () => {
             )}
           </Styled.ReviewsBox>
         </Styled.BoxWrap>
-        <Styled.BoxWrap>
-          <Styled.Heading>좋아요</Styled.Heading>
+        <Styled.BoxWrap display="grid" gridColumns={`repeat(2, 1fr)`}>
           <Styled.LikeBox>
-            업체
+            <Styled.Heading>좋아요 업체</Styled.Heading>
             <Styled.ComWrap>
               {Company.isLoading ? (
-                <ComLike
-                  companyName={"비밀의 화원 홍대점"}
-                  companyImgUrl={
-                    "https://mykeejaebucket.s3.ap-northeast-2.amazonaws.com/Server%EB%B9%84%EB%B0%80%EC%9D%98%ED%99%94%EC%9B%90%20%EB%8B%A4%EC%9A%B4%ED%83%80%EC%9A%B4%20%ED%99%8D%EB%8C%80%EC%A0%90.1668842023542.png"
-                  }
-                />
+                <Styled.ComWrap>
+                  <ThemeLike companyName={""} companyImgUrl={""} />
+                </Styled.ComWrap>
+              ) : Company.data.length === 0 ? (
+                <Styled.ComWrap display={`flex`}>
+                  <CTBox size={`24px`} margin={`10px`}>
+                    아직 좋아요 한 업체가 없습니다
+                  </CTBox>
+                  <CTBox size={`24px`} margin={`10px`}>
+                    업체를 좋아요 해보세요!
+                  </CTBox>
+                  <CTBox size={`24px`} margin={`10px`}>
+                    👇👇👇
+                  </CTBox>
+                  <CTBox
+                    size={`24px`}
+                    margin={`10px`}
+                    onClick={() => {
+                      navigate(`/company`);
+                    }}
+                    color={`#1e9fc0`}
+                  >
+                    좋아요 하러가기
+                  </CTBox>
+                </Styled.ComWrap>
               ) : (
-                Company.data.map((data, index) => (
-                  <ComLike
-                    key={"comp" + index}
-                    id={data.id}
-                    companyName={data.companyName}
-                    companyImgUrl={data.companyImgUrl}
-                  />
-                ))
+                <Styled.ComWrap>
+                  {Company.data.map((data, index) => (
+                    <ThemeLike
+                      key={"comp" + index}
+                      id={data.id}
+                      companyName={data.companyName}
+                      ImgUrl={data.companyImgUrl}
+                    />
+                  ))}
+                </Styled.ComWrap>
               )}
             </Styled.ComWrap>
-            테마
-            <Styled.ComWrap>
-              {Theme.isLoading ? (
-                <ThemeLike
-                  companyName={"비밀의 화원 홍대점"}
-                  companyImgUrl={
-                    "https://mykeejaebucket.s3.ap-northeast-2.amazonaws.com/Server%EB%B9%84%EB%B0%80%EC%9D%98%ED%99%94%EC%9B%90%20%EB%8B%A4%EC%9A%B4%ED%83%80%EC%9A%B4%20%ED%99%8D%EB%8C%80%EC%A0%90.1668842023542.png"
-                  }
-                  themeName={"해리포터와 비밀의 화원"}
-                />
-              ) : (
-                Theme.data.map((data, index) => (
+          </Styled.LikeBox>
+          <Styled.LikeBox>
+            <Styled.Heading>좋아요 테마</Styled.Heading>
+            {Theme.isLoading ? (
+              <Styled.ComWrap>
+                <ThemeLike companyName={""} ImgUrl={""} themeName={""} />
+              </Styled.ComWrap>
+            ) : Theme.data.length === 0 ? (
+              <Styled.ComWrap display={`flex`}>
+                <CTBox size={`24px`} margin={`10px`}>
+                  아직 좋아요 한 테마가 없습니다
+                </CTBox>
+                <CTBox size={`24px`} margin={`10px`}>
+                  테마를 좋아요 해보세요!
+                </CTBox>
+                <CTBox size={`24px`} margin={`10px`}>
+                  👇👇👇
+                </CTBox>
+                <CTBox
+                  size={`24px`}
+                  margin={`10px`}
+                  onClick={() => {
+                    navigate(`/theme`);
+                  }}
+                  color={`#1e9fc0`}
+                >
+                  좋아요 하러가기
+                </CTBox>
+              </Styled.ComWrap>
+            ) : (
+              <Styled.ComWrap>
+                {Theme.data.map((data, index) => (
                   <ThemeLike
                     key={"theme" + index}
                     id={data.id}
                     companyName={data.companyName}
-                    themeImgUrl={data.themeImgUrl}
+                    ImgUrl={data.themeImgUrl}
                     themeName={data.themeName}
                   />
-                ))
-              )}
-            </Styled.ComWrap>
+                ))}
+              </Styled.ComWrap>
+            )}
           </Styled.LikeBox>
         </Styled.BoxWrap>
       </Styled.Container>

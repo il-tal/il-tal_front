@@ -75,12 +75,3 @@ const STFooter = styled.div`
 
   color: grey;
 `;
-
-const DevPart = styled.span`
-  margin: 3px;
-  font-size: 1.25rem;
-`;
-
-const DevInfo = styled.span`
-  margin: 5px;
-`;
