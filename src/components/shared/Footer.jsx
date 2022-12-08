@@ -18,13 +18,7 @@ const Footer = () => {
           <img src={logo} alt="logo" />
         </Logo>
         <STFooter>
-          <span
-            onClick={() => {
-              navigate("/test");
-            }}
-          >
-            Copyright &copy; 2022
-          </span>
+          <span>Copyright &copy; 2022</span>
           <DevPart>UI/UX</DevPart>
           <DevInfo>전현주</DevInfo>
           <DevPart>FE</DevPart>
