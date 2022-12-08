@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import setting from "../../asset/img/settings.png";
 
 export const Container = styled.div`
   height: 100%;
@@ -52,19 +51,20 @@ export const MainTitle = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   z-index: 1;
-  width: 244px;
-  height: 244px;
+  width: 280px;
+  height: 280px;
   border-radius: 12rem;
   background-color: #cccccc;
   position: absolute;
   top: -30%;
-  margin-left: 171px;
+
 `;
 
 export const UserNameBox = styled.div`
   position: relative;
   display: grid;
-  grid-template-rows: 4fr 1fr 1fr 1fr;
+  grid-template-rows: 3fr 1fr 1fr 2fr;
+  place-items: center;
   background: linear-gradient(252.9deg, #DEFF99 0%, #06C387 72.92%, #119B6F 100%);
   border-radius: 8px;
   top: 25%;
@@ -76,12 +76,13 @@ export const UserNameBox = styled.div`
 
 export const TendencyBox = styled.div`
   position: relative;
-  min-height: 530px;
-  max-height: 530px;
+  min-height: 556px;
+  max-height: 556px;
   border-radius: 8px;
   margin: 10px;
+  padding-right: 30px;
   display: grid;
-  grid-template-rows: 1fr 4fr;
+  grid-template-rows: 1fr 5fr;
   background-color: #ffffff;
 `;
 
@@ -176,6 +177,7 @@ export const ComWrap = styled.div`
   min-width: ${(props) => props.width || "708px"};
   min-height: ${(props) => props.height || "708px"};
   display: ${(props) => props.display || "grid"};
+  align-items: ${(props) => props.align || "center"};
   flex-direction: ${(props) => props.direction || "column"};
   grid-template-columns: ${(props)=>props.colums||`repeat(2, 350px)`};
   grid-template-rows: ${(props)=>props.rows||`repeat(2, 1fr)`};

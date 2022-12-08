@@ -29,7 +29,7 @@ const Router = () => {
           <Route path="/myaccount" element={<MyPage />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
-        <Route path="/test" element={<Test />} />
+        <Route path="/hanghae99iltalteam" element={<Test />} />
       </Routes>
     </BrowserRouter>
   );

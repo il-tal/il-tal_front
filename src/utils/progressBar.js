@@ -31,6 +31,7 @@ const Container = styled.div`
 
 const FillerStyles = styled.div`
   height: 90%;
+  margin: 2px;
   width: ${(props) => props.completed}%;
   background-color: ${(props) => props.color || `#ffffff`};
   border-radius: inherit;

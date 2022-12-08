@@ -1,4 +1,4 @@
-import { QueryClient, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { SwiperSlide } from "swiper/react";
 import { getAchieve, getBest, getHOf, getRandom } from "../../api/mainApi";
 import { Carousel } from "../../utils/carousel";
@@ -12,23 +12,42 @@ import * as custom from "../../styles/themeStyle";
 import main from "../../asset/main.png";
 import { useRecoilValue } from "recoil";
 import { loginCheck } from "../../api/store";
+import { useNavigate } from "react-router-dom";
 
 const Main = () => {
   //로그인 유무 판별
+  const navigate = useNavigate();
   const loginCheckState = useRecoilValue(loginCheck);
   const achieve = useQuery(["getAchieve", loginCheckState], getAchieve, {
     enabled: sessionStorage.userinfo ? true : false,
   });
-
-  const best = useQuery(["getBest"], getBest, { staleTime: Infinity });
+  const best = useQuery(
+    ["getBest"],
+    getBest,
+    { staleTime: Infinity },
+    {
+      onError: (err) => {
+        navigate("/error");
+      },
+    }
+  );
   const random = useQuery(["getRandom"], getRandom, {
     staleTime: Infinity,
+    onError: (err) => {
+      navigate("/error");
+    },
+  });
+  const hallOfFame = useQuery(["getHof"], getHOf, {
+    onSuccess: () => {},
+
+    onError: (err) => {
+      navigate("/error");
+    },
   });
   const totalAchievement = 20;
-  const hallOfFame = useQuery(["getHof"], getHOf);
   return (
     <Container>
-      {sessionStorage.userinfo ? (
+      {loginCheckState ? (
         achieve.isLoading ? (
           <UserBox bgimg={`${main}`}>
             <UserWarp flex={`column`} justify={`center`} mtop={`2rem`}>
@@ -151,9 +170,8 @@ const Main = () => {
         ) : (
           <Carousel>
             {random.data.map((data, index) => (
-              <SwiperSlide>
+              <SwiperSlide key={"Recommand" + index}>
                 <RecommandTheme
-                  key={"Recommand" + index}
                   id={data.id}
                   companyName={data.companyName}
                   themeName={data.themeName}
@@ -174,6 +192,7 @@ const Main = () => {
         <BestUserWrap>
           {hallOfFame.data.map((data, index) => (
             <BestUser
+              key={"BestUser" + index}
               number={index + 1}
               imgUrl={data.mainBadgeImg}
               userName={data.nickname}

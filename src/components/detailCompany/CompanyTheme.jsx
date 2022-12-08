@@ -1,5 +1,4 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import styled from "styled-components";
@@ -56,7 +55,7 @@ const CompanyTheme = ({ theme }) => {
           <div className="info-like-wrap">
             <span>
               난이도{" "}
-              {[...Array(theme.difficulty)].map((arg, index) => {
+              {[...Array(Math.round(theme.difficulty))].map((arg, index) => {
                 return <img src={lock} alt="lock" key={`key${index}`} />;
               })}{" "}
               | {theme.minPeople}~{theme.maxPeople}명 | {theme.playTime}분

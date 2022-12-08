@@ -13,6 +13,7 @@ body {
   color: #000;
   margin: 0;
   padding: 0;
+  overflow-x: hidden;
 }
 
 .swiper {
@@ -24,7 +25,6 @@ body {
   text-align: center;
   font-size: 18px;
   background-color: transparent;
-
   /* Center slide text vertically */
   display: -webkit-box;
   display: -ms-flexbox;

@@ -42,21 +42,20 @@ const SynopText = styled.div`
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
-  /* transition: height 400ms ease-in-out; */
   .small {
     display: flex;
     height: 100%;
-    max-height: 18px;
+    max-height: 20px;
     width: 100%;
     font-size: 20px;
     margin: 15px 0;
     line-height: 19px;
-    /* display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 2; */
     overflow: hidden;
     transition: max-height 500ms ease-in-out;
     flex-direction: column;
+    div {
+      margin-bottom: 4px;
+    }
   }
   .big {
     display: flex;
@@ -70,10 +69,11 @@ const SynopText = styled.div`
     transition: max-height 500ms ease-in-out;
     flex-direction: column;
   }
-  span {
+  div {
     font-size: 20px;
     font-weight: bold;
-
+    margin-bottom: 4px;
+    line-height: 21px;
     cursor: pointer;
   }
   p {

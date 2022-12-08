@@ -1,4 +1,3 @@
-import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../../asset/HeaderLogo.png";
 
@@ -10,7 +9,6 @@ const Footer = () => {
   const ggggraceful = "https://github.com/ggggraceful";
   const soojin_dev = "https://github.com/soojin-dev";
   // const ogaeng1 = "https://github.com/ogaeng1";
-  const navigate = useNavigate();
   return (
     <Container>
       <div className="layout">
@@ -18,13 +16,7 @@ const Footer = () => {
           <img src={logo} alt="logo" />
         </Logo>
         <STFooter>
-          <span
-            onClick={() => {
-              navigate("/test");
-            }}
-          >
-            Copyright &copy; 2022
-          </span>
+          <span>Copyright &copy; 2022</span>
           <DevPart>UI/UX</DevPart>
           <DevInfo>전현주</DevInfo>
           <DevPart>FE</DevPart>

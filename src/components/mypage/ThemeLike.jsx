@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import { DibBox, DibImg, ThemeLabel } from "./StyledLike";
+import { DibBox, DibImg } from "./StyledLike";
 
 const ThemeLike = (props) => {
   const navigate = useNavigate();
