@@ -96,8 +96,7 @@ const Main = () => {
               justify={`center`}
               place={`center`}
               position={`absolute`}
-              lineHeight={`43.57px`}
-            >
+              lineHeight={`43.57px`}>
               로그인 후 업적을 확인하세요!
             </custom.CTBox>
           </UserInfo>
@@ -151,9 +150,8 @@ const Main = () => {
         ) : (
           <Carousel>
             {random.data.map((data, index) => (
-              <SwiperSlide>
+              <SwiperSlide key={"Recommand" + index}>
                 <RecommandTheme
-                  key={"Recommand" + index}
                   id={data.id}
                   companyName={data.companyName}
                   themeName={data.themeName}
@@ -174,6 +172,7 @@ const Main = () => {
         <BestUserWrap>
           {hallOfFame.data.map((data, index) => (
             <BestUser
+              key={"BestUser" + index}
               number={index + 1}
               imgUrl={data.mainBadgeImg}
               userName={data.nickname}
