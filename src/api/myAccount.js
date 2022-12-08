@@ -21,7 +21,6 @@ export const reciveBadges = async (badgeId) => {
   const data = await api.post("/badge/give", badgeId);
   return data;
 };
-
 export const putMainBadge = async (badgeId) => {
   const data = await api.put(`/badge/${badgeId.badgeId}`, badgeId);
   return data;
@@ -31,7 +30,6 @@ export const getMyPage = async () => {
   const data = await api.get("/mypage");
   return data.data.data;
 };
-
 export const getMyTheme = async () => {
   const data = await api.get("/mythemes");
   return data.data.data;

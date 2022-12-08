@@ -18,6 +18,9 @@ export const Button = (props) => {
       bottom={props.bottom}
       left={props.left}
       right={props.right}
+      margin={props.margin}
+      padding={props.padding}
+      backgroundColor={props.backgroundColor}
     >
       {props.label}
     </ButtonStyle>
@@ -32,4 +35,7 @@ const ButtonStyle = styled.button`
   bottom: ${(props) => props.bottom};
   left: ${(props) => props.left};
   right: ${(props) => props.right};
+  margin: ${(props) => props.margin};
+  padding: ${(props) => props.padding};
+  background-color: ${(props) => props.backgroundColor || `#ffffff`};
 `;

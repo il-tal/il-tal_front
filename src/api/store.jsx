@@ -42,3 +42,13 @@ export const headerClicked = atom({
   key: "clicked",
   default: 0,
 });
+
+export const genreTend = atom({
+  key: "GenreTend",
+  default: [],
+});
+
+export const questTend = atom({
+  key: "questTend",
+  default: [],
+});

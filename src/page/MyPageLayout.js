@@ -5,7 +5,7 @@ import Layout from "../components/shared/Layout";
 import styled from "styled-components";
 
 
-const MainLayout = (props) => {
+const MyPageLayout = (props) => {
   return (
     <LayoutBody >
       <Header />
@@ -17,8 +17,8 @@ const MainLayout = (props) => {
   );
 };
 
-export default MainLayout;
+export default MyPageLayout;
 
 const LayoutBody = styled.div`
-  background-color: #f5f5f5;
+  background-color: rgba(6, 195, 135, 0.05);
 `

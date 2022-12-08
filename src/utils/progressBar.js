@@ -7,11 +7,11 @@ import styled from "styled-components";
  *  @param { Integer } height 높이 `1.2rem`
  */
 const ProgressBar = (props) => {
-  const { bgcolor, completed, goal, height } = props;
+  const { bgcolor, completed, goal, height, width, shadow } = props;
   return (
-    <Container height={height}>
-      <FillerStyles color={bgcolor} completed={(completed / goal) * 100}>
-        <LabelStyles>{`${completed}/${goal}`}</LabelStyles>
+    <Container height={height} width={width}>
+      <FillerStyles color={bgcolor} completed={(completed / goal) * 100} shadow={shadow}>
+        <LabelStyles shadow={shadow}>{completed===0 ? "":`${completed}/${goal}`}</LabelStyles>
       </FillerStyles>
     </Container>
   );
@@ -19,30 +19,34 @@ const ProgressBar = (props) => {
 
 const Container = styled.div`
   height: ${(props) => props.height};
-  width: calc(100% - 8rem);
-  background-color: #ababab;
+  width: ${(props) => props.width || `calc(100% - 8rem)`};
+  background-color: #cccccc;
   border-radius: 1.25rem;
-  margin-right: 10px;
-  margin-left: 10px;
-  box-shadow: 0.2rem 0.2rem 0.3rem #777777;
+  margin-right: 20px;
+  margin-left: 20px;
+  box-shadow: ${(props) => props.shadow};
+  display: flex;
+  align-items: center;
 `;
 
 const FillerStyles = styled.div`
-  height: 100%;
+  height: 90%;
   width: ${(props) => props.completed}%;
-  background-color: ${(props) => props.color};
+  background-color: ${(props) => props.color || `#ffffff`};
   border-radius: inherit;
   display: flex;
   position: relative;
   align-items: center;
-  box-shadow: 0.5rem 0.5rem 0.625rem #999999;
+  justify-content: center;
+  box-shadow: ${(props) => props.shadow };
 `;
 
 const LabelStyles = styled.span`
   padding: 10px;
-  color: white;
+  color: #000000;
   font-weight: bold;
   position: absolute;
+  display: flex;
   right: 0;
 `;
 

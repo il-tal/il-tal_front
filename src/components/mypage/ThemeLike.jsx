@@ -1,47 +1,42 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
+import { DibBox, DibImg, ThemeLabel } from "./StyledLike";
 
 const ThemeLike = (props) => {
   const navigate = useNavigate();
   return (
-    <ThemeLikeBox
-      themeImgUrl={props.themeImgUrl}
+    <DibBox
       onClick={() => {
         navigate(`/theme/${props.id}`);
       }}
     >
-      <div></div>
-      <ThemeLabel>
-        <CompanyName>{props.companyName}</CompanyName>
-        <ThemeName>{props.themeName}</ThemeName>
-      </ThemeLabel>
-    </ThemeLikeBox>
+      <>1</>
+      <DibImg src={props.ImgUrl} alt={"이미지"}></DibImg>
+      <CompanyName>{props.companyName}</CompanyName>
+      <ThemeName>{props.themeName}</ThemeName>
+    </DibBox>
   );
 };
 
 export default ThemeLike;
 
-const ThemeLikeBox = styled.div`
-  background-image: url(${(props) => props.themeImgUrl});
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 14.5rem;
-  height: 14.5rem;
-  display: grid;
-  grid-template-rows: 5fr 1fr;
-  margin: 25px;
-`;
-
-const ThemeLabel = styled.div`
-  background-color: gray;
-`;
 const CompanyName = styled.div`
-  font-size: 1.25rem;
+  z-index: 1;
+  max-width: 280px;
+  font-size: 24px;
   font-weight: bold;
   color: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
+
 const ThemeName = styled.div`
-  font-size: 1rem;
+  z-index: 1;
+  max-width: 200px;
+  font-size: 16px;
   color: white;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;

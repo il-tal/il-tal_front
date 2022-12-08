@@ -8,10 +8,10 @@ const UserSummary = (props) => {
       <RowGrid place={"center left"}>
         <RepTitleName>{props.mainBadgeName}</RepTitleName>
         <ProgressBar
-          bgcolor={"#123123"}
           completed={props.completed}
           goal={props.goal}
           height={`2.5rem`}
+          width={`600px`}
         />
       </RowGrid>
       <RecentTitle recentTitle={props.RecentTitle} />
@@ -23,17 +23,19 @@ const UserSummary = (props) => {
 export default UserSummary;
 
 const UserSummaryBox = styled.div`
-  width: 100rem;
-  height: 15rem;
+  min-width: 1440px;
+  max-width: 1440px;
+  min-height: 212px;
+  max-height: 212px;
   display: grid;
   place-items: center;
-  grid-template-columns: 1.1fr 3fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 4fr 1fr 1fr 1fr;
   filter: blur(${(props) => props.blur}rem);
+  border-radius: 8px;
 `;
 
 const RowGrid = styled.div`
   font-size: 1rem;
-  min-width: 100%;
   display: grid;
   place-items: ${(props) => props.place};
   grid-template-rows: repeat(2, minmax(1fr, 100%));
@@ -44,8 +46,8 @@ const RepTitle = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  width: 10rem;
-  height: 10rem;
+  width: 144px;
+  height: 144px;
   border-radius: 5rem;
   background-color: #ababab;
   box-shadow: 0.3rem 0.3rem 0.5rem #ababab;
@@ -53,7 +55,7 @@ const RepTitle = styled.div`
 
 const RepTitleName = styled.div`
   margin: 1.5rem;
-  font-size: 2.5rem;
+  font-size: 24px;
 `;
 
 const RecentTitle = styled.div`
@@ -61,9 +63,9 @@ const RecentTitle = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  width: 8rem;
-  height: 8rem;
-  border-radius: 5rem;
+  width: 96px;
+  height: 96px;
+  border-radius: 8rem;
   background-color: #ababab;
   box-shadow: 0.4rem 0.4rem 0.6rem #ababab;
 `;
