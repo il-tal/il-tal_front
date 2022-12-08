@@ -12,10 +12,10 @@ const ThemeSynopsis = ({ synopsis }) => {
         <div className={ellipsis ? "small" : "big"}>
           {synopsis.split("\n").map((data, index) => {
             return (
-              <span key={`sysnop${index}`}>
+              <div key={`sysnop${index}`}>
                 {data}
                 <br />
-              </span>
+              </div>
             );
           })}
         </div>

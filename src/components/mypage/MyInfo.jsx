@@ -17,9 +17,15 @@ import Example from "../../utils/Radar";
 import setting from "../../asset/img/settings.png";
 import down from "../../asset/img/down.png";
 import up from "../../asset/img/up.png";
+import CompanyLike from "./CompanyLike";
+import { getAchieve } from "../../api/mainApi";
+import { useEffect } from "react";
+import { useRecoilValue } from "recoil";
+import { loginCheck } from "../../api/store";
 
 const MyInfo = () => {
   const mapData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const achieve = useQuery(["getAchieve"], getAchieve);
   const queryClient = useQueryClient();
   const User = useQuery(["getMyPage"], api.getMyPage);
   const Badges = useQuery(["getBadges"], api.getAllBadges);
@@ -59,7 +65,14 @@ const MyInfo = () => {
   const stylePref = User.isLoading
     ? ""
     : User.data?.stylePreference?.split(" ").filter(Boolean);
+
+  const loginCheckState = useRecoilValue(loginCheck);
   const navigate = useNavigate();
+  useEffect(() => {
+    if (!loginCheckState) {
+      navigate("/");
+    }
+  }, [loginCheckState, navigate]);
   return (
     <>
       {isModal ? (
@@ -78,6 +91,7 @@ const MyInfo = () => {
             lockStyle={User.data?.lockStyle}
             roomSize={User.data?.roomSize}
             surprise={User.data?.surprise}
+            setIsModal={setIsModal}
           />
         </Modal>
       ) : (
@@ -128,7 +142,7 @@ const MyInfo = () => {
                   </Styled.UserName>
                 )}
                 <ProgressBar
-                  completed={User.isLoading ? 0 : User.data.totalAchieveCnt}
+                  completed={User.isLoading ? 0 : achieve.data.achieveBadgeCnt}
                   goal={20}
                   height={`2rem`}
                   width={`95%`}
@@ -207,7 +221,7 @@ const MyInfo = () => {
                 comment={"코멘트"}
                 playTime={"2022-12-25"}
               />
-            ) : Review.data.length === 0 ? (
+            ) : Review.data?.length === 0 ? (
               <Carousel>
                 {mapData.map((data, index) => (
                   <SwiperSlide key={"notyet" + index}>
@@ -244,9 +258,9 @@ const MyInfo = () => {
             <Styled.ComWrap>
               {Company.isLoading ? (
                 <Styled.ComWrap>
-                  <ThemeLike companyName={""} companyImgUrl={""} />
+                  <CompanyLike companyName={""} companyImgUrl={""} />
                 </Styled.ComWrap>
-              ) : Company.data.length === 0 ? (
+              ) : Company?.data.length === 0 ? (
                 <Styled.ComWrap display={`flex`}>
                   <CTBox size={`24px`} margin={`10px`}>
                     아직 좋아요 한 업체가 없습니다
@@ -271,7 +285,7 @@ const MyInfo = () => {
               ) : (
                 <Styled.ComWrap>
                   {Company.data.map((data, index) => (
-                    <ThemeLike
+                    <CompanyLike
                       key={"company" + index}
                       id={data.id}
                       companyName={data.companyName}
@@ -288,7 +302,7 @@ const MyInfo = () => {
               <Styled.ComWrap>
                 <ThemeLike companyName={""} ImgUrl={""} themeName={""} />
               </Styled.ComWrap>
-            ) : Theme.data.length === 0 ? (
+            ) : Theme?.data.length === 0 ? (
               <Styled.ComWrap display={`flex`}>
                 <CTBox size={`24px`} margin={`10px`}>
                   아직 좋아요 한 테마가 없습니다

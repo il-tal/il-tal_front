@@ -20,5 +20,4 @@ const MainLayout = (props) => {
 export default MainLayout;
 
 const LayoutBody = styled.div`
-  background-color: #f5f5f5;
 `

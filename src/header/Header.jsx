@@ -138,7 +138,7 @@ const Container = styled.div`
   border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
-  background-color: ${(props) => props.color || "white"};
+  background-color: ${(props) => props.color || "#ffffff"};
   z-index: 10;
   .layout {
     height: 92%;

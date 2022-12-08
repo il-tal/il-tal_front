@@ -86,9 +86,7 @@ const Main = () => {
                 RecentTitle_3={achieve.data.badgeImgUrl[3]}
                 mainBadgeImg={achieve.data.mainBadgeImg}
                 bgcolor={"#123123"}
-                completed={
-                  achieve.data.totalAchieveCnt + achieve.data.totalFailCnt
-                }
+                completed={achieve.data.achieveBadgeCnt}
                 goal={totalAchievement}
               />
             </UserInfo>

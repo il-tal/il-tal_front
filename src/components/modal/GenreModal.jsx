@@ -7,29 +7,37 @@ import GenreBtn from "../mypage/GenreBtn";
 import Tendency from "../mypage/Tendency";
 import { Button } from "../shared/Button";
 import { editTendency, getMyPage, postTendency } from "../../api/myAccount";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const GenreModal = (props) => {
   const User = useQuery(["getMyPage"], getMyPage);
-  const [genre, setGenre] = useState(props.genrePref);
-  const [quest, setQuest] = useState(props.stylePref);
-  const [scare, setScare] = useState(props.lessScare);
-  const [room, setRoom] = useState(props.roomSize);
-  const [lock, setLock] = useState(props.lockStyle);
-  const [device, setDevice] = useState(props.device);
-  const [interior, setInterior] = useState(props.interior);
-  const [activity, setActivity] = useState(props.excitePreference);
-  const [jumpscare, setJumpscare] = useState(props.surprise);
+  const [genre, setGenre] = useState(props.genrePref || []);
+  const [quest, setQuest] = useState(props.stylePref || []);
+  const [scare, setScare] = useState(props.lessScare || 1);
+  const [room, setRoom] = useState(props.roomSize || 1);
+  const [lock, setLock] = useState(props.lockStyle || 1);
+  const [device, setDevice] = useState(props.device || 1);
+  const [interior, setInterior] = useState(props.interior || 1);
+  const [activity, setActivity] = useState(props.excitePreference || 1);
+  const [jumpscare, setJumpscare] = useState(props.surprise || 1);
+  const queryClient = useQueryClient();
   // post 요청
   const postTend = useMutation((tendency) => postTendency(tendency), {
-    onSuccess: () => {},
+    onSuccess: () => {
+      queryClient.invalidateQueries(["getMyPage"]);
+      props.setIsModal(false);
+    },
     onError: () => {},
   });
   // put 요청
   const editTend = useMutation((tendency) => editTendency(tendency), {
-    onSuccess: () => {},
+    onSuccess: () => {
+      queryClient.invalidateQueries(["getMyPage"]);
+      props.setIsModal(false);
+    },
   });
   const onSubmit = (e) => {
+    e.preventDefault();
     if (
       User.data.genrePreference === null &&
       User.data.stylePreference === null
