@@ -8,7 +8,7 @@ import styled from "styled-components";
 const MyPageLayout = (props) => {
   return (
     <LayoutBody >
-      <Header />
+      <Header color={`#f2fcf9`}/>
       <Layout>
         <Outlet />
       </Layout>

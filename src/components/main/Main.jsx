@@ -10,9 +10,13 @@ import RecommandTheme from "./RecommandTheme";
 import UserSummary from "./UserSummary";
 import * as custom from "../../styles/themeStyle";
 import main from "../../asset/main.png";
+import { useRecoilValue } from "recoil";
+import { loginCheck } from "../../api/store";
 
 const Main = () => {
-  const achieve = useQuery(["getAchieve"], getAchieve, {
+  //로그인 유무 판별
+  const loginCheckState = useRecoilValue(loginCheck);
+  const achieve = useQuery(["getAchieve", loginCheckState], getAchieve, {
     enabled: sessionStorage.userinfo ? true : false,
   });
 

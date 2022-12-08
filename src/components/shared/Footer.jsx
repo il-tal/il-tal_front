@@ -70,8 +70,15 @@ const Logo = styled.div`
 
 const STFooter = styled.div`
   display: flex;
-
   align-items: center;
-
   color: grey;
+`;
+
+const DevPart = styled.span`
+  margin: 3px;
+  font-size: 1.25rem;
+`;
+
+const DevInfo = styled.span`
+  margin: 5px;
 `;

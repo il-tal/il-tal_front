@@ -10,7 +10,7 @@ import SerchForm from "../components/serch/SertchForm";
 import logo from "../asset/HeaderLogo.png";
 import Swal from "sweetalert2";
 
-const Header = () => {
+const Header = (props) => {
   //페이지 이동에 사용
   const navigater = useNavigate();
 
@@ -22,7 +22,6 @@ const Header = () => {
 
   //로그아웃
   const onLogout = () => {
-
     Swal.fire({
       title: "로그아웃 하시겠습니까?",
       text: "로그아웃을 하면 후기를 작성할 수 없어요! 😢",
@@ -32,14 +31,12 @@ const Header = () => {
       cancelButtonText: "취소",
     }).then((result) => {
       if (result.isConfirmed) {
-        
         sessionStorage.removeItem("userinfo");
         sessionStorage.removeItem("access_token");
         sessionStorage.removeItem("refresh_token");
         setLoginState(false);
       }
     });
-
   };
 
   //로그인 체크 후 스테이트값 변경
@@ -84,7 +81,7 @@ const Header = () => {
   };
 
   return (
-    <Container>
+    <Container color={props.color}>
       <div className="layout">
         <div className="left-wrap">
           <div className="logo" onClick={onClickLogo}>
@@ -112,10 +109,8 @@ const Header = () => {
             <div
               onClick={() => {
                 onLogout();
-
               }}
             >
-
               <FiLogOut size="28" />
             </div>
           </div>
@@ -143,7 +138,7 @@ const Container = styled.div`
   border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
-  background-color: white;
+  background-color: ${(props) => props.color || "white"};
   z-index: 10;
   .layout {
     height: 92%;

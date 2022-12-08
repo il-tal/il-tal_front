@@ -167,18 +167,16 @@ export const ReviewsBox = styled.div`
 export const LikeBox = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
+  height: 100%;
+  max-width: 728px;
 `;
 
 export const ComWrap = styled.div`
   min-width: ${(props) => props.width || "708px"};
   min-height: ${(props) => props.height || "708px"};
-  width: 100%;
   display: ${(props) => props.display || "grid"};
   flex-direction: ${(props) => props.direction || "column"};
-  justify-content: ${(props) => props.justify || "top"};
-  align-items: ${(props) => props.align || "center"};
-  grid-template-columns: ${(props)=>props.colums||`repeat(2, 1fr)`};
-  margin: 10px;
+  grid-template-columns: ${(props)=>props.colums||`repeat(2, 350px)`};
+  grid-template-rows: ${(props)=>props.rows||`repeat(2, 1fr)`};
 `;
