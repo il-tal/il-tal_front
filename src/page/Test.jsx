@@ -28,24 +28,19 @@ const Test = () => {
 export default Test;
 
 const Cockpit = styled.div`
+  min-width: 100%;
+  min-height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: grid;
   grid-template-columns: repeat(3, minmax(100px, auto));
   background-color: #a9b779;
 `;
 
 const FlightDeck = styled.button`
+  min-width: 250px;
+  min-height: 150px;
   margin: 20px auto;
   padding: 50px;
   outline: 3px solid;
 `;
-
-/**
-<Route path="/" element={<MainPage />}/>
-<Route path="/theme" element={<ThemePage />}/>
-<Route path="/theme/:id" element={<DetailTheme />}/>
-<Route path="/company" element={<CompanyPage />}/>
-<Route path="/company/:id" element={<DetailCompanyPage />}/>
-<Route path="/myaccount" element={<MyPage />} />
-<Route path="*" element={<ErrorPage />}/>
- * 
- */

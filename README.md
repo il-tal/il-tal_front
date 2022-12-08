@@ -20,7 +20,9 @@
 > 지루한 일상으로부터의 일탈을 꿈꾸는 <br/>
 > 방탈출 사이트 일상의 탈출입니다.
 
-![](./src/asset/test-img.webp)
+
+![](./src/asset/test.webp)
+
 
 프로젝트를 소개하는 내용입니다
 
@@ -61,7 +63,7 @@
 <img src="https://img.shields.io/badge/react_beautiful_dnd-13.1.1-0061FF?style=for-the-badge&logo=react_beautiful_dnd&logoColor=white">
 <img src="https://img.shields.io/badge/rc_slider-13.1.1-E4637C?style=for-the-badge&logo=Slides&logoColor=white">
 <img src="https://img.shields.io/badge/react_infinite_scroller-1.2.6-000000?style=for-the-badge&logo=Infiniti&logoColor=white">
-<img src="https://img.shields.io/badge/react_kakao_maps_sdk-1.1.5-FFCD00?style=for-the-badge&logo=Infiniti&logoColor=white">
+<img src="https://img.shields.io/badge/react_kakao_maps_sdk-1.1.5-FFCD00?style=for-the-badge&logo=Kakao&logoColor=white">
 <img src="https://img.shields.io/badge/react_slick-0.29.0-FF880F?style=for-the-badge&logo=slickpic&logoColor=white">
 
 <p align="right">(<a href="#Top">맨 위로</a>)</p>
