@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { DibBox, DibImg } from "./StyledLike";
 
-const ThemeLike = (props) => {
+const CompanyLike = (props) => {
   const navigate = useNavigate();
   return (
     <DibBox
@@ -18,7 +18,7 @@ const ThemeLike = (props) => {
   );
 };
 
-export default ThemeLike;
+export default CompanyLike;
 
 const CompanyName = styled.div`
   z-index: 1;

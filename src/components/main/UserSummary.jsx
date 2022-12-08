@@ -31,7 +31,6 @@ const UserSummaryBox = styled.div`
   place-items: center;
   grid-template-columns: 1fr 4fr 1fr 1fr 1fr;
   filter: blur(${(props) => props.blur}rem);
-  border-radius: 8px;
 `;
 
 const RowGrid = styled.div`
@@ -55,7 +54,16 @@ const RepTitle = styled.div`
 
 const RepTitleName = styled.div`
   margin: 1.5rem;
-  font-size: 24px;
+  font-size: 20px;
+  font-weight: 700;
+  background: rgba(6, 195, 135, 0.2);
+  border: 1px solid rgba(6, 195, 135, 0.7);
+  border-radius: 27.5px;
+  width: 198px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
 
 const RecentTitle = styled.div`
@@ -67,5 +75,4 @@ const RecentTitle = styled.div`
   height: 96px;
   border-radius: 8rem;
   background-color: #ababab;
-  box-shadow: 0.4rem 0.4rem 0.6rem #ababab;
 `;

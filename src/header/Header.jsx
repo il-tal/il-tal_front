@@ -1,4 +1,4 @@
-import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import LoginRegisterForm from "../components/modal/LoginRegisterForm";
 import Modal from "../components/modal/Modal";
@@ -138,7 +138,7 @@ const Container = styled.div`
   border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
-  background-color: ${(props) => props.color || "white"};
+  background-color: ${(props) => props.color || "#ffffff"};
   z-index: 10;
   .layout {
     height: 92%;
@@ -201,26 +201,11 @@ const Container = styled.div`
   }
 `;
 
-const HeaderWrap = styled.div`
-  height: 100%;
-  width: 1000px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
 const LoginBtn = styled.button`
   width: 120px;
   border: none;
   font-size: 21px;
   background-color: transparent;
   cursor: pointer;
-  cursor: pointer;
-`;
-
-const LogoutBtn = styled.button`
-  height: 30px;
-  width: 70px;
-  border: 1px solid black;
   cursor: pointer;
 `;

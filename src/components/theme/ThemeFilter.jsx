@@ -13,7 +13,6 @@ import {
   scoreState,
   themePages,
 } from "../../api/store";
-import { useQueryClient } from "@tanstack/react-query";
 import lock from "../../asset/lock.png";
 
 const ThemeFilter = ({ refetch, filterCnt }) => {
@@ -23,25 +22,6 @@ const ThemeFilter = ({ refetch, filterCnt }) => {
   const [people, setPeople] = useRecoilState(peopleState);
   const [score, setScore] = useRecoilState(scoreState);
   const [difficulty, setDifficulty] = useRecoilState(difficultyState);
-
-  //난이도 선택 슬라이더바 목록
-  const levelFilter = {
-    1: "매우쉬움",
-    2: "쉬움",
-    3: "보통",
-    4: "어려움",
-    5: "매우어려움",
-  };
-
-  //별점 선택 슬라이더바 목록
-  const starFilter = {
-    0: "평가없음",
-    1: "1점",
-    2: "2점",
-    3: "3점",
-    4: "4점",
-    5: "5점",
-  };
 
   //전체지역 선택 스테이트
   const [isLocationAll, setIsLocationAll] = useState(true);
@@ -98,7 +78,8 @@ const ThemeFilter = ({ refetch, filterCnt }) => {
             className={isLocationAll ? "ok" : "not"}
             onClick={() => {
               setLocation([]);
-            }}>
+            }}
+          >
             전체
           </button>
           <CategoryBtn
@@ -112,7 +93,8 @@ const ThemeFilter = ({ refetch, filterCnt }) => {
           <p>장르</p>
           <button
             className={isGenreAll ? "ok" : "not"}
-            onClick={() => setGenre([])}>
+            onClick={() => setGenre([])}
+          >
             전체
           </button>
           <CategoryBtn
@@ -125,7 +107,8 @@ const ThemeFilter = ({ refetch, filterCnt }) => {
           <p>예약 가능 인원</p>
           <button
             className={isPeopleAll ? "ok" : "not"}
-            onClick={() => setPeople([])}>
+            onClick={() => setPeople([])}
+          >
             전체
           </button>
           <CategoryBtn
@@ -192,7 +175,8 @@ const ThemeFilter = ({ refetch, filterCnt }) => {
           onClick={() => {
             refetch();
             setPage(0);
-          }}>
+          }}
+        >
           {filterCnt.isLoading
             ? "Loading.."
             : `총 ${filterCnt.data.data}개 결과`}

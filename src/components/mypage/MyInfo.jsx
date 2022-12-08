@@ -17,9 +17,15 @@ import Example from "../../utils/Radar";
 import setting from "../../asset/img/settings.png";
 import down from "../../asset/img/down.png";
 import up from "../../asset/img/up.png";
+import CompanyLike from "./CompanyLike";
+import { getAchieve } from "../../api/mainApi";
+import { useEffect } from "react";
+import { useRecoilValue } from "recoil";
+import { loginCheck } from "../../api/store";
 
 const MyInfo = () => {
   const mapData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const achieve = useQuery(["getAchieve"], getAchieve);
   const queryClient = useQueryClient();
   const User = useQuery(["getMyPage"], api.getMyPage);
   const Badges = useQuery(["getBadges"], api.getAllBadges);
@@ -53,10 +59,20 @@ const MyInfo = () => {
     { name: "인테리어", value: User.data?.interior },
     { name: "활동성", value: User.data?.excitePreference },
   ];
-  const genrePref = User.data?.genrePreference.split(" ").filter(Boolean);
-  const stylePref = User.data?.stylePreference.split(" ").filter(Boolean);
+  const genrePref = User.isLoading
+    ? ""
+    : User.data?.genrePreference?.split(" ").filter(Boolean);
+  const stylePref = User.isLoading
+    ? ""
+    : User.data?.stylePreference?.split(" ").filter(Boolean);
+
+  const loginCheckState = useRecoilValue(loginCheck);
   const navigate = useNavigate();
-  console.log(Tendata);
+  useEffect(() => {
+    if (!loginCheckState) {
+      navigate("/");
+    }
+  }, [loginCheckState, navigate]);
   return (
     <>
       {isModal ? (
@@ -75,6 +91,7 @@ const MyInfo = () => {
             lockStyle={User.data?.lockStyle}
             roomSize={User.data?.roomSize}
             surprise={User.data?.surprise}
+            setIsModal={setIsModal}
           />
         </Modal>
       ) : (
@@ -125,10 +142,10 @@ const MyInfo = () => {
                   </Styled.UserName>
                 )}
                 <ProgressBar
-                  completed={User.isLoading ? 0 : User.data.totalAchieveCnt}
+                  completed={User.isLoading ? 0 : achieve.data.achieveBadgeCnt}
                   goal={20}
                   height={`2rem`}
-                  width={`90%`}
+                  width={`95%`}
                   shadow={`0`}
                 />
               </Styled.UserNameBox>
@@ -144,12 +161,16 @@ const MyInfo = () => {
                   }}
                 />
                 <div>
-                  {genrePref?.map((data, index) => (
-                    <MyGenre key={"genre" + index} genre={data} />
-                  ))}
-                  {stylePref?.map((data, index) => (
-                    <MyGenre key={"style" + index} genre={data} />
-                  ))}
+                  {genrePref
+                    ? genrePref.map((data, index) => (
+                        <MyGenre key={"genre" + index} genre={data} />
+                      ))
+                    : "아직 등록한 성향이 없습니다."}
+                  {stylePref
+                    ? stylePref.map((data, index) => (
+                        <MyGenre key={"style" + index} genre={data} />
+                      ))
+                    : ""}
                 </div>
                 <Example data={Tendata} />
               </Styled.TendencyBox>
@@ -171,7 +192,7 @@ const MyInfo = () => {
             ) : (
               Badges.data.map((data, index) => (
                 <MyTitles
-                  key={data.badgeName + index}
+                  key={"badge" + index}
                   id={String(data.id)}
                   isBadge={isBadge}
                   BadgeName={collapse ? "" : data.badgeName}
@@ -200,12 +221,11 @@ const MyInfo = () => {
                 comment={"코멘트"}
                 playTime={"2022-12-25"}
               />
-            ) : Review.data.length === 0 ? (
+            ) : Review.data?.length === 0 ? (
               <Carousel>
                 {mapData.map((data, index) => (
-                  <SwiperSlide>
+                  <SwiperSlide key={"notyet" + index}>
                     <MyReviews
-                      key={index + "notyet"}
                       id={Math.floor(Math.random() * (20 * (index + 1)))}
                       themeName={`아직 리뷰가 없습니다`}
                       score={Math.floor(Math.random() * 5 + 1)}
@@ -218,9 +238,8 @@ const MyInfo = () => {
             ) : (
               <Carousel>
                 {Review.data.map((data, index) => (
-                  <SwiperSlide>
+                  <SwiperSlide key={"Carousel" + index}>
                     <MyReviews
-                      key={"rev" + index}
                       id={data.id}
                       themeName={data.themeName}
                       score={data.score}
@@ -239,9 +258,9 @@ const MyInfo = () => {
             <Styled.ComWrap>
               {Company.isLoading ? (
                 <Styled.ComWrap>
-                  <ThemeLike companyName={""} companyImgUrl={""} />
+                  <CompanyLike companyName={""} companyImgUrl={""} />
                 </Styled.ComWrap>
-              ) : Company.data.length === 0 ? (
+              ) : Company?.data.length === 0 ? (
                 <Styled.ComWrap display={`flex`}>
                   <CTBox size={`24px`} margin={`10px`}>
                     아직 좋아요 한 업체가 없습니다
@@ -266,8 +285,8 @@ const MyInfo = () => {
               ) : (
                 <Styled.ComWrap>
                   {Company.data.map((data, index) => (
-                    <ThemeLike
-                      key={"comp" + index}
+                    <CompanyLike
+                      key={"company" + index}
                       id={data.id}
                       companyName={data.companyName}
                       ImgUrl={data.companyImgUrl}
@@ -283,7 +302,7 @@ const MyInfo = () => {
               <Styled.ComWrap>
                 <ThemeLike companyName={""} ImgUrl={""} themeName={""} />
               </Styled.ComWrap>
-            ) : Theme.data.length === 0 ? (
+            ) : Theme?.data.length === 0 ? (
               <Styled.ComWrap display={`flex`}>
                 <CTBox size={`24px`} margin={`10px`}>
                   아직 좋아요 한 테마가 없습니다

@@ -1,4 +1,3 @@
-import { useState } from "react";
 import styled from "styled-components";
 
 const GenreBtn = ({ categoryIndex, state, setState }) => {
