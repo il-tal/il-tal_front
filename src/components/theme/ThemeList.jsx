@@ -1,22 +1,31 @@
 import styled from "styled-components";
 import ThemePoster from "./ThemePoster";
 import ThemeFilter from "./ThemeFilter";
-import { useState } from "react";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { getFilterTheme } from "../../api/ThemeApi";
-import InfiniteScroll from "react-infinite-scroller";
-import { useRecoilValue } from "recoil";
+import { useQuery } from "@tanstack/react-query";
+import { getFilterCnt, getFilterTheme } from "../../api/ThemeApi";
+import { useRecoilState, useRecoilValue } from "recoil";
 import {
   difficultyState,
   genreState,
   locationState,
+  loginCheck,
   peopleState,
   scoreState,
+  sortState,
+  themePages,
 } from "../../api/store";
 
+import Pagination from "react-js-pagination";
+import { useEffect } from "react";
+
+import nextgray from "../../asset/next-gray.png";
+import prevgray from "../../asset/prev-gray.png";
+import nextgreen from "../../asset/next-green.png";
+import prevgreen from "../../asset/prev-green.png";
+
 const ThemeList = () => {
-  //필터 토글
-  const [isFilter, setIsFilter] = useState(false);
+  //페이지 전역상태
+  const [themePagenation, setThemePage] = useRecoilState(themePages);
 
   //전역변수로 선언된 각 필터 스테이트를 값만 불러서 사용 (useRecoilValue사용)
   const genre = useRecoilValue(genreState);
@@ -25,84 +34,141 @@ const ThemeList = () => {
   const score = useRecoilValue(scoreState);
   const difficulty = useRecoilValue(difficultyState);
 
-  //필터링 된 장르들 무한쿼리
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isLoading,
-    isFetching,
-    isError,
-    error,
+  //로그인 유무 판별
+  const loginCheckState = useRecoilValue(loginCheck);
 
-    refetch,
-  } = useInfiniteQuery(
-    ["getThemeList"],
-    ({ pageParam = 0 }) =>
+  //정렬 전역 스테이트
+  const [sort, setSort] = useRecoilState(sortState);
+
+  //페이징처리된 데이터 받아오기
+  const { data, isError, error, isLoading, refetch } = useQuery(
+    ["getThemes", themePagenation, loginCheckState],
+    () =>
       getFilterTheme({
-        pageParam,
         genre,
         location,
         score,
         people,
         difficulty,
-        refetch,
-      }),
-    {
-      getNextPageParam: (lastPage, allPages) => {
-        //현재 페이지의 데이터가 5개이면 다음페이지를 가져오고
-        //5보다 작으면 undefined로 다음페이지가 없다고 명령함
-        //getNextPageParam의 첫번째 인자는 현재페이지 정보, 두번째 인자는 불러온 모든 페이지 정보
-        if (lastPage.data.length === 5) {
-          return allPages.length;
-        } else if (lastPage.data.length < 5) {
-          return undefined;
-        }
-      },
-    }
+        themePagenation,
+        sort,
+      })
+  );
+  //정렬 토글
+  const onChangeSort = (e) => {
+    setSort(e.target.value);
+  };
+
+  //정렬 트리거 함수 (onChangeSort가 실행되어 sort가 변할때 마다 refetch시킴)
+  useEffect(() => {
+    refetch();
+  }, [refetch, sort]);
+
+  //페이지네이션이 눌릴때마다 themePage를 페이지에 맞게 설정
+  const onPageHandler = (page) => {
+    setThemePage(page - 1);
+  };
+
+  //필터링된 테마 개수 미리보기 API GET요청
+  const filterCnt = useQuery(
+    ["getFilterCnt", genre, location, score, people, difficulty],
+    () => getFilterCnt({ genre, location, score, people, difficulty })
   );
 
-  //로딩 및 에러 처리
+  // 로딩 및 에러 처리
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error! {error.toString()}</div>;
 
   return (
     <Container>
-      {/* <div className="filter">
-        <Filter onClick={() => setIsFilter(!isFilter)}>
-          {isFilter ? "필터 닫기" : "필터 열기"}
-        </Filter>
-        {isFilter ? <ThemeFilter refetch={refetch} /> : null}
-      </div> */}
-      <ThemeFilter refetch={refetch} />
-      <PosterWrap>
-        <InfiniteScroll
-          className="infinite"
-          loadMore={fetchNextPage}
-          hasMore={hasNextPage}
-        >
-          {data.pages.map((pagedata) => {
-            return pagedata.data.map((theme) => {
+      <div className="filter-label">
+        <div className="label">필터</div>
+
+        <ThemeFilter refetch={refetch} filterCnt={filterCnt} />
+      </div>
+      <div className="theme-label">
+        <div className="label-sort-wrap">
+          <div className="label">검색결과 {data.data.totalElements}개</div>
+          <div className="sort-wrap">
+            <input
+              type="radio"
+              className="radio-btn"
+              value="reviewCnt"
+              id="review"
+              name="sort"
+              defaultChecked={sort}
+              onChange={onChangeSort}
+            />
+            <label htmlFor="review">· 리뷰순</label>
+            <input
+              type="radio"
+              className="radio-btn"
+              value="themeScore"
+              id="score"
+              name="sort"
+              onChange={onChangeSort}
+            />
+            <label htmlFor="score">· 별점순</label>
+
+            <input
+              type="radio"
+              className="radio-btn"
+              value="totalLikeCnt"
+              id="like"
+              name="sort"
+              onChange={onChangeSort}
+            />
+            <label htmlFor="like">· 좋아요순</label>
+            <input
+              type="radio"
+              className="radio-btn"
+              value="themeName"
+              id="abc"
+              name="sort"
+              onChange={onChangeSort}
+            />
+            <label htmlFor="abc">· 가나다순</label>
+          </div>
+        </div>
+        <BodyWrap>
+          <PosterWrap>
+            {data.data.content.map((theme) => {
               return (
-                <div className="hover">
-                  <ThemePoster
-                    theme={theme}
-                    data={data}
-                    onClick={() => alert("hi")}
-                  />
+                <div className="theme-wrap" key={`poster${theme.id}`}>
+                  <ThemePoster theme={theme} />
                 </div>
               );
-            });
-          })}
-        </InfiniteScroll>
-        <div>
-          {isFetching
-            ? "loading..."
-            : hasNextPage
-            ? "더보기"
-            : "더이상 테마가 없어요!"}
-        </div>
-      </PosterWrap>
+            })}
+          </PosterWrap>
+
+          <div className="pagenation">
+            {data.data.totalPages > 1 ? (
+              <Pagination
+                activePage={themePagenation + 1}
+                itemsCountPerPage={9}
+                totalItemsCount={data.data.totalElements}
+                pageRangeDisplayed={5}
+                hideFirstLastPages={true}
+                prevPageText={
+                  themePagenation === 0 ? (
+                    <img src={prevgray} alt="next" />
+                  ) : (
+                    <img src={prevgreen} alt="next" />
+                  )
+                }
+                nextPageText={
+                  themePagenation + 1 === data.data.totalPages ? (
+                    <img src={nextgray} alt="next" />
+                  ) : (
+                    <img src={nextgreen} alt="next" />
+                  )
+                }
+                onChange={onPageHandler}
+              />
+            ) : null}
+          </div>
+        </BodyWrap>
+      </div>
     </Container>
   );
 };
@@ -120,33 +186,112 @@ const Container = styled.div`
     justify-content: flex-end;
     position: relative;
   }
+  .filter-label {
+  }
+  .theme-label {
+    margin-left: 20px;
+    height: 100%;
+  }
+  .label-sort-wrap {
+    display: flex;
+    justify-content: space-between;
+  }
+  .label {
+    font-size: 20px;
+    font-weight: bold;
+    height: 70px;
+    display: flex;
+    align-items: center;
+  }
+  .sort-wrap {
+    display: flex;
+    input {
+      display: none;
+    }
+    input[type="radio"] + label {
+      font-size: 20px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      margin-right: 15px;
+      color: gray;
+    }
+    input[type="radio"]:checked + label {
+      color: black;
+    }
+  }
 `;
 
-const Filter = styled.div`
-  height: 30px;
-  width: 100px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid;
-  background-color: grey;
-  margin: 10px;
-  cursor: pointer;
-  &:hover {
-    background-color: black;
-    color: white;
+const BodyWrap = styled.div`
+  width: 1078px;
+  height: 100%;
+  .pagenation {
+    .pagination {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+      align-items: center;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    ul.pagination li {
+      display: inline-block;
+      width: 50px;
+      height: 50px;
+      /* border: 1px solid #e2e2e2; */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1rem;
+    }
+
+    ul.pagination li:first-child {
+      border-radius: 5px 0 0 5px;
+    }
+
+    ul.pagination li:last-child {
+      border-radius: 0 5px 5px 0;
+    }
+
+    ul.pagination li a {
+      text-decoration: none;
+      color: black;
+      font-size: 24px;
+    }
+
+    ul.pagination li.active a {
+      color: white;
+    }
+
+    ul.pagination li.active {
+      /* scale: 1.3; */
+      border-radius: 50% 50%;
+      background-color: var(--color-main);
+    }
+
+    ul.pagination li a:hover {
+      color: black;
+    }
+    ul.pagination li a.active {
+      color: blue;
+    }
+
+    .page-selection {
+      width: 48px;
+      height: 30px;
+      color: #337ab7;
+    }
   }
 `;
 
 const PosterWrap = styled.div`
-  height: 100%;
-  width: 1100px;
+  height: 1407px;
+  width: 100%;
   display: flex;
-  margin: 0 auto;
-  justify-content: center;
+
   flex-wrap: wrap;
-  .infinite {
-    display: flex;
-    flex-wrap: wrap;
-  }
 `;

@@ -38,6 +38,13 @@ export const companyLocation = atom({
   default: "",
 });
 
+//업체별 페이지 전역 스테이트
+export const companyPages = atom({
+  key: "companyPage",
+  default: 0,
+});
+
+//
 export const headerClicked = atom({
   key: "clicked",
   default: 0,
@@ -51,4 +58,52 @@ export const genreTend = atom({
 export const questTend = atom({
   key: "questTend",
   default: [],
+  });
+  
+//테마별 페이지 전역 스테이트
+export const themePages = atom({
+  key: "themePages",
+  default: 0,
+});
+
+//로그인 유무 판별 스테이트
+export const loginCheck = atom({
+  key: "loginCheck",
+  default: false,
+});
+
+//테마페이지 정렬 스테이트
+export const sortState = atom({
+  key: "sort",
+  default: "reviewCnt",
+});
+
+//테마페이지 정렬 토글 스테이트
+export const onSortState = atom({
+  key: "onSort",
+  default: "review",
+});
+
+//검색어 스테이트
+export const serchState = atom({
+  key: "serchState",
+  default: "",
+});
+
+//검색 테마 페이지 전역 스테이트
+export const serchThemePages = atom({
+  key: "serchThemePage",
+  default: 0,
+});
+
+//검색 업체 페이지 전역 스테이트
+export const serchComPages = atom({
+  key: "serchComPage",
+  default: 0,
+});
+
+//댓글 페이지 전역 스테이트
+export const commnetPages = atom({
+  key: "commentPages",
+  default: 0,
 });

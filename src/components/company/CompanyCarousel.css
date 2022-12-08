@@ -1,0 +1,105 @@
+/* #app {
+  height: 300px;
+}
+html,
+body {
+  position: relative;
+  height: 300px;
+}
+
+body {
+  background: #eee;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0;
+} */
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  /* height: 300px; */
+
+  /* Center slide text vertically */
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: center;
+  -ms-flex-pack: center;
+  -webkit-justify-content: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  -webkit-align-items: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.swiper-wrapper:hover ~ .swiper-button-prev {
+  background: url(/src/asset/left_arrow.png) no-repeat;
+  background-position: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 0.5px solid #cccccc;
+}
+
+.swiper-wrapper:hover ~ .swiper-button-next {
+  background: url(/src/asset/right_arrow.png) no-repeat;
+  background-position: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 0.5px solid #cccccc;
+}
+
+.swiper {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.swiper-button-next:hover {
+  background: url(/src/asset/right_arrow.png) no-repeat;
+  background-position: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 0.5px solid #cccccc;
+}
+
+/* .swiper-button-next:hover ~ .swiper-button-prev {
+  background: url(/src/asset/left_arrow.png) no-repeat;
+  background-position: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 0.5px solid #cccccc;
+} */
+
+.swiper-button-prev:hover {
+  background: url(/src/asset/left_arrow.png) no-repeat;
+  background-position: center;
+  width: 35px;
+  height: 35px;
+  border-radius: 50%;
+  border: 0.5px solid #cccccc;
+}
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+  display: none;
+}

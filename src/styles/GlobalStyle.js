@@ -21,6 +21,10 @@ const GlobalStyle = createGlobalStyle`
   body{
     font-family:  'Noto Sans KR', sans-serif;
   }
+  html {
+    --color-main:  #06c387; //main point color
+    --color-border: #d1cccc; //border color
+  }
 `;
 
 export default GlobalStyle;

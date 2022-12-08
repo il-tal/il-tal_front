@@ -6,6 +6,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { getComment, postComment } from "../../api/ThemeApi";
 import { useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 const CommentForm = ({ setIsEdit, isEdit }) => {
   //댓글 데이터 스테이트 초기값
   const initial = {
@@ -34,17 +35,41 @@ const CommentForm = ({ setIsEdit, isEdit }) => {
   //작성완료 버튼 누를 시 서버에 POST요청 보내기 및 데이터 유무 확인처리
   const onSubmitHandler = () => {
     if (cmt.score === "") {
-      alert("별점을 입력해주세요!");
+      Swal.fire({
+        icon: "warning",
+        title: "별점을 입력해 주세요",
+        text: "얼마나 재미있었는지 별점으로 알려주세요!",
+      });
     } else if (cmt.success === "") {
-      alert("성공/실패 여부를 체크해주세요!");
+      Swal.fire({
+        icon: "warning",
+        title: "성공여부를 체크해 주세요",
+        text: "해당 테마를 성공하셨는지 알려주시겠어요?😊",
+      });
     } else if (cmt.difficulty === "") {
-      alert("난이도는 어떠셨나요?");
+      Swal.fire({
+        icon: "warning",
+        title: "난이도를 입력해 주세요",
+        text: "얼마나 어려웠는지 평가해주세요! 🙋‍♂️",
+      });
     } else if (cmt.hint === "") {
-      alert("힌트는 몇개 사용하셨나요?");
+      Swal.fire({
+        icon: "warning",
+        title: "힌트사용개수를 입력해 주세요",
+        text: "힌트는 얼마나 사용하셨나요? 😎",
+      });
     } else if (cmt.playDate === "") {
-      alert("언제 탈출에 도전했는지 알려주실래요?");
+      Swal.fire({
+        icon: "warning",
+        title: "날짜를 입력해 주세요",
+        text: "해당 테마를 플레이한 날짜가 언제인가요? 😊",
+      });
     } else if (cmt.comment === "") {
-      alert("해당 테마가 어땠는지 후기로 공유해볼까요?");
+      Swal.fire({
+        icon: "warning",
+        title: "내용을 입력해 주세요",
+        text: "테마를 이용한 생생한 경험, 모두에게 들려주세요! 👍👍",
+      });
     } else {
       writheComment.mutate({ id: id, data: cmt });
     }
@@ -55,19 +80,26 @@ const CommentForm = ({ setIsEdit, isEdit }) => {
     ({ id: id, data: cmt }) => postComment({ id: id, data: cmt }),
     {
       onSuccess: () => {
-        queryClient.invalidateQueries(["getComments", "getDetail"]);
-
-        alert("댓글 작성 완료!");
+        queryClient.invalidateQueries(["getComments"]);
+        queryClient.invalidateQueries(["getDetail"]);
+        Swal.fire({
+          icon: "success",
+          title: "댓글 작성완료!",
+          text: "소중한 의견 감사합니다!!😊",
+        });
         setIsEdit(true);
         setCmt(initial);
       },
       onError: () => {
-        alert("댓글 작성 오류!! 다시 시도하세요!");
+        Swal.fire({
+          icon: "warning",
+          title: "댓글 작성실패!",
+          text: "댓글 작성 실패!",
+        });
         setCmt(initial);
       },
     }
   );
-  console.log("스테이트", cmt);
 
   return (
     <Container>
@@ -110,6 +142,8 @@ const CommentForm = ({ setIsEdit, isEdit }) => {
           <Btn onClick={() => onSubmitHandler()}>작성완료</Btn>
         </FormHeaderWrap>
         <TextInput
+          placeholder="후기를 공유해보세요! (150자 미만)"
+          maxLength={150}
           name="comment"
           onChange={onChangeHandler}
           value={cmt.comment}
@@ -130,20 +164,26 @@ const Container = styled.div`
   justify-content: center;
   align-items: center;
   padding: 10px 0;
+  border-radius: 8px;
+  border: 1px solid grey;
 `;
 const DateInput = styled.input`
   height: 26px;
   width: 100px;
+  border-radius: 8px;
+  border: 1px solid grey;
 `;
 const TextInput = styled.textarea`
   height: 150px;
   width: 1370px;
   margin: 10px 0;
-  border: 1px solid grey;
+  border: none;
   resize: none;
   padding: 5px;
   box-sizing: border-box;
   font-size: 15px;
+  background-color: #efefef;
+  border-radius: 8px;
 `;
 const FormHeaderWrap = styled.div`
   height: 50px;
@@ -159,6 +199,7 @@ const FormHeaderWrap = styled.div`
 const FormWrap = styled.div`
   height: 100%;
   width: 100%;
+  border-radius: 8px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -168,7 +209,8 @@ const FormWrap = styled.div`
 const Btn = styled.div`
   height: 30px;
   width: 100px;
-  background-color: black;
+  border-radius: 8px;
+  background-color: var(--color-main);
   color: white;
   cursor: pointer;
 

@@ -7,9 +7,16 @@ import KakaoMap from "../map/KakaoMap";
 import Modal from "../modal/Modal";
 import ThemeReview from "./ThemeReview";
 import ThemeSynopsis from "./ThemeSynopsis";
+import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
+import { useRecoilValue } from "recoil";
+import { loginCheck } from "../../api/store";
+import Swal from "sweetalert2";
 const DetailTheme = () => {
   //상세페이지 조회용 id
   const { id } = useParams();
+
+  //로그인 유무 판별
+  const loginCheckState = useRecoilValue(loginCheck);
 
   //카카오맵 모달창
   const [isMap, setIsMap] = useState(true);
@@ -18,10 +25,25 @@ const DetailTheme = () => {
   const navigate = useNavigate();
 
   //테마 상세정보 조회 GET 요청 useQuery
-  const { data, isLoading } = useQuery(["getDetail"], () => getDetailTheme(id));
+  const { data, isLoading } = useQuery(["getDetail", loginCheckState], () =>
+    getDetailTheme(id)
+  );
 
   //데이터 refetch를 위한 쿼리클라이언트
   const queryClient = useQueryClient();
+
+  //좋아요 회원만 가능하도록 알람띄우기
+  const likeOnlyMemeber = () => {
+    if (loginCheckState) {
+      themeLike.mutate({ themeId: id });
+    } else {
+      Swal.fire({
+        title: "로그인 후 이용하세요!",
+        text: "비회원은 좋아요를 보낼수 없어요 😢",
+        icon: "warning",
+      });
+    }
+  };
 
   //좋아요기능 mutation
   const themeLike = useMutation((themeId) => wishTheme(themeId), {
@@ -88,21 +110,24 @@ const DetailTheme = () => {
             </TextPrice>
           </ThemeInfo>
           <ThemeBtnWrap>
+            <div onClick={() => likeOnlyMemeber()}>
+              {data.data.themeLikeCheck ? (
+                <Btn>
+                  {<BsSuitHeartFill color="var(--color-main)" size="20" />}
+                  좋아요 {data.data.totalLikeCnt}
+                </Btn>
+              ) : (
+                <Btn>
+                  {<BsSuitHeart size="20" />} 좋아요 {data.data.totalLikeCnt}
+                </Btn>
+              )}
+            </div>
             <Btn onClick={() => navigate(`/company/${data.data.companyId}`)}>
               업체보기
             </Btn>
-            <Btn
-              onClick={() => window.open([`${data.data.themeUrl}`, "_black"])}
-            >
+            <Btn2 onClick={() => window.open([`${data.data.themeUrl}`])}>
               예약하기
-            </Btn>
-            <div onClick={() => themeLike.mutate({ themeId: id })}>
-              {data.data.themeLikeCheck ? (
-                <Btn>좋아요 취소</Btn>
-              ) : (
-                <Btn>좋아요</Btn>
-              )}
-            </div>
+            </Btn2>
           </ThemeBtnWrap>
         </ThemeTextWrap>
       </ThemeInfoWrap>
@@ -128,7 +153,7 @@ const Container = styled.div`
 `;
 
 const ThemeInfoWrap = styled.div`
-  height: 730px;
+  height: 610px;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -137,14 +162,15 @@ const ThemeInfoWrap = styled.div`
 `;
 
 const ThemePicWrap = styled.div`
-  height: 586px;
-  width: 586px;
+  height: 464px;
+  width: 684px;
+  margin-right: 30px;
 `;
 
 const ThemePic = styled.div`
-  height: 586px;
-  width: 586px;
-  background-color: teal;
+  height: 464px;
+  width: 684px;
+
   display: flex;
   justify-content: center;
   align-items: center;
@@ -156,7 +182,7 @@ const ThemePic = styled.div`
   }
 `;
 const ThemeTextWrap = styled.div`
-  height: 586px;
+  height: 464px;
   width: 800px;
   display: flex;
   flex-direction: column;
@@ -164,27 +190,23 @@ const ThemeTextWrap = styled.div`
 `;
 
 const TextGenre = styled.div`
-  height: 50px;
   width: 100%;
   display: flex;
+  align-items: center;
 `;
 const TextDifficulty = styled.div`
-  height: 50px;
   width: 100%;
   display: flex;
 `;
 const TextPeople = styled.div`
-  height: 50px;
   width: 100%;
   display: flex;
 `;
 const TextTime = styled.div`
-  height: 50px;
   width: 100%;
   display: flex;
 `;
 const TextPrice = styled.div`
-  height: 50px;
   width: 100%;
   display: flex;
 `;
@@ -197,14 +219,18 @@ const ThemeInfo = styled.div`
   flex-direction: column;
   justify-content: center;
   .type {
-    height: 60px;
+    height: 50px;
     width: 130px;
     font-size: 20px;
     color: grey;
+    display: flex;
+    align-items: center;
   }
   .content {
     font-size: 20px;
-    height: 60px;
+    height: 50px;
+    display: flex;
+    align-items: center;
   }
 `;
 
@@ -232,18 +258,33 @@ const ThemeTitle = styled.div`
 `;
 const ThemeBtnWrap = styled.div`
   height: 50px;
-  width: 100%;
+  width: 700px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  font-size: 16px;
 `;
 
 const Btn = styled.div`
-  height: 30px;
-  width: 100px;
+  height: 48px;
+  width: 220px;
   border: 1px solid;
+  border-radius: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 13px;
+
+  cursor: pointer;
+`;
+const Btn2 = styled.div`
+  height: 48px;
+  width: 220px;
+  color: white;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--color-main);
+
   cursor: pointer;
 `;

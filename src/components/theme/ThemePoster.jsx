@@ -1,19 +1,43 @@
 import styled from "styled-components";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
+import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 import { wishTheme } from "../../api/ThemeApi";
+import { useRecoilValue } from "recoil";
+import { loginCheck } from "../../api/store";
+import Swal from "sweetalert2";
 
 const ThemePoster = ({ theme }) => {
+  //페이지 이동에 사용
   const navigate = useNavigate();
+
+  //쿼리 클라이언트 선언
   const queryClient = useQueryClient();
+
+  //좋아요 기능 mutation
   const themeLike = useMutation((themeId) => wishTheme(themeId), {
     onSuccess: (res) => {
       queryClient.invalidateQueries(["getThemeList"]);
       setLikeState(res.data.themeLikeCheck);
     },
   });
+
+  //로그인 유무 판별
+  const loginCheckState = useRecoilValue(loginCheck);
+
+  //좋아요 회원만 가능하도록 알람띄우기
+  const likeOnlyMemeber = () => {
+    if (loginCheckState) {
+      themeLike.mutate({ themeId: theme.id });
+    } else {
+      Swal.fire({
+        title: "로그인 후 이용하세요!",
+        text: "비회원은 좋아요를 보낼수 없어요 😢",
+        icon: "warning",
+      });
+    }
+  };
 
   //좋아요 스테이트 (theme에서 체크여부를 바로 받으면 너무 느리게 바뀌므로 wishTheme요청값을 이용하기위해 사용)
   const [likeState, setLikeState] = useState(theme.themeLikeCheck);
@@ -38,13 +62,15 @@ const ThemePoster = ({ theme }) => {
         <ThemeTextGenre>{theme.genre}</ThemeTextGenre>
         <ThemeTextBottom>
           <div>
-            ⭐ {theme.themeScore} <span>({theme.reviewCnt})</span>
+            <span className="star">★</span> {theme.themeScore}{" "}
+            <span>({theme.reviewCnt})</span>
           </div>
-          <div
-            className="like"
-            onClick={() => themeLike.mutate({ themeId: theme.id })}
-          >
-            {likeState ? <AiFillHeart color={"red"} /> : <AiOutlineHeart />}
+          <div className="like" onClick={() => likeOnlyMemeber()}>
+            {likeState ? (
+              <BsSuitHeartFill color={"var(--color-main)"} />
+            ) : (
+              <BsSuitHeart />
+            )}
           </div>
         </ThemeTextBottom>
       </ThemeTextWrap>
@@ -57,23 +83,26 @@ export default ThemePoster;
 const Container = styled.div`
   height: 440px;
   width: 340px;
-  border: 1px solid gray;
+  border: 1px solid var(--color-border);
   display: flex;
   flex-direction: column;
   align-items: center;
   border-radius: 8px;
   overflow: hidden;
-  margin: 27px 10px;
+  margin: 0 18px 27px 0;
+  box-sizing: border-box;
+  scale: 1;
 
   &:hover {
-    border: 1px solid rgba(255, 183, 67, 1);
+    box-shadow: 0 4px 15px 1px rgba(6, 195, 135, 0.25);
+    border: 1px solid var(--color-main);
   }
 `;
 
 const ThemePic = styled.div`
   height: 216px;
-  width: 340px;
-
+  width: 100%;
+  border: none;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -135,5 +164,10 @@ const ThemeTextBottom = styled.div`
   }
   span {
     color: gray;
+  }
+  .star {
+    color: var(--color-main);
+    font-size: 25px;
+    font-weight: bold;
   }
 `;

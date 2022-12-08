@@ -8,8 +8,9 @@ import ErrorPage from "../page/ErrorPage";
 import CompanyPage from "../page/CompanyPage";
 import MainLayout from "../page/MainLayout";
 import Test from "../page/Test";
-import GenreModal from "../components/modal/GenreModal";
 import MyPageLayout from "../page/MyPageLayout";
+import KakaoLogin from "../components/modal/KakaoLogin";
+import SerchPage from "../page/SerchPage";
 
 const Router = () => {
   return (
@@ -17,17 +18,18 @@ const Router = () => {
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<MainPage />} />
+          <Route path="/kakao/callback" element={<KakaoLogin />} />
           <Route path="/theme" element={<ThemePage />} />
           <Route path="/theme/:id" element={<DetailTheme />} />
           <Route path="/company" element={<CompanyPage />} />
           <Route path="/company/:id" element={<DetailCompanyPage />} />
+          <Route path="/serch" element={<SerchPage />} />
         </Route>
         <Route element={<MyPageLayout />}>
           <Route path="/myaccount" element={<MyPage />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
         <Route path="/test" element={<Test />} />
-        <Route path="/test/:id" element={<GenreModal />} />
       </Routes>
     </BrowserRouter>
   );

@@ -29,10 +29,10 @@ const KakaoMap = ({ address, company }) => {
         });
 
         // 인포윈도우로 장소에 대한 설명을 표시합니다
-        var infowindow = new kakao.maps.InfoWindow({
-          content: `<div style="display:flex;width:100%;text-align:center;padding:6px 0;">${company}</div>`,
-        });
-        infowindow.open(map, marker);
+        // var infowindow = new kakao.maps.InfoWindow({
+        //   content: `<div style="display:flex;width:100%;text-align:center;padding:6px 0;">${company}</div>`,
+        // });
+        // infowindow.open(map, marker);
 
         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
         map.setCenter(coords);
@@ -46,7 +46,7 @@ const KakaoMap = ({ address, company }) => {
         <div
           className="map"
           id="map"
-          style={{ width: "450px", height: "350px" }}
+          style={{ width: "580px", height: "520px" }}
         ></div>
       </MapWrap>
     </>
@@ -60,21 +60,4 @@ const MapWrap = styled.div`
   flex-direction: column;
   background-color: transparent;
   position: relative;
-
-  .close {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 3px;
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 3;
-    height: 20px;
-    width: 60px;
-    background-color: gray;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-  }
 `;

@@ -2,11 +2,14 @@ import styled from "styled-components";
 import ThemePoster from "./ThemePoster";
 import { companyWish } from "../../api";
 import { useNavigate } from "react-router-dom";
-import Carousel from "./Carousel";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
-import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useEffect, useState } from "react";
-
+import { SwiperSlide } from "swiper/react";
+import { CompanyCarousel } from "./CompanyCarousel";
+import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
+import { useRecoilValue } from "recoil";
+import { loginCheck } from "../../api/store";
+import Swal from "sweetalert2";
 //ThemeWrap에서 ThemePoster는 페이징처리하여 3개씩 보여주기
 
 const Company = ({ company }) => {
@@ -18,6 +21,22 @@ const Company = ({ company }) => {
       setWish(res.data.companyLikeCheck);
     },
   });
+
+  //로그인 유무 판별
+  const loginCheckState = useRecoilValue(loginCheck);
+
+  //좋아요 회원만 가능하도록 알람띄우기
+  const likeOnlyMemeber = () => {
+    if (loginCheckState) {
+      companyLike.mutate({ companyId: company.id });
+    } else {
+      Swal.fire({
+        title: "로그인 후 이용하세요!",
+        text: "비회원은 좋아요를 보낼수 없어요 😢",
+        icon: "warning",
+      });
+    }
+  };
 
   const [wish, setWish] = useState(company.companyLikeCheck);
   useEffect(() => {
@@ -32,35 +51,66 @@ const Company = ({ company }) => {
     <Container>
       <CompanyWrap>
         <CompanyPic>
-          <img
+          <CompanyCarousel>
+            <SwiperSlide>
+              <img
+                onClick={() => {
+                  navigator(`/company/${company.id}`);
+                }}
+                alt="companypicture"
+                src={company.companyImgUrl}
+              />
+            </SwiperSlide>
+            {company.themeList.map((themePics, index) => {
+              return (
+                <SwiperSlide key={`themepics${index}`}>
+                  <img
+                    onClick={() => {
+                      navigator(`/company/${company.id}`);
+                    }}
+                    alt="themepicture"
+                    src={themePics.themeImgUrl}
+                  />
+                </SwiperSlide>
+              );
+            })}
+          </CompanyCarousel>
+        </CompanyPic>
+        <CompanyInfo>
+          <CompanyName
             onClick={() => {
               navigator(`/company/${company.id}`);
             }}
-            alt=""
-            src={company.companyImgUrl}
-          />
-        </CompanyPic>
-        <CompanyText>
-          <CompanyName>{company.companyName}</CompanyName>
+          >
+            {company.companyName}
+          </CompanyName>
           <CompanyScore>
-            ⭐️⭐️⭐️⭐️⭐️{company.CompanyScore} ({company.totalReviewCnt})
+            {" "}
+            <span>★</span> {company.companyScore} ({company.totalReviewCnt})
           </CompanyScore>
+
+          <CompanyThemeNameGenre>
+            {company.themeList.map((themename) => {
+              return `#${themename.themeName} `;
+            })}
+            {/* {company.themeList.map((themegenre) => {
+              if (themegenre.genre === "Unknown") {
+                return null;
+              } else {
+                return `#${themegenre.genre} `;
+              }
+            })} */}
+          </CompanyThemeNameGenre>
           <HomepageUrl
-            onClick={() => window.open(`${company.companyUrl}`, "_black")}>
+            onClick={() => window.open(`${company.companyUrl}`, "_black")}
+          >
             홈페이지
           </HomepageUrl>
-        </CompanyText>
-        <CompanyLike
-          onClick={() => companyLike.mutate({ companyId: company.id })}>
-          {wish ? <AiFillHeart color={"red"} /> : <AiOutlineHeart />}{" "}
-          {company.companyLikeCnt}
-        </CompanyLike>
+          <CompanyLike onClick={() => likeOnlyMemeber()}>
+            {wish ? <BsSuitHeartFill color={"#06c387"} /> : <BsSuitHeart />}{" "}
+          </CompanyLike>
+        </CompanyInfo>
       </CompanyWrap>
-      <ThemeWrap>
-        {company.themeList.map((theme) => {
-          return <ThemePoster theme={theme} />;
-        })}
-      </ThemeWrap>
     </Container>
   );
 };
@@ -68,80 +118,107 @@ const Company = ({ company }) => {
 export default Company;
 
 const Container = styled.div`
-  height: 100%;
-  width: 100%;
-  margin-top: 50px;
+  height: 563px;
+  width: 464px;
+  margin-top: 10px;
   display: flex;
 `;
 
 const CompanyWrap = styled.div`
+  height: 563px;
+  width: 464px;
   position: relative;
-  height: 100%;
-  transition: all 0.2s linear;
-  :hover {
-    transform: scale(1.02);
+  transition: all 0.1s linear;
+  border: 1px solid #8a8a8a;
+  object-fit: cover;
+  border-radius: 10px;
+  overflow: hidden;
+  &:hover {
+    box-shadow: 0 4px 15px 1px rgba(6, 195, 135, 0.25);
+    border: 1px solid #06c387;
   }
 `;
 
 const CompanyPic = styled.div`
-  height: 351px;
-  width: 285px;
-  opacity: 0.8;
+  height: 300px;
+  width: 464px;
   position: relative;
   cursor: pointer;
-  filter: brightness(30%);
-  overflow: hidden;
   img {
     height: 100%;
     width: 100%;
     object-fit: cover;
-    border-radius: 10px;
   }
 `;
 
-const CompanyText = styled.div`
-  position: absolute;
-  top: 25px;
-  left: 20px;
-  color: white;
+const CompanyInfo = styled.div`
+  height: 263px;
+  width: 464px;
+  padding: 20px;
+  position: relative;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 `;
 
 const CompanyName = styled.div`
   font-weight: bold;
   font-size: 25px;
-  width: 160px;
+  cursor: pointer;
 `;
 
 const CompanyScore = styled.div`
-  margin-top: 15px;
   font-weight: bold;
-  font-size: 17px;
+  font-size: 20px;
+  span {
+    font-size: 23px;
+    color: var(--color-main);
+  }
+`;
+
+const CompanyThemeNameGenre = styled.div`
+  word-break: keep-all;
+  word-wrap: break-word;
+  height: 90px;
+  width: 400px;
+  font-size: 20px;
+  color: #ababab;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 30px;
 `;
 
 const HomepageUrl = styled.button`
-  margin-top: 15px;
   background-color: white;
-  font-size: 17px;
-  padding: 5px 20px;
-  border: none;
+  font-size: 19px;
+  color: #8a8a8a;
+  height: 41px;
+  width: 220px;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
   cursor: pointer;
 `;
 
 const CompanyLike = styled.button`
-  bottom: 10px;
-  left: 10px;
-  font-size: 20px;
+  position: absolute;
+  font-size: 33px;
   background-color: transparent;
   border: none;
-  position: absolute;
   cursor: pointer;
+  right: 15px;
+  top: 200px;
 `;
 
-const ThemeWrap = styled.div`
-  position: absolute;
-  margin-top: 27px;
-  margin-left: 225px;
-  height: 297px;
-  width: 100%;
-  display: flex;
-`;
+// const ThemeWrap = styled.div`
+//   position: absolute;
+//   margin-top: 27px;
+//   margin-left: 225px;
+//   height: 297px;
+//   width: 100%;
+//   display: flex;
+// `;

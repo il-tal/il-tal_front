@@ -8,10 +8,11 @@ const ThemeSynopsis = ({ synopsis }) => {
   return (
     <Container>
       <SynopText>
+        <p>시놉시스</p>
         <div className={ellipsis ? "small" : "big"}>
-          {synopsis.split("\n").map((data) => {
+          {synopsis.split("\n").map((data, index) => {
             return (
-              <span>
+              <span key={`sysnop${index}`}>
                 {data}
                 <br />
               </span>
@@ -47,7 +48,7 @@ const SynopText = styled.div`
     height: 100%;
     max-height: 18px;
     width: 100%;
-    font-size: 13px;
+    font-size: 20px;
     margin: 15px 0;
     line-height: 19px;
     /* display: -webkit-box;
@@ -62,7 +63,7 @@ const SynopText = styled.div`
     height: 100%;
     max-height: 250px;
     width: 100%;
-    font-size: 13px;
+    font-size: 20px;
     margin: 15px 0;
     line-height: 19px;
     overflow: hidden;
@@ -70,9 +71,14 @@ const SynopText = styled.div`
     flex-direction: column;
   }
   span {
-    font-size: 14px;
+    font-size: 20px;
     font-weight: bold;
 
     cursor: pointer;
+  }
+  p {
+    font-size: 25px;
+    font-weight: bold;
+    margin: 10px 0;
   }
 `;

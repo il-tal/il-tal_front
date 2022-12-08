@@ -1,7 +1,7 @@
 const Locations = {
   location: [
     {
-      name: "전체",
+      name: "지역전체",
       value: "",
     },
     {
