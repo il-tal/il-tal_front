@@ -211,8 +211,9 @@ const RegisterForm = ({ setIsLogin }) => {
                       required: true,
 
                       pattern: {
-                        value: /^(?=.*[a-zA-Z])(?=.*\d)[-a-zA-Z0-9]{4,12}$/,
-                        message: "영문/숫자 포함 4-12자로 입력해주세요.",
+                        value: /^(?=.*[a-zA-Z])[-a-zA-Z0-9]{4,12}$/,
+                        message:
+                          "영문 또는 영문과 숫자를 포함하여 4-12자로 입력해주세요.",
                       },
                     })}
                   />
@@ -220,7 +221,9 @@ const RegisterForm = ({ setIsLogin }) => {
                     중복확인
                   </DuplicationIdCheckBtn>
                 </IdNickBox>
-                {errors?.username && <p>{errors.username.message}</p>}
+                {errors?.username && (
+                  <p className="errormsg">{errors.username.message}</p>
+                )}
                 <InputPW
                   type="password"
                   placeholder="  비밀번호"
@@ -229,12 +232,15 @@ const RegisterForm = ({ setIsLogin }) => {
 
                     pattern: {
                       value:
-                        /^.*(?=^.{8,16}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/,
-                      message: "영문/숫자/특수문자포함 8-16자로 입력해주세요.",
+                        /^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z0-9!@#$%^&+=]{8,16}$/,
+                      message:
+                        "영문/숫자 중 하나 이상을 사용하여 8-16자로 입력해주세요.",
                     },
                   })}
                 />
-                {errors?.password1 && <p>{errors.password1.message}</p>}
+                {errors?.password1 && (
+                  <p className="errormsg">{errors.password1.message}</p>
+                )}
                 <InputPW
                   type="password"
                   placeholder="  비밀번호확인"
@@ -248,7 +254,9 @@ const RegisterForm = ({ setIsLogin }) => {
                     },
                   })}
                 />
-                {errors?.password2 && <p>{errors.password2.message}</p>}
+                {errors?.password2 && (
+                  <p className="errormsg">{errors.password2.message}</p>
+                )}
                 <IdNickBox>
                   <CreateNickname
                     type="text"
@@ -258,7 +266,7 @@ const RegisterForm = ({ setIsLogin }) => {
                       pattern: {
                         value: /^[가-힣a-zA-Z0-9]{2,10}$/,
                         message:
-                          "한글/영문/숫자를 사용하여 2~10자로 작성해주세요.",
+                          "한글/영문/숫자 중 하나 이상을 사용하여 2~10자로 작성해주세요.",
                       },
                     })}
                   />
@@ -266,7 +274,9 @@ const RegisterForm = ({ setIsLogin }) => {
                     중복확인
                   </DuplicationIdCheckBtn>
                 </IdNickBox>
-                {errors?.nickname && <p>{errors.nickname.message}</p>}
+                {errors?.nickname && (
+                  <p className="errormsg">{errors.nickname.message}</p>
+                )}
                 {/* 아이디 영문숫자포함 4-12자, 닉네임 한글영어포함 2-10자, 비밀번호 영문 특수문자포함 8-16자*/}
               </InputBox>
               <RegisterBtn>회원가입</RegisterBtn>
@@ -327,6 +337,7 @@ const Input = styled.input`
   border: none;
   margin-top: 8px;
   font-size: 18px;
+  padding: 20px;
 `;
 
 const LoginBtn = styled.button`
@@ -401,6 +412,9 @@ const FormBox = styled.div`
   flex-direction: column;
   row-gap: 18px;
   font-size: 15px;
+  .errormsg {
+    color: red;
+  }
 `;
 
 const InputBox = styled.div`
@@ -422,6 +436,7 @@ const CreateId = styled.input`
   border-radius: 8px;
   border: none;
   font-size: 17px;
+  padding: 20px;
 `;
 
 const DuplicationIdCheckBtn = styled.button`
@@ -447,6 +462,7 @@ const InputPW = styled.input`
   border-radius: 8px;
   border: none;
   font-size: 17px;
+  padding: 20px;
 `;
 
 const CreateNickname = styled.input`
@@ -457,6 +473,7 @@ const CreateNickname = styled.input`
   border-radius: 8px;
   border: none;
   font-size: 17px;
+  padding: 20px;
 `;
 
 const RegisterBtn = styled.button`
