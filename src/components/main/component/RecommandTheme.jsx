@@ -13,7 +13,7 @@ const RecommandTheme = (props) => {
             navigate(`/theme/${props.id}`);
           }}
         />
-        <>1</>
+        <>.</>
         <ThemeText fontSize={`20px`} fontWeight={100}>
           {props.companyName}
         </ThemeText>
