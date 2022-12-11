@@ -8,6 +8,11 @@ import { useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 const CommentForm = ({ setIsEdit, isEdit }) => {
+  //오늘 날짜 (month는 0~11을 출력하므로 +1 필요)
+  const today = new Date();
+  const date =
+    today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+
   //댓글 데이터 스테이트 초기값
   const initial = {
     score: "",
@@ -136,6 +141,7 @@ const CommentForm = ({ setIsEdit, isEdit }) => {
               type="date"
               onChange={onChangeHandler}
               value={cmt.playDate}
+              max={date}
             />
           </div>
 
