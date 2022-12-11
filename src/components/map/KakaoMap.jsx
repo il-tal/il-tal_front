@@ -13,6 +13,12 @@ const KakaoMap = ({ address, company }) => {
     // 지도를 생성합니다
     var map = new kakao.maps.Map(mapContainer, mapOption);
 
+    // 지도에 확대 축소 컨트롤을 생성한다
+    var zoomControl = new kakao.maps.ZoomControl();
+
+    // 지도의 우측에 확대 축소 컨트롤을 추가한다
+    map.addControl(zoomControl, kakao.maps.ControlPosition.RIGHT);
+
     // 주소-좌표 변환 객체를 생성합니다
     var geocoder = new kakao.maps.services.Geocoder();
 
