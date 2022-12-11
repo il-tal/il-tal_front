@@ -11,10 +11,15 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
 import { loginCheck } from "../../api/store";
 import Swal from "sweetalert2";
+import Modal from "../modal/Modal";
+import ThemePicComponent from "../detailTheme/ThemePicComponent";
 const DetailCompany = () => {
   //업체 아이디 받기
   const { id } = useParams();
   const navigate = useNavigate();
+
+  //포스터 사진 모달창
+  const [isPic, setIsPic] = useState(true);
 
   //업체 상세페이지 GET요청
   const { data, isLoading } = useQuery(["getDetailCompany"], () =>
@@ -52,8 +57,8 @@ const DetailCompany = () => {
     <Container>
       <CompanyWrap>
         <div className="pic-map-wrap">
-          <CompanyPic>
-            <img src={data.data.companyImgUrl} />
+          <CompanyPic onClick={() => setIsPic(false)}>
+            <img src={data.data.companyImgUrl} alt="postpic" />
           </CompanyPic>
           <CompanyMap>
             <KakaoMap
@@ -116,6 +121,14 @@ const DetailCompany = () => {
           );
         })}
       </ThemeWrap>
+      {isPic ? null : (
+        <Modal closeModal={() => setIsPic(true)}>
+          <ThemePicComponent
+            setClose={setIsPic}
+            pic={data.data.companyImgUrl}
+          />
+        </Modal>
+      )}
     </Container>
   );
 };
@@ -155,6 +168,7 @@ const CompanyPic = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  cursor: pointer;
   img {
     display: flex;
     object-fit: cover;
