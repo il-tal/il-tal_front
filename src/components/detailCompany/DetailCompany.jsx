@@ -42,6 +42,11 @@ const DetailCompany = () => {
     }
   };
 
+  //주소이동
+  const loadKakaoMap = () => {
+    window.open(`https://map.kakao.com/link/search/${data.data.address}`);
+  };
+
   //데이터 refetch 클라이언트
   const queryClient = useQueryClient();
 
@@ -99,7 +104,9 @@ const DetailCompany = () => {
           <CompanyInfo>
             <div className="icon-wrap">
               <FiMapPin size="25px" />
-              <span>{data.data.address}</span>
+              <span className="hyperlink" onClick={loadKakaoMap}>
+                {data.data.address}
+              </span>
             </div>
             <div className="icon-wrap">
               <FiPhone size="25px" />
@@ -107,7 +114,15 @@ const DetailCompany = () => {
             </div>
             <div className="icon-wrap">
               <AiOutlineClockCircle size="25px" />
-              <span>{data.data.workHour}</span>
+              {data.data.workHour.split("\\n").map((data, index) => {
+                return (
+                  <span key={`date${index}`}>
+                    {data}
+                    <br />
+                  </span>
+                );
+              })}
+              {/* <span>{data.data.workHour}</span> */}
             </div>
           </CompanyInfo>
         </div>
@@ -245,6 +260,9 @@ const CompanyInfo = styled.div`
   .icon-wrap {
     display: flex;
     align-items: center;
+  }
+  .hyperlink {
+    cursor: pointer;
   }
 `;
 
