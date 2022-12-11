@@ -68,8 +68,11 @@ const SynopText = styled.div`
     overflow: hidden;
     transition: max-height 500ms ease-in-out;
     flex-direction: column;
+    div {
+      margin-bottom: 4px;
+    }
   }
-  div {
+  span {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 4px;

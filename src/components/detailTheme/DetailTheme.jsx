@@ -11,6 +11,7 @@ import { BsSuitHeartFill, BsSuitHeart } from "react-icons/bs";
 import { useRecoilValue } from "recoil";
 import { loginCheck } from "../../api/store";
 import Swal from "sweetalert2";
+import ThemePicComponent from "./ThemePicComponent";
 const DetailTheme = () => {
   //상세페이지 조회용 id
   const { id } = useParams();
@@ -18,8 +19,8 @@ const DetailTheme = () => {
   //로그인 유무 판별
   const loginCheckState = useRecoilValue(loginCheck);
 
-  //카카오맵 모달창
-  const [isMap, setIsMap] = useState(true);
+  //포스터 사진 모달창
+  const [isPic, setIsPic] = useState(true);
 
   //navigate
   const navigate = useNavigate();
@@ -74,7 +75,7 @@ const DetailTheme = () => {
     <Container>
       <ThemeInfoWrap>
         <ThemePicWrap>
-          <ThemePic>
+          <ThemePic onClick={() => setIsPic(false)}>
             <img src={data.data.themeImgUrl} alt="themePic" />
           </ThemePic>
         </ThemePicWrap>
@@ -133,9 +134,9 @@ const DetailTheme = () => {
       </ThemeInfoWrap>
       <ThemeSynopsis synopsis={data.data.synopsis} />
       <ThemeReview props={data.data} />
-      {isMap ? null : (
-        <Modal closeModal={() => setIsMap(true)}>
-          <KakaoMap setClose={setIsMap} />
+      {isPic ? null : (
+        <Modal closeModal={() => setIsPic(true)}>
+          <ThemePicComponent setClose={setIsPic} pic={data.data.themeImgUrl} />
         </Modal>
       )}
     </Container>
@@ -175,6 +176,7 @@ const ThemePic = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  cursor: pointer;
   img {
     display: flex;
     object-fit: cover;

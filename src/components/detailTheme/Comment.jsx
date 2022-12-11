@@ -13,6 +13,11 @@ import { delComment, putComment } from "../../api/ThemeApi";
 import { useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 
+//오늘 날짜 (month는 0~11을 출력하므로 +1 필요)
+const today = new Date();
+const date =
+  today.getFullYear() + "-" + (today.getMonth() + 1) + "-" + today.getDate();
+
 const Comment = ({
   id,
   nickname,
@@ -212,6 +217,7 @@ const Comment = ({
               name="playDate"
               onChange={onChangeEdit}
               defaultValue={playDate}
+              max={date}
             />
           </div>
         ) : (
@@ -414,5 +420,6 @@ const Body = styled.div`
     height: 80px;
     width: 660px;
     margin: 10px;
+    word-wrap: break-word;
   }
 `;

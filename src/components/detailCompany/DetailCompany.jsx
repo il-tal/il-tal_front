@@ -11,10 +11,15 @@ import { AiOutlineClockCircle } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
 import { loginCheck } from "../../api/store";
 import Swal from "sweetalert2";
+import Modal from "../modal/Modal";
+import ThemePicComponent from "../detailTheme/ThemePicComponent";
 const DetailCompany = () => {
   //업체 아이디 받기
   const { id } = useParams();
   const navigate = useNavigate();
+
+  //포스터 사진 모달창
+  const [isPic, setIsPic] = useState(true);
 
   //업체 상세페이지 GET요청
   const { data, isLoading } = useQuery(["getDetailCompany"], () =>
@@ -37,6 +42,11 @@ const DetailCompany = () => {
     }
   };
 
+  //주소이동
+  const loadKakaoMap = () => {
+    window.open(`https://map.kakao.com/link/search/${data.data.address}`);
+  };
+
   //데이터 refetch 클라이언트
   const queryClient = useQueryClient();
 
@@ -52,8 +62,8 @@ const DetailCompany = () => {
     <Container>
       <CompanyWrap>
         <div className="pic-map-wrap">
-          <CompanyPic>
-            <img src={data.data.companyImgUrl} />
+          <CompanyPic onClick={() => setIsPic(false)}>
+            <img src={data.data.companyImgUrl} alt="postpic" />
           </CompanyPic>
           <CompanyMap>
             <KakaoMap
@@ -94,7 +104,9 @@ const DetailCompany = () => {
           <CompanyInfo>
             <div className="icon-wrap">
               <FiMapPin size="25px" />
-              <span>{data.data.address}</span>
+              <span className="hyperlink" onClick={loadKakaoMap}>
+                {data.data.address}
+              </span>
             </div>
             <div className="icon-wrap">
               <FiPhone size="25px" />
@@ -102,7 +114,15 @@ const DetailCompany = () => {
             </div>
             <div className="icon-wrap">
               <AiOutlineClockCircle size="25px" />
-              <span>{data.data.workHour}</span>
+              {data.data.workHour.split("\\n").map((data, index) => {
+                return (
+                  <span key={`date${index}`}>
+                    {data}
+                    <br />
+                  </span>
+                );
+              })}
+              {/* <span>{data.data.workHour}</span> */}
             </div>
           </CompanyInfo>
         </div>
@@ -116,6 +136,14 @@ const DetailCompany = () => {
           );
         })}
       </ThemeWrap>
+      {isPic ? null : (
+        <Modal closeModal={() => setIsPic(true)}>
+          <ThemePicComponent
+            setClose={setIsPic}
+            pic={data.data.companyImgUrl}
+          />
+        </Modal>
+      )}
     </Container>
   );
 };
@@ -155,6 +183,7 @@ const CompanyPic = styled.div`
   justify-content: center;
   align-items: center;
   overflow: hidden;
+  cursor: pointer;
   img {
     display: flex;
     object-fit: cover;
@@ -231,6 +260,9 @@ const CompanyInfo = styled.div`
   .icon-wrap {
     display: flex;
     align-items: center;
+  }
+  .hyperlink {
+    cursor: pointer;
   }
 `;
 
