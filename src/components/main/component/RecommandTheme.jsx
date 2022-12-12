@@ -7,13 +7,18 @@ const RecommandTheme = (props) => {
     <Container>
       <ThemeWrap>
         <ThemePic
-          alt="props.id"
-          src={props.themeImgUrl}
           onClick={() => {
             navigate(`/theme/${props.id}`);
           }}
-        />
-        <>.</>
+        >
+          <source srcSet={props.themeImgUrl} type="image/webp" />
+          <img
+            src={props.themeImgUrl}
+            alt={props.themeName}
+            className="themeImg"
+          />
+        </ThemePic>
+        .
         <ThemeText fontSize={`20px`} fontWeight={100}>
           {props.companyName}
         </ThemeText>
@@ -33,22 +38,29 @@ const Container = styled.div`
 `;
 
 const ThemeWrap = styled.div`
-  width: 400px;
+  width: 350px;
   height: 250px;
   display: grid;
   grid-template-rows: 5fr 1fr 1fr;
 `;
 
-const ThemePic = styled.img`
-  filter: brightness(50%);
-  min-width: 400px;
+const ThemePic = styled.picture`
+  min-width: 350px;
   min-height: 250px;
-  max-width: 400px;
+  max-width: 350px;
   max-height: 250px;
-  border-radius: 8px;
   position: absolute;
   object-fit: cover;
   margin: 0 auto;
+  .themeImg {
+    min-width: 350px;
+    min-height: 250px;
+    max-width: 350px;
+    max-height: 250px;
+    border-radius: 8px;
+    object-fit: cover;
+    filter: brightness(50%);
+  }
 `;
 
 const ThemeText = styled.div`

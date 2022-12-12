@@ -10,8 +10,8 @@ const UserSummary = (props) => {
         <ProgressBar
           completed={props.completed}
           goal={props.goal}
-          height={`2.5rem`}
-          width={`600px`}
+          height={`32px`}
+          width={`480px`}
         />
       </Styled.RowGrid>
       <Styled.RecentTitle recentTitle={props.RecentTitle} />

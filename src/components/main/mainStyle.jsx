@@ -18,9 +18,9 @@ export const UserBox = styled.div`
   background-repeat: no-repeat;
   background-position: center;
   width: 100vw;
-  min-height: 400px;
-  max-height: 400px;
-  margin-bottom: 160px;
+  min-height: 360px;
+  max-height: 360px;
+  margin-bottom: 100px;
   font-size: 2rem;
   text-align: center;
   justify-content: center;
@@ -39,7 +39,7 @@ export const UserWarp = styled.div`
 `;
 
 export const TitleTextWrap = styled.div`
-  width: 1440px;
+  width: 1200px;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -47,25 +47,26 @@ export const TitleTextWrap = styled.div`
 `;
 
 export const UserIntro = styled.div`
-  margin-top: 24px;
-  font-size: ${(props) => props.font || `3rem`};
+  margin-top: 18px;
+  font-size: ${(props) => props.font || `40px`};
   font-weight: ${(props) => props.bold};
   color: ${(props) => props.color || `#0e0e0e`};
 `;
 
 export const HeaderTitle = styled.div`
   display: block;
-  width: 90rem;
+  width: 1200px;
   justify-content: center;
   align-items: left !important;
-  font-size: 32px;
+  font-size: 28px;
   font-weight: 700;
-  margin: 24px;
+  margin: 20px 0px 20px 10px;
 `;
 
 export const UserInfo = styled.div`
   font-size: 1rem;
-  width: 90rem;
+  width: 1200px;
+  height: 165px;
   margin: ${(props) => props.margin};
   display: flex;
   justify-content: center;
@@ -85,7 +86,7 @@ export const PopularThemeWrap = styled.div`
 `;
 
 export const RecommandThemeWrap = styled.div`
-  width: 90rem;
+  width: 1200px;
   margin-top: 25px;
   margin-bottom: 70px;
   display: flex;
@@ -94,7 +95,7 @@ export const RecommandThemeWrap = styled.div`
 `;
 
 export const BestUserWrap = styled.div`
-  width: 90rem;
+  width: 1200px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -103,8 +104,8 @@ export const BestUserWrap = styled.div`
 
 // UserSummary.jsx
 export const UserSummaryBox = styled.div`
-  min-width: 1440px;
-  max-width: 1440px;
+  min-width: 1200px;
+  max-width: 1200px;
   min-height: 212px;
   max-height: 212px;
   display: grid;
@@ -125,22 +126,22 @@ export const RepTitle = styled.div`
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  width: 144px;
-  height: 144px;
+  width: 108px;
+  height: 108px;
   border-radius: 5rem;
   background-color: #ababab;
   box-shadow: 0.3rem 0.3rem 0.5rem #ababab;
 `;
 
 export const RepTitleName = styled.div`
-  margin: 1.5rem;
+  margin: 20px;
   font-size: 20px;
   font-weight: 700;
   background: rgba(6, 195, 135, 0.2);
   border: 1px solid rgba(6, 195, 135, 0.7);
   border-radius: 27.5px;
   width: 198px;
-  height: 55px;
+  height: 44px;
   display: flex;
   justify-content: center;
   align-items: center;

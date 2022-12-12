@@ -13,21 +13,19 @@ import { Navigation, Autoplay } from "swiper";
 
 export const Carousel = ({ children }) => {
   return (
-    <>
-      <Swiper
-        slidesPerView={4}
-        spaceBetween={350}
-        loop={true}
-        autoplay={{
-          delay: 2500,
-          disableOnInteraction: false,
-        }}
-        loopFillGroupWithBlank={true}
-        navigation={true}
-        modules={[Autoplay, Navigation]}
-      >
-        {children}
-      </Swiper>
-    </>
+    <Swiper
+      slidesPerView={4}
+      spaceBetween={350}
+      loop={true}
+      autoplay={{
+        delay: 2500,
+        disableOnInteraction: false,
+      }}
+      loopFillGroupWithBlank={true}
+      navigation={true}
+      modules={[Autoplay, Navigation]}
+    >
+      {children}
+    </Swiper>
   );
 };

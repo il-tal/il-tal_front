@@ -8,13 +8,13 @@ const MainScreen = (props) => {
     <>
       {props.isLoading ? (
         <Styled.UserBox bgimg={`${main}`}>
-          <Styled.UserWarp flex={`column`} justify={`center`} mtop={`2rem`}>
+          <Styled.UserWarp flex={`column`} justify={`center`} mtop={`40px`}>
             <Styled.TitleTextWrap>
               <Styled.UserIntro bold={"bold"}>
                 Guest 님
                 <br />
               </Styled.UserIntro>
-              <Styled.UserIntro bold={"normal !important"} font={`40px`}>
+              <Styled.UserIntro bold={"normal !important"} font={`60px`}>
                 탈출할준비되셨나요
               </Styled.UserIntro>
             </Styled.TitleTextWrap>
@@ -29,13 +29,13 @@ const MainScreen = (props) => {
         </Styled.UserBox>
       ) : (
         <Styled.UserBox bgimg={`${main}`}>
-          <Styled.UserWarp flex={`column`} justify={`center`} mtop={`2rem`}>
+          <Styled.UserWarp flex={`column`} justify={`center`} mtop={`60px`}>
             <Styled.TitleTextWrap>
               <Styled.UserIntro bold={"bold"}>
                 {props.nickname}님
                 <br />
               </Styled.UserIntro>
-              <Styled.UserIntro bold={"normal !important"} font={`40px`}>
+              <Styled.UserIntro bold={"normal !important"} font={`32px`}>
                 탈출할준비되셨나요
               </Styled.UserIntro>
             </Styled.TitleTextWrap>
