@@ -7,6 +7,9 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  .notice {
+    width: 1440px;
+  }
 `;
 
 export const UserBox = styled.div`
