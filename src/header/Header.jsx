@@ -107,6 +107,7 @@ const Header = (props) => {
               마이페이지
             </LoginBtn>{" "}
             <div
+              className="logout"
               onClick={() => {
                 onLogout();
               }}
@@ -198,6 +199,9 @@ const Container = styled.div`
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    .logout {
+      margin-left: 20px;
+    }
   }
 `;
 
