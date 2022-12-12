@@ -6,12 +6,14 @@ import BestUser from "./component/BestUser";
 import PopSkel from "./PopSkel";
 import PopularTheme from "./component/PopularTheme";
 import RecommandTheme from "./component/RecommandTheme";
+import Notice from "../modal/Notice";
 import { useRecoilValue } from "recoil";
 import { loginCheck } from "../../api/store";
 import { useNavigate } from "react-router-dom";
 import MainScreen from "./component/MainScreen";
 import GuestScreen from "./component/GuestScreen";
 import * as Styled from "./mainStyle";
+import NoticeList from "../modal/NoticeList";
 
 const Main = () => {
   //로그인 유무 판별
@@ -127,7 +129,6 @@ const Main = () => {
           </Carousel>
         )}
       </Styled.RecommandThemeWrap>
-
       <Styled.HeaderTitle>명예의 전당</Styled.HeaderTitle>
       {hallOfFame.isLoading ? (
         <Styled.BestUserWrap>
@@ -150,6 +151,9 @@ const Main = () => {
           ))}
         </Styled.BestUserWrap>
       )}
+      <div className="notice">
+        <NoticeList />
+      </div>
     </Styled.Container>
   );
 };
