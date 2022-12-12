@@ -44,7 +44,7 @@ const KakaoMap = ({ address, company }) => {
         map.setCenter(coords);
       }
     });
-  }, []);
+  }, [address]);
 
   return (
     <>
