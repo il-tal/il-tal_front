@@ -131,7 +131,7 @@ const Main = () => {
       <Styled.HeaderTitle>명예의 전당</Styled.HeaderTitle>
       {hallOfFame.isLoading ? (
         <Styled.BestUserWrap>
-          <BestUser></BestUser>
+          <BestUser />
         </Styled.BestUserWrap>
       ) : (
         <Styled.BestUserWrap>

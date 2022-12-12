@@ -15,7 +15,14 @@ const PopularTheme = (props) => {
           onClick={() => {
             navigate(`/theme/${props.id}`);
           }}
-        />
+        >
+          <source srcSet={props.themeImgUrl} type="image/webp" />
+          <img
+            src={props.themeImgUrl}
+            alt={`${props.themeName}`}
+            className="pop-img"
+          />
+        </ThemeImg>
 
         <ThemeText fontSize={`20px`} fontWeight={400}>
           {props.companyName}
@@ -30,9 +37,9 @@ const PopularTheme = (props) => {
 export default PopularTheme;
 
 const Container = styled.div`
-  height: 448px;
-  width: 280px;
-  max-width: 448px;
+  height: 358px;
+  width: 224px;
+  max-width: 358px;
   max-height: 280px;
   margin: 25px;
   display: table;
@@ -40,22 +47,30 @@ const Container = styled.div`
 `;
 
 const ThemeWrap = styled.div`
-  width: 448px;
+  width: 358px;
   height: 280px;
   display: grid;
   grid-template-rows: 5fr 1fr 1fr;
 `;
 
-const ThemeImg = styled.img`
+const ThemeImg = styled.picture`
   filter: brightness(50%);
-  min-width: 448px;
+  min-width: 358px;
   min-height: 280px;
   max-height: 280px;
-  max-width: 448px;
+  max-width: 358px;
   border-radius: 8px;
   object-fit: cover;
   position: absolute;
   margin: 0 auto;
+  .pop-img {
+    filter: brightness(50%);
+    min-width: 358px;
+    min-height: 280px;
+    max-height: 280px;
+    max-width: 358px;
+    border-radius: 8px;
+  }
 `;
 
 const RankWrap = styled.div`
@@ -63,14 +78,14 @@ const RankWrap = styled.div`
   place-content: right center;
   width: 100%;
   height: 100%;
-  margin-left: 380px;
+  margin-left: 85%;
   color: #ffffff;
   position: relative;
 `;
 
 const ThemeRank = styled.div`
-  width: 3.25rem;
-  height: 3.75rem;
+  width: 42px;
+  height: 48px;
   font-size: 32px;
   z-index: 1;
   display: grid;

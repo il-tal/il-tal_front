@@ -35,6 +35,7 @@ const Container = styled.div`
   box-shadow: ${(props) => props.shadow};
   display: flex;
   align-items: center;
+  position: relative;
 `;
 
 const FillerStyles = styled.div`
@@ -44,7 +45,6 @@ const FillerStyles = styled.div`
   background-color: ${(props) => props.color || `#ffffff`};
   border-radius: inherit;
   display: flex;
-  position: relative;
   align-items: center;
   justify-content: center;
   box-shadow: ${(props) => props.shadow};

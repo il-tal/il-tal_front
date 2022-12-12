@@ -1,4 +1,4 @@
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MainPage from "../page/MainPage";
 import ThemePage from "../page/ThemePage";
 import DetailTheme from "../page/DetailThemePage";
@@ -7,7 +7,6 @@ import MyPage from "../page/MyPage";
 import ErrorPage from "../page/ErrorPage";
 import CompanyPage from "../page/CompanyPage";
 import MainLayout from "../page/MainLayout";
-import Test from "../page/Test";
 import MyPageLayout from "../page/MyPageLayout";
 import KakaoLogin from "../components/modal/KakaoLogin";
 import SerchPage from "../page/SerchPage";
@@ -29,7 +28,6 @@ const Router = () => {
           <Route path="/myaccount" element={<MyPage />} />
         </Route>
         <Route path="*" element={<ErrorPage />} />
-        <Route path="/hanghae99iltalteam" element={<Test />} />
       </Routes>
     </BrowserRouter>
   );
