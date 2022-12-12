@@ -22,6 +22,7 @@ import { getAchieve } from "../../api/mainApi";
 import { useEffect } from "react";
 import { useRecoilValue } from "recoil";
 import { loginCheck } from "../../api/store";
+import Swal from "sweetalert2";
 
 const MyInfo = () => {
   const mapData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -31,7 +32,11 @@ const MyInfo = () => {
   const Badges = useQuery(["getBadges"], api.getAllBadges);
   const Review = useQuery(["getReviews"], api.getMyReview);
   const Company = useQuery(["getCompany"], api.getMyCompany);
-  const Theme = useQuery(["getTheme"], api.getMyTheme);
+  const Theme = useQuery(["getTheme"], api.getMyTheme, {
+    onError: (error) => {
+      console.log(error, "error");
+    },
+  });
   const [isModal, setIsModal] = useState(false);
   const [isBadge, setBadge] = useState(false);
   const [collapse, setCollapse] = useState(true);
@@ -71,6 +76,11 @@ const MyInfo = () => {
   useEffect(() => {
     if (!loginCheckState) {
       navigate("/");
+      Swal.fire({
+        icon: "error",
+        title: "로그인을 해주세요.",
+        text: "로그인 한 사용자만 이용 가능합니다.",
+      });
     }
   }, [loginCheckState, navigate]);
   return (

@@ -7,7 +7,7 @@ const CompanyLike = (props) => {
   return (
     <DibBox
       onClick={() => {
-        navigate(`/theme/${props.id}`);
+        navigate(`/company/${props.id}`);
       }}
     >
       <>1</>
