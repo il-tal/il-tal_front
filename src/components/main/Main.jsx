@@ -135,7 +135,7 @@ const Main = () => {
         </Styled.BestUserWrap>
       ) : (
         <Styled.BestUserWrap>
-          {hallOfFame.data.map((data, index) => (
+          {hallOfFame.data.content.map((data, index) => (
             <BestUser
               key={"BestUser" + index}
               number={index + 1}
