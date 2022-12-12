@@ -14,7 +14,6 @@
     "date-fns": "^2.29.3",
     "rc-slider": "^10.1.0",
     "react": "^18.2.0",
-    "react-beautiful-dnd": "^13.1.1",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.39.4",
     "react-icons": "^4.6.0",
