@@ -1,6 +1,12 @@
 // export default GuestScreen;
 
-import { UserBox, UserInfo, UserIntro, UserWarp } from "../mainStyle";
+import {
+  TitleTextWrap,
+  UserBox,
+  UserInfo,
+  UserIntro,
+  UserWarp,
+} from "../mainStyle";
 import UserSummary from "./UserSummary";
 import main from "../../../asset/main.png";
 import * as custom from "../../../styles/themeStyle";
@@ -8,14 +14,15 @@ import * as custom from "../../../styles/themeStyle";
 const GuestScreen = (props) => {
   return (
     <UserBox bgimg={`${main}`}>
-      <UserWarp justify={`left`} mtop={`5rem`}>
-        <UserIntro bold={"bold"} font={`40px`} color={`#ffffff`}>
-          일상의 방탈출
-          <br />
-        </UserIntro>
-        <UserIntro bold={"normal"} font={`40px`} color={`#ffffff`}>
-          , 도전해보세요!
-        </UserIntro>
+      <UserWarp justify={`center`} mtop={`3rem`}>
+        <TitleTextWrap>
+          <UserIntro bold={"bold"} font={`40px`} color={`#ffffff`}>
+            일상의 방탈출,
+          </UserIntro>
+          <UserIntro bold={"normal"} font={`40px`} color={`#ffffff`}>
+            도전해보세요!
+          </UserIntro>
+        </TitleTextWrap>
       </UserWarp>
       <UserInfo margin={`100px auto`}>
         <UserSummary blur={1} />
