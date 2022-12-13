@@ -19,7 +19,7 @@ const Notice = ({ id, setIsModal }) => {
         <StTitle>
           <div>
             <span>[공지사항]</span>
-            <span> {data.data.data.title}</span>
+            <span> {data.data.title}</span>
           </div>
           <div className="exit-icon" onClick={() => setIsModal(false)}>
             <HiOutlineX />
@@ -28,13 +28,13 @@ const Notice = ({ id, setIsModal }) => {
         <Line />
         <StContentTitle>
           <div className="content-top">
-            <span>{data.data.data.title}</span>
-            <span>{data.data.data.createdAt.substr(0, 10)}</span>
+            <span>{data.data.title}</span>
+            <span>{data.data.createdAt.substr(0, 10)}</span>
           </div>
         </StContentTitle>
         <StContent>
-          {data.data.data.noticeContent}
-          <img src={data.data.data.noticeImgUrl} alt="image" />
+          {data.data.noticeContent}
+          <img src={data.data.noticeImgUrl} alt="image" />
         </StContent>
       </StSubCont>
     </StCont>
