@@ -36,7 +36,8 @@ const NoticeList = () => {
                 <div
                   onClick={onClickHandler}
                   className="notice-wrap"
-                  key={content.id}>
+                  key={content.id}
+                >
                   <div className="index-wrap">
                     <div className="index">{index + 1}. </div>
                     <div className="title" id={content.id}>

@@ -1,15 +1,22 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Maze from "../utils/Maze";
+// import error css
+import "./ErrorPage.css";
 
 const ErrorPage = () => {
   const navigate = useNavigate();
   return (
     <ErrorBox>
       <Maze />
-      <div>이런 탈출에 실패했습니다.</div>
-      <div>아무래도 이쪽길이 아닌거 같습니다...</div>
-      <button onClick={() => navigate("/")}>메인으로 돌아가기</button>
+      <div class="container">
+        <div class="neon" onClick={() => navigate("/")}>
+          404
+        </div>
+        <div class="flux" onClick={() => navigate("/")}>
+          PAGE NOT FOUND
+        </div>
+      </div>
     </ErrorBox>
   );
 };
@@ -22,4 +29,5 @@ const ErrorBox = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-color: #000;
 `;

@@ -17,7 +17,7 @@ const ProgressBar = (props) => {
       >
         <LabelStyles shadow={shadow}>
           {completed === 0
-            ? <div className="not">아직 달성한 뱃지가 없습니다</div>
+            ? "아직 달성한 뱃지가 없습니다"
             : `${completed}/${goal}`}
         </LabelStyles>
       </FillerStyles>
@@ -58,11 +58,6 @@ const LabelStyles = styled.span`
   display: flex;
   flex-direction: row;
   right: 0;
-  .not {
-    font-size: 1.2rem;
-    min-width: 100%;
-    margin-right: 25vw;
-  }
 `;
 
 export default ProgressBar;

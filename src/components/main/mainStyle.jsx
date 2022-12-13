@@ -8,7 +8,7 @@ export const Container = styled.div`
   justify-content: center;
   align-items: center;
   .notice {
-    width: 1440px;
+    width: 1190px;
   }
 `;
 
@@ -140,8 +140,8 @@ export const RepTitleName = styled.div`
   background: rgba(6, 195, 135, 0.2);
   border: 1px solid rgba(6, 195, 135, 0.7);
   border-radius: 27.5px;
-  width: 198px;
-  height: 44px;
+  width: 225px;
+  height: 36px;
   display: flex;
   justify-content: center;
   align-items: center;

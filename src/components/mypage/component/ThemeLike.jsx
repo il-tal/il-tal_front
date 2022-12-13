@@ -2,23 +2,38 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { DibBox, DibImg } from "./StyledLike";
 
-const CompanyLike = (props) => {
+const ThemeLike = (props) => {
   const navigate = useNavigate();
   return (
     <DibBox
       onClick={() => {
-        navigate(`/company/${props.id}`);
+        navigate(`${props.url}`);
       }}
     >
-      <>1</>
-      <DibImg src={props.ImgUrl} alt={"이미지"}></DibImg>
+      <div className="name">.</div>
+      <DibImg>
+        <source
+          srcSet={props.ImgUrl}
+          width={294}
+          height={294}
+          borderRadius={8}
+          type="image/webp"
+        />
+        <img
+          className="dib-Img"
+          src={`https://source.unsplash.com/random/400x${
+            245 + Math.floor(Math.random() * 10)
+          }`}
+          alt={props.companyName}
+        />
+      </DibImg>
       <CompanyName>{props.companyName}</CompanyName>
       <ThemeName>{props.themeName}</ThemeName>
     </DibBox>
   );
 };
 
-export default CompanyLike;
+export default ThemeLike;
 
 const CompanyName = styled.div`
   z-index: 1;

@@ -108,7 +108,7 @@ export const UserTitles = styled.div`
   align-items: center;
   span{
     display: flex;
-    width: 137px;
+    width: ${(props)=>props.width||`137px`};
     justify-content: center;
     align-items: center;
     border-radius: 23px;
@@ -122,10 +122,18 @@ export const UserTitles = styled.div`
 export const NameEdit = styled.input.attrs({
   placeholder: "변경할 닉네임 입력",
 })`
+  display: flex;
   background-color: transparent;
   border: none;
-  font-size: 16px;
+  height: 40px;
+  font-size: 20px;
+  width: 100%;
+  color: #ffffff;
   text-align: center;
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 20px;
+  }
 `;
 
 export const UserName = styled.div`
@@ -136,6 +144,13 @@ export const UserName = styled.div`
   font-size: 32px;
   width: 100%;
   color: #ffffff;
+  .user-id{
+    height: 18px;
+    font-size: 18px;
+    font-weight: 400;
+    margin-left: 25px;
+    color: rgba(255, 255, 255, 0.7);
+  }
 `;
 
 export const TitlesBox = styled.div`
@@ -173,12 +188,42 @@ export const LikeBox = styled.div`
   max-width: 728px;
 `;
 
+export const NotCarousel = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+`
+
 export const ComWrap = styled.div`
-  min-width: ${(props) => props.width || "708px"};
-  min-height: ${(props) => props.height || "708px"};
+  min-width: ${(props) => props.minWidth || "708px"};
+  min-height: ${(props) => props.minHeight || "708px"};
+  height: ${(props) => props.height || "708px"};
+  grid-template-columns: ${(props)=>props.colums||`repeat(2, 350px)`};
+  grid-template-rows: ${(props)=>props.rows||`repeat(2, 350px)`};
   display: ${(props) => props.display || "grid"};
   align-items: ${(props) => props.align || "center"};
   flex-direction: ${(props) => props.direction || "column"};
-  grid-template-columns: ${(props)=>props.colums||`repeat(2, 350px)`};
-  grid-template-rows: ${(props)=>props.rows||`repeat(2, 1fr)`};
+  background-color: #ffffff;
+  position: relative;
+  overflow: hidden;
 `;
+
+export const NameEditDiv = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .name-edit-btn{
+    width: 100px;
+    padding: 5px 0;
+    border-radius: 5px;
+    border: none;
+    margin: 0 10px;
+  }
+`
+
+export const NameEditForm = styled.form`
+  font-size: 16px;
+  margin: 0 50px;
+  padding: 10px;
+  color: #ffffff;
+`
