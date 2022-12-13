@@ -30,19 +30,28 @@ export const getMyPage = async () => {
   const data = await api.get("/mypage");
   return data.data.data;
 };
+
 export const getMyTheme = async () => {
   const data = await api.get("/mythemes");
   return data.data.data;
 };
+
 export const getMyCompany = async () => {
   const data = await api.get("/mycompanies");
   return data.data.data;
 };
+
 export const getMyReview = async () => {
   const data = await api.get("/myreviews");
   return data.data.data;
 };
+
 export const getAllBadges = async () => {
   const data = await api.get("/badges");
   return data.data.data;
+};
+
+export const getMemberBadges = async () => {
+  const data = await api.get("/member/badges");
+  return data.data.data.sort((a, b) => a.id - b.id);
 };

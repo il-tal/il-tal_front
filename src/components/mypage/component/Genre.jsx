@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const MyGenre = (props) => {
+const Genre = (props) => {
   return (
     <>
       <GenreBox>{props.genre}</GenreBox>
@@ -8,7 +8,7 @@ const MyGenre = (props) => {
   );
 };
 
-export default MyGenre;
+export default Genre;
 
 const GenreBox = styled.div`
   padding: 10px;
