@@ -39,10 +39,13 @@ const MyTitles = (props) => {
       props.id === 6 ||
       props.id === 7 ||
       props.id === 8 ||
-      props.id === 9 ||
-      props.id === 10
+      props.id === 9
     ) {
       if (props.fail >= props.badgeGoal) {
+        setIsAttainment(true);
+      }
+    } else if (props.id === 10) {
+      if (props.success + props.fail >= props.badgeGoal) {
         setIsAttainment(true);
       }
     }
