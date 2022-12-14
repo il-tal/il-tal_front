@@ -14,13 +14,13 @@
 
 ## 🚪 프로젝트 소개
 
-[:globe_with_meridians:](https://il-tal.com/)
+### 일탈 웹사이트 바로가기 [:globe_with_meridians:](https://il-tal.com/)
 
 > 방탈출, 하고는 싶은데 뭘 해야할지 모르겠다면?? :thinking: <br/>
 > 일탈에서 방탈출 정보를 한번에 모아보고, 바로 예약사이트로 연결까지 <br/>
 > 나의 방탈출 업적을 기록해 뱃지도 받아보세요~
 
-![](./src/asset/img/readme.png)
+[![일탈](./src/asset/img/readme.jpg)](https://il-tal.com/)
 
 > 일탈 웹사이트 바로가기
 
@@ -69,8 +69,6 @@
 <img src="https://img.shields.io/badge/yup-0.32.11-6048C3?style=for-the-badge&logo=yup&logoColor=white">
 <!-- rc-slider -->
 <img src="https://img.shields.io/badge/rc_slider-13.1.1-E4637C?style=for-the-badge&logo=Slides&logoColor=white">
-<!-- react-infinite-scroller -->
-<img src="https://img.shields.io/badge/react_infinite_scroller-1.2.6-000000?style=for-the-badge&logo=Infiniti&logoColor=white">
 <!-- react-kakao-map -->
 <img src="https://img.shields.io/badge/react_kakao_maps_sdk-1.1.5-FFCD00?style=for-the-badge&logo=Kakao&logoColor=white">
 <!-- React-Slick -->
