@@ -34,7 +34,6 @@ const MyInfo = () => {
     onError: (error) => {},
   });
   const [isModal, setIsModal] = useState(false);
-  const [isBadge, setBadge] = useState(false);
   const [collapse, setCollapse] = useState(true);
   const [themeFold, setThemeFold] = useState(true);
   const [companyFold, setCompanyFold] = useState(true);
