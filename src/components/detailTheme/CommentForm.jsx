@@ -87,6 +87,7 @@ const CommentForm = ({ setIsEdit, isEdit }) => {
       onSuccess: () => {
         queryClient.invalidateQueries(["getComments"]);
         queryClient.invalidateQueries(["getDetail"]);
+
         Swal.fire({
           icon: "success",
           title: "댓글 작성완료!",
