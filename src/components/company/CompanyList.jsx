@@ -19,7 +19,12 @@ const CompanyList = () => {
 
   const { data, isLoading, isError, error, refetch } = useQuery(
     ["getCompanyList", comLocation, comPage],
-    () => companyList({ comPage, comLocation })
+    () => companyList({ comPage, comLocation }),
+    {
+      onSuccess: () => {
+        window.scrollTo(0, 0);
+      },
+    }
   );
 
   const onChangeHandler = (e) => {
@@ -42,7 +47,8 @@ const CompanyList = () => {
           <select
             className="filter"
             onChange={onChangeHandler}
-            value={comLocation}>
+            value={comLocation}
+          >
             {Locations.location.map((arg) => {
               return (
                 <option key={arg.value} value={arg.value}>

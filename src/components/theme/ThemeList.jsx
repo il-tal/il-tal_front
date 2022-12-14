@@ -52,7 +52,12 @@ const ThemeList = () => {
         difficulty,
         themePagenation,
         sort,
-      })
+      }),
+    {
+      onSuccess: () => {
+        window.scrollTo(0, 0);
+      },
+    }
   );
   //정렬 토글
   const onChangeSort = (e) => {

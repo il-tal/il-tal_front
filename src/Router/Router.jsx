@@ -10,10 +10,12 @@ import MainLayout from "../page/MainLayout";
 import MyPageLayout from "../page/MyPageLayout";
 import KakaoLogin from "../components/modal/KakaoLogin";
 import SerchPage from "../page/SerchPage";
+import ScrollOnTop from "../utils/ScrollOnTop";
 
 const Router = () => {
   return (
     <BrowserRouter>
+      <ScrollOnTop />
       <Routes>
         <Route element={<MainLayout />}>
           <Route path="/" element={<MainPage />} />
