@@ -12,7 +12,7 @@ import nextgray from "../../asset/next-gray.png";
 import prevgray from "../../asset/prev-gray.png";
 import nextgreen from "../../asset/next-green.png";
 import prevgreen from "../../asset/prev-green.png";
-import { useEffect } from "react";
+
 const ThemeReview = ({ props }) => {
   //코멘트 조회용 테마 id
   const { id } = useParams();
@@ -30,9 +30,6 @@ const ThemeReview = ({ props }) => {
   const { data, isLoading } = useQuery(["getComments", commentPage], () =>
     getComment({ id, commentPage })
   );
-
-  //댓글 더보기 state
-  const [more, setMore] = useState(true);
 
   //코멘트 페이지네이션 온체인지
   const onCommentPage = (page) => {
@@ -156,7 +153,6 @@ const Container = styled.div`
       display: inline-block;
       width: 50px;
       height: 50px;
-      /* border: 1px solid #e2e2e2; */
       display: flex;
       justify-content: center;
       align-items: center;
@@ -182,7 +178,6 @@ const Container = styled.div`
     }
 
     ul.pagination li.active {
-      /* scale: 1.3; */
       border-radius: 50% 50%;
       background-color: var(--color-main);
     }

@@ -1,7 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import Pagination from "react-js-pagination";
 import { useNavigate } from "react-router-dom";
-
 import { useRecoilState, useRecoilValue } from "recoil";
 import styled from "styled-components";
 import { getSerchCompany, getSerchTheme } from "../../api/serchApi";
@@ -194,7 +193,6 @@ const TitleListWrap = styled.div`
     display: inline-block;
     width: 60px;
     height: 60px;
-    /* border: 1px solid #e2e2e2; */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -220,7 +218,6 @@ const TitleListWrap = styled.div`
   }
 
   ul.pagination li.active {
-    /* scale: 1.3; */
     border-radius: 50% 50%;
     background-color: var(--color-main);
   }

@@ -1,9 +1,5 @@
 const Category = {
   GenreCategory: [
-    // {
-    //   name: "전체",
-    //   value: null,
-    // },
     {
       name: "미션",
       value: "미션",
@@ -54,10 +50,6 @@ const Category = {
   ],
 
   LocationCategory: [
-    // {
-    //   name: "전체",
-    //   value: null,
-    // },
     {
       name: "강남",
       value: "강남",
@@ -93,10 +85,6 @@ const Category = {
   ],
 
   ScoreCategory: [
-    // {
-    //   name: "전체",
-    //   value: "전체",
-    // },
     {
       name: "⭐️",
       value: 1,
@@ -147,10 +135,6 @@ const Category = {
   ],
 
   PeopleCategory: [
-    // {
-    //   name: "전체",
-    //   value: "전체",
-    // },
     {
       name: "1인",
       value: 1,

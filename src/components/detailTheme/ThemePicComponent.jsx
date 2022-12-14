@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 const ThemePicComponent = ({ pic }) => {
-  console.log(pic);
   return (
     <Container>
       <img src={pic} alt="themepic" />
