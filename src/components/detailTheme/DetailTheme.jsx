@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getDetailTheme, wishTheme } from "../../api/ThemeApi";
-import KakaoMap from "../map/KakaoMap";
 import Modal from "../modal/Modal";
 import ThemeReview from "./ThemeReview";
 import ThemeSynopsis from "./ThemeSynopsis";

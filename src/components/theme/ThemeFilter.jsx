@@ -67,6 +67,7 @@ const ThemeFilter = ({ refetch, filterCnt }) => {
     setDifficulty([1, 5]);
   };
 
+  //페이지 변경 (필터 적용 후 페이지 0으로 초기화시켜주기 위해 사용)
   const setPage = useSetRecoilState(themePages);
 
   return (

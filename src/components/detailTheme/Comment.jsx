@@ -170,21 +170,7 @@ const Comment = ({
           </>
         ) : null
       ) : null}
-      {/* {userinfo.nickname === nickname ? (
-        <>
-          <div className="del" onClick={() => deleteComment.mutate(id)}>
-            <AiOutlineDelete />
-          </div>
-          <div className="edit" onClick={() => setIsEdit(!isEdit)}>
-            {isEdit ? <AiOutlineClose /> : <AiOutlineEdit />}
-          </div>
-          {isEdit ? (
-            <div className="save" onClick={onSubmitHandler}>
-              <AiOutlineSave />
-            </div>
-          ) : null}
-        </>
-      ) : null} */}
+
       <Header>
         {isEdit ? (
           <div className="edit-select">
@@ -278,7 +264,6 @@ const Container = styled.div`
   box-sizing: border-box;
   border-radius: 8px;
   padding: 5px;
-  /* justify-content: space-between; */
   align-items: center;
   position: relative;
   .del {
@@ -393,7 +378,6 @@ const Middle = styled.div`
   align-items: center;
 
   div {
-    /* margin-right: 10px; */
     font-size: 16px;
   }
   .clear {
