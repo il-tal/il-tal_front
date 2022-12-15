@@ -3,7 +3,6 @@ import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { getDetailTheme, wishTheme } from "../../api/ThemeApi";
-import KakaoMap from "../map/KakaoMap";
 import Modal from "../modal/Modal";
 import ThemeReview from "./ThemeReview";
 import ThemeSynopsis from "./ThemeSynopsis";
@@ -115,11 +114,11 @@ const DetailTheme = () => {
               {data.data.themeLikeCheck ? (
                 <Btn>
                   {<BsSuitHeartFill color="var(--color-main)" size="20" />}
-                  좋아요 {data.data.totalLikeCnt}
+                  찜하기 {data.data.totalLikeCnt}
                 </Btn>
               ) : (
                 <Btn>
-                  {<BsSuitHeart size="20" />} 좋아요 {data.data.totalLikeCnt}
+                  {<BsSuitHeart size="20" />} 찜하기 {data.data.totalLikeCnt}
                 </Btn>
               )}
             </div>

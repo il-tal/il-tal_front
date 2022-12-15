@@ -70,8 +70,7 @@ const MyInfo = () => {
         <Modal
           closeModal={() => {
             setIsModal(false);
-          }}
-        >
+          }}>
           <GenreModal
             genrePref={genrePref}
             stylePref={stylePref}
@@ -222,7 +221,7 @@ const MyInfo = () => {
         </Styled.BoxWrap>
         <Styled.BoxWrap display="grid" gridColumns={`repeat(2, 1fr)`}>
           <Styled.LikeBox>
-            <Styled.Heading>좋아요 업체</Styled.Heading>
+            <Styled.Heading>내가 찜한 업체</Styled.Heading>
             {Company.isLoading ? (
               <Styled.ComWrap>
                 <ThemeLike companyName={""} ImgUrl={""} themeName={""} />
@@ -254,7 +253,7 @@ const MyInfo = () => {
             </Styled.CollapseTitles>
           </Styled.LikeBox>
           <Styled.LikeBox>
-            <Styled.Heading>좋아요 테마</Styled.Heading>
+            <Styled.Heading>내가 찜한 테마</Styled.Heading>
             {Theme.isLoading ? (
               <Styled.ComWrap>
                 <ThemeLike companyName={""} ImgUrl={""} themeName={""} />
