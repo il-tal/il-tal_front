@@ -34,7 +34,7 @@ const Notice = ({ id, setIsModal }) => {
         </StContentTitle>
         <StContent>
           {data.data.noticeContent}
-          <img src={data.data.noticeImgUrl} alt="image" />
+          <img src={data.data.noticeImgUrl} alt={data.data.noticeContent} />
         </StContent>
       </StSubCont>
     </StCont>
@@ -45,7 +45,7 @@ export default Notice;
 
 const StCont = styled.div`
   width: 900px;
-  min-height: 500px;
+  height: 850px;
   padding: 30px;
   background-color: white;
   border-radius: 10px;
@@ -92,9 +92,29 @@ const StContentTitle = styled.div`
 const StContent = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
   align-items: center;
   font-size: 18px;
   margin-top: 15px;
   text-align: left;
   row-gap: 15px;
+  scrollbar-width: thin;
+  overflow-y: scroll;
+  img {
+    width: 100%;
+    object-fit: cover;
+    box-sizing: border-box;
+    padding: 10px;
+  }
+  &::-webkit-scrollbar {
+    width: 10px;
+    margin-left: 10px;
+  }
+  &::-webkit-scrollbar-button {
+    display: none;
+  }
+  &::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background-color: var(--color-main);
+  }
 `;
