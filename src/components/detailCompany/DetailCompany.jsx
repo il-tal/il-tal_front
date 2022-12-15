@@ -82,19 +82,18 @@ const DetailCompany = () => {
             <div className="button-wrap">
               <button
                 className="homepage"
-                onClick={() => window.open(data.data.companyUrl)}
-              >
+                onClick={() => window.open(data.data.companyUrl)}>
                 홈페이지
               </button>
               <button onClick={() => likeOnlyMemeber()} className="like">
                 {data.data.companyLikeCheck ? (
                   <div className="like-wrap">
-                    {<BsSuitHeartFill color={"#06c387"} size="20" />} 좋아요{" "}
+                    {<BsSuitHeartFill color={"#06c387"} size="20" />} 찜하기{" "}
                     {data.data.totalLikeCnt}
                   </div>
                 ) : (
                   <div className="like-wrap">
-                    {<BsSuitHeart size="20" />} 좋아요
+                    {<BsSuitHeart size="20" />} 찜하기
                     {data.data.totalLikeCnt}
                   </div>
                 )}

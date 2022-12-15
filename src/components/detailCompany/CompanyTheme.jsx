@@ -67,7 +67,7 @@ const CompanyTheme = ({ theme }) => {
               ) : (
                 <BsSuitHeart size={23} />
               )}{" "}
-              좋아요 {theme.totalLikeCnt}
+              찜하기 {theme.totalLikeCnt}
             </button>
           </div>
         </ThemeText>

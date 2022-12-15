@@ -39,8 +39,7 @@ const KakaoMap = ({ address, company }) => {
         <div
           className="map"
           id="map"
-          style={{ width: "580px", height: "520px" }}
-        ></div>
+          style={{ width: "580px", height: "520px" }}></div>
       </MapWrap>
     </>
   );

@@ -114,11 +114,11 @@ const DetailTheme = () => {
               {data.data.themeLikeCheck ? (
                 <Btn>
                   {<BsSuitHeartFill color="var(--color-main)" size="20" />}
-                  좋아요 {data.data.totalLikeCnt}
+                  찜하기 {data.data.totalLikeCnt}
                 </Btn>
               ) : (
                 <Btn>
-                  {<BsSuitHeart size="20" />} 좋아요 {data.data.totalLikeCnt}
+                  {<BsSuitHeart size="20" />} 찜하기 {data.data.totalLikeCnt}
                 </Btn>
               )}
             </div>
