@@ -28,6 +28,11 @@ const KakaoMap = ({ address, company }) => {
       if (status === kakao.maps.services.Status.OK) {
         var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
+        // 결과값으로 받은 위치를 마커로 표시합니다
+        var marker = new kakao.maps.Marker({
+          map: map,
+          position: coords,
+        });
         map.setCenter(coords);
       }
     });
