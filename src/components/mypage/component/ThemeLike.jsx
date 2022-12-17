@@ -21,7 +21,7 @@ const ThemeLike = (props) => {
         />
         <img
           className="dib-Img"
-          src={`https://source.unsplash.com/random/400x${
+          srcSet={`https://source.unsplash.com/random/400x${
             245 + Math.floor(Math.random() * 10)
           }`}
           alt={props.companyName}

@@ -12,9 +12,9 @@ const MyReviews = (props) => {
         navigate(`/theme/${props.id}`);
       }}
     >
-      <ThemeImg src={props.themeImgUrl} alt={props.themeName}>
+      <ThemeImg>
         <source srcSet={props.themeImgUrl} type="image/webp" />
-        <img src={props.themeImgUrl} alt={props.themeName} />
+        <img srcSet={props.themeImgUrl} alt={props.themeName} loading="lazy" />
       </ThemeImg>
       <ThemeName>{props.themeName}</ThemeName>
       <ThemeDiv>
