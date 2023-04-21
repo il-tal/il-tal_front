@@ -7,6 +7,7 @@ import { wishTheme } from "../../api/ThemeApi";
 import { useRecoilValue } from "recoil";
 import { loginCheck } from "../../api/store";
 import Swal from "sweetalert2";
+import { useInView } from "react-intersection-observer";
 
 const ThemePoster = ({ theme }) => {
   //페이지 이동에 사용
@@ -49,10 +50,26 @@ const ThemePoster = ({ theme }) => {
     }
   }, [theme]);
 
+  //화면에 보일때 보여줄 토글state
+  const [showList, setShowList] = useState(false);
+
+  //옵저버 스테이트
+  const { ref, inView } = useInView({
+    threshold: 0.1,
+    triggerOnce: true,
+  });
+
+  //옵저버에 감지되면 showList true로 상태변경 (이미지 Lazy loading)
+  useEffect(() => {
+    if (inView && !showList) {
+      setShowList(true);
+    }
+  }, [inView, showList]);
+
   return (
     <Container>
-      <ThemePic onClick={() => navigate(`/theme/${theme.id}`)}>
-        <img src={theme.themeImgUrl} alt="themePoster" />
+      <ThemePic ref={ref} onClick={() => navigate(`/theme/${theme.id}`)}>
+        {showList ? <img src={theme.themeImgUrl} alt="themePoster" /> : null}
       </ThemePic>
       <ThemeTextWrap>
         <ThemeTextHeader>{theme.companyName}</ThemeTextHeader>

@@ -24,7 +24,7 @@ import down from "../../asset/img/down.png";
 import up from "../../asset/img/up.png";
 
 const MyInfo = () => {
-  const mapData = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+  const mapData = [1, 2, 3, 4, 5];
   const achieve = useQuery(["getAchieve"], getAchieve);
   const User = useQuery(["getMyPage"], api.getMyPage);
   const Badges = useQuery(["getBadges"], api.getAllBadges);
@@ -70,7 +70,8 @@ const MyInfo = () => {
         <Modal
           closeModal={() => {
             setIsModal(false);
-          }}>
+          }}
+        >
           <GenreModal
             genrePref={genrePref}
             stylePref={stylePref}

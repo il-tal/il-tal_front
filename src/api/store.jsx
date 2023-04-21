@@ -1,6 +1,6 @@
 import { atom } from "recoil";
 
-//Recoil로 만든 전역상태 보관 Store
+//Recoil로 만든 전역상태 보관 Store..
 
 //장르필터 전역 스테이트
 export const genreState = atom({
@@ -58,8 +58,8 @@ export const genreTend = atom({
 export const questTend = atom({
   key: "questTend",
   default: [],
-  });
-  
+});
+
 //테마별 페이지 전역 스테이트
 export const themePages = atom({
   key: "themePages",
