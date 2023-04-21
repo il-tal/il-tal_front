@@ -19,7 +19,7 @@ const Header = (props) => {
 
   //로그인 체크 전역 스테이트
   const [loginState, setLoginState] = useRecoilState(loginCheck);
-
+  //로그아웃
   //로그아웃
   const onLogout = () => {
     Swal.fire({
