@@ -3,7 +3,7 @@ import styled from "styled-components";
 //카테고리 필터용 버튼 컴포넌트 (인덱스로 각 항목별 인덱스 넣고, props로 state와 setState를 각각 보내서 사용)
 const CategoryBtn = ({ categoryIndex, state, setState }) => {
   const categoryHandler = (e) => {
-    //해당 State에 클릭한 카테고리가 있는지 확인한다. (있다면 클릭한 카테고리를 반환하고, 없다면 undefinded가 됨)
+    //해당 State에 클릭한 카테고리가 있는지 확인한다. (있다면 클릭한 카테고리를 반환하고, 없다면 undefined가 됨)
     const isInclude = state.find((element) => element === e.target.value);
 
     //만약 클릭한 카테고리가 "전체" 인 경우 state는 빈배열로 바꾼다.
@@ -54,7 +54,7 @@ const Btn = styled.button`
   padding: 0 10px;
 
   &:hover {
-    color: #333;
+    /* /* color: #333; */
     color: ${({ backgroundColor }) => (backgroundColor ? "white" : "black")};
     background-color: ${({ backgroundColor }) =>
       backgroundColor ? "var(--color-main)" : "#e6e6e6"};
